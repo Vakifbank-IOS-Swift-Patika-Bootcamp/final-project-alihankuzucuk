@@ -75,7 +75,7 @@ final class RawGClient {
     ///   - pageSize: Parameter of how many items you want to see
     ///   - queryFilters: Parameter array of type [Key : Value]
     ///   - completion: Completion of where you handle response
-    static func getGamesInRange(page: Int = 1, pageSize: Int = 30, queryFilters: [String:String]? = nil, completion: @escaping (GamesModel?, Error?) -> Void) {
+    static func getGamesInRange(page: Int = 1, pageSize: Int = 30, queryFilters: [String:String]? = nil, completion: @escaping (BaseResponseModel<GameModel>?, Error?) -> Void) {
         var queryParameters = ["page":String(page),"page_size":String(pageSize)]
         
         if let queryFilters = queryFilters {
@@ -84,7 +84,7 @@ final class RawGClient {
             }
         }
         
-        handleResponse(url: Endpoints.games.getUrlWith(queryParameters: queryParameters), responseType: GamesModel.self) { response, error in
+        handleResponse(url: Endpoints.games.getUrlWith(queryParameters: queryParameters), responseType: BaseResponseModel<GameModel>.self) { response, error in
             if let response = response {
                 completion(response, nil)
             } else {

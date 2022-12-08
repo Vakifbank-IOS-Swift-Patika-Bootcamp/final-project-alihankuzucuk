@@ -1,34 +1,11 @@
 //
-//  GamesModel.swift
+//  GameModel.swift
 //  GameBox
 //
 //  Created by Alihan KUZUCUK on 8.12.2022.
 //
 
 import Foundation
-
-// MARK: - GamesModel
-struct GamesModel: Codable {
-    let gameCount: Int
-    let nextPage: String?
-    let previousPage: String?
-    let games: [GameModel]?
-
-    enum CodingKeys: String, CodingKey {
-        case gameCount = "count"
-        case nextPage = "next"
-        case previousPage = "previous"
-        case games = "results"
-    }
-    
-    init(from decoder: Decoder) throws {
-        let values = try decoder.container(keyedBy: CodingKeys.self)
-        gameCount = try values.decodeIfPresent(Int.self, forKey: .gameCount) ?? -1
-        nextPage = try values.decodeIfPresent(String.self, forKey: .nextPage) ?? nil
-        previousPage = try values.decodeIfPresent(String.self, forKey: .previousPage) ?? nil
-        games = try values.decodeIfPresent([GameModel].self, forKey: .games) ?? []
-    }
-}
 
 // MARK: - GameModel
 struct GameModel: Codable {
