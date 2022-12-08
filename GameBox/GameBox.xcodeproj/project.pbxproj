@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C30942972941B33800AF712F /* GamesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C30942962941B33800AF712F /* GamesModel.swift */; };
 		C37548682941A4F100C52AFF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C37548672941A4F100C52AFF /* AppDelegate.swift */; };
 		C375486A2941A4F100C52AFF /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C37548692941A4F100C52AFF /* SceneDelegate.swift */; };
 		C375486C2941A4F100C52AFF /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C375486B2941A4F100C52AFF /* ViewController.swift */; };
@@ -37,6 +38,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		C30942962941B33800AF712F /* GamesModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamesModel.swift; sourceTree = "<group>"; };
 		C37548642941A4F100C52AFF /* GameBox.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GameBox.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C37548672941A4F100C52AFF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C37548692941A4F100C52AFF /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -78,6 +80,30 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C30942932941B27D00AF712F /* Scenes */ = {
+			isa = PBXGroup;
+			children = (
+				C30942942941B28A00AF712F /* GameList */,
+			);
+			path = Scenes;
+			sourceTree = "<group>";
+		};
+		C30942942941B28A00AF712F /* GameList */ = {
+			isa = PBXGroup;
+			children = (
+				C30942952941B2CC00AF712F /* Model */,
+			);
+			path = GameList;
+			sourceTree = "<group>";
+		};
+		C30942952941B2CC00AF712F /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				C30942962941B33800AF712F /* GamesModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		C375485B2941A4F100C52AFF = {
 			isa = PBXGroup;
 			children = (
@@ -103,6 +129,7 @@
 			children = (
 				C375489A2941A52600C52AFF /* App */,
 				C375489B2941A55D00C52AFF /* Core */,
+				C30942932941B27D00AF712F /* Scenes */,
 				C375486B2941A4F100C52AFF /* ViewController.swift */,
 				C37548782941A4F300C52AFF /* Info.plist */,
 			);
@@ -281,6 +308,7 @@
 				C37548682941A4F100C52AFF /* AppDelegate.swift in Sources */,
 				C375486A2941A4F100C52AFF /* SceneDelegate.swift in Sources */,
 				C37548722941A4F100C52AFF /* GameBox.xcdatamodeld in Sources */,
+				C30942972941B33800AF712F /* GamesModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
