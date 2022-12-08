@@ -16,6 +16,7 @@ final class RawGClient {
         static let base = "https://api.rawg.io/api"
         
         case games = "games"
+        case genres = "genres"
         
         // MARK: - getUrlWith
         /// Creates and returns a url by appending each element in the queryParameters array to the queryString
@@ -68,7 +69,7 @@ final class RawGClient {
         
     }
     
-    
+    // MARK: - getGamesInRange
     /// Makes a request to the /games endpoint and returns games in given range as parameter
     /// - Parameters:
     ///   - page: Parameter of which page you want to request
@@ -85,6 +86,19 @@ final class RawGClient {
         }
         
         handleResponse(url: Endpoints.games.getUrlWith(queryParameters: queryParameters), responseType: BaseResponseModel<GameModel>.self) { response, error in
+            if let response = response {
+                completion(response, nil)
+            } else {
+                completion(nil, error)
+            }
+        }
+    }
+    
+    // MARK: - getAllGenres
+    /// Makes a request to the /genres endpoint and returns all genres
+    /// - Parameter completion: Completion of where you handle response
+    static func getAllGenres(completion: @escaping (BaseResponseModel<GenreModel>?, Error?) -> Void) {
+        handleResponse(url: Endpoints.genres.getUrlWith(queryParameters: nil), responseType: BaseResponseModel<GenreModel>.self) { response, error in
             if let response = response {
                 completion(response, nil)
             } else {
