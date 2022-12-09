@@ -122,26 +122,41 @@ final class GameListViewModel: GameListViewModelProtocol {
     }
     
     func getGame(at index: Int) -> GameModel? {
-        games?[index]
+        guard let games = games else { return nil }
+        guard games.count > index && index >= 0 else { return nil }
+        
+        return games[index]
     }
     
     func getGameId(at index: Int) -> Int? {
-        games?[index].gameId
+        guard let games = games else { return nil }
+        guard games.count > index && index >= 0 else { return nil }
+        
+        return games[index].gameId
     }
     
     func getCurrentPage() -> Int { currentPage }
     
     // MARK: - GenreModel Methods
     func getGenre(at index: Int) -> GenreModel? {
-        genres?[index]
+        guard let genres = genres else { return nil }
+        guard genres.count > index && index >= 0 else { return nil }
+        
+        return genres[index]
     }
     
     func getGenreId(at index: Int) -> Int? {
-        genres?[index].genreId
+        guard let genres = genres else { return nil }
+        guard genres.count > index && index >= 0 else { return nil }
+        
+        return genres[index].genreId
     }
     
     func getGenreSlug(at index: Int) -> String? {
-        genres?[index].genreSlug
+        guard let genres = genres else { return nil }
+        guard genres.count > index && index >= 0 else { return nil }
+        
+        return genres[index].genreSlug
     }
     
     // MARK: - Filtering
