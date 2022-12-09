@@ -127,8 +127,8 @@
 		C30942942941B28A00AF712F /* GameList */ = {
 			isa = PBXGroup;
 			children = (
-				C373D45629423C63007D3833 /* ViewModel */,
 				C30942952941B2CC00AF712F /* Model */,
+				C373D45629423C63007D3833 /* ViewModel */,
 			);
 			path = GameList;
 			sourceTree = "<group>";
