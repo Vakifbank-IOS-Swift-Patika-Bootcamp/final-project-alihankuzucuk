@@ -2,20 +2,24 @@ PODS:
   - Alamofire (5.6.4)
   - AlamofireImage (4.2.0):
     - Alamofire (~> 5.4)
+  - MaterialActivityIndicator (0.0.6)
 
 DEPENDENCIES:
   - Alamofire
   - AlamofireImage (~> 4.1)
+  - MaterialActivityIndicator
 
 SPEC REPOS:
   trunk:
     - Alamofire
     - AlamofireImage
+    - MaterialActivityIndicator
 
 SPEC CHECKSUMS:
   Alamofire: 4e95d97098eacb88856099c4fc79b526a299e48c
   AlamofireImage: 34a2d90b0e5fe6a5605f85ae4b7b01e784c60192
+  MaterialActivityIndicator: 5061a52fadf7d22533734f2d34806311331bc424
 
-PODFILE CHECKSUM: 95b9657a8f5f55292811ec83bfdb1a059bd55bfb
+PODFILE CHECKSUM: 06ee1236531cc48e927a151cc6e3b6d75c1b5da6
 
 COCOAPODS: 1.11.3
