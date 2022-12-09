@@ -24,6 +24,7 @@ protocol GameListViewModelProtocol {
     func getCurrentPage() -> Int
     
     // MARK: - GenreModel Methods
+    func getGenreCount() -> Int
     func getGenre(at index: Int) -> GenreModel?
     func getGenreId(at index: Int) -> Int?
     func getGenreSlug(at index: Int) -> String?
@@ -138,6 +139,10 @@ final class GameListViewModel: GameListViewModelProtocol {
     func getCurrentPage() -> Int { currentPage }
     
     // MARK: - GenreModel Methods
+    func getGenreCount() -> Int {
+        genres?.count ?? 0
+    }
+    
     func getGenre(at index: Int) -> GenreModel? {
         guard let genres = genres else { return nil }
         guard genres.count > index && index >= 0 else { return nil }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="AQO-kl-BeN">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
@@ -40,17 +40,41 @@
             </objects>
             <point key="canvasLocation" x="691" y="495"/>
         </scene>
-        <!--View Controller-->
+        <!--Game List View Controller-->
         <scene sceneID="13V-BT-feO">
             <objects>
-                <viewController id="Zuo-Ua-YEn" sceneMemberID="viewController">
+                <viewController id="Zuo-Ua-YEn" customClass="GameListViewController" customModule="GameBox" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="os9-5e-FeX">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="jCO-Tq-uj6">
+                                <rect key="frame" x="0.0" y="103" width="393" height="75"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="75" id="Wfj-iC-Lai"/>
+                                </constraints>
+                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="15" id="pDo-Xg-jMy">
+                                    <size key="itemSize" width="128" height="128"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="15" minY="0.0" maxX="15" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells/>
+                            </collectionView>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="kUH-Sf-sNh"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="jCO-Tq-uj6" firstAttribute="top" secondItem="kUH-Sf-sNh" secondAttribute="top" id="9Ln-Yg-Bii"/>
+                            <constraint firstItem="jCO-Tq-uj6" firstAttribute="trailing" secondItem="kUH-Sf-sNh" secondAttribute="trailing" id="EXu-HX-OI2"/>
+                            <constraint firstItem="jCO-Tq-uj6" firstAttribute="leading" secondItem="kUH-Sf-sNh" secondAttribute="leading" id="xjP-yW-gBv"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="VZM-nZ-GuP"/>
+                    <connections>
+                        <outlet property="collectionViewGenres" destination="jCO-Tq-uj6" id="dKc-cH-MKq"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="s4R-Ug-bdM" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

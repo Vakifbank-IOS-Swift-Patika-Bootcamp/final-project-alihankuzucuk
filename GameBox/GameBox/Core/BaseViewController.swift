@@ -28,5 +28,12 @@ class BaseViewController: UIViewController {
         indicator.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         indicator.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
     }
+    
+    func showAlert(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
+        let alertBtnOk = UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil)
+        alert.addAction(alertBtnOk)
+        self.present(alert, animated: true, completion: nil)
+    }
 
 }
