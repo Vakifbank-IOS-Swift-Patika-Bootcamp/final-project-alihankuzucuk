@@ -8,6 +8,7 @@ target 'GameBox' do
   # Pods for GameBox
   pod 'Alamofire'
   pod 'AlamofireImage', '~> 4.1'
+  pod 'MaterialActivityIndicator'
 
   target 'GameBoxTests' do
     inherit! :search_paths
