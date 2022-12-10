@@ -16,8 +16,8 @@ final class GenreCollectionViewCell: UICollectionViewCell {
     @IBOutlet private weak var lblGenreName: UILabel!
 
     // MARK: - Methods
-    func configureCell(genre: GenreModel) {
-        lblGenreName.text = genre.genreName
+    func configureCell(genre: CommonModel) {
+        lblGenreName.text = genre.name
     }
 
 }

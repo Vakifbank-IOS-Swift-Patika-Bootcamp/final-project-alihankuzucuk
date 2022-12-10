@@ -10,7 +10,28 @@ import UIKit
 final class GameListViewController: BaseViewController {
     
     // MARK: - Outlets
-    @IBOutlet private weak var collectionViewGenres: UICollectionView!
+    @IBOutlet private weak var collectionViewGenres: UICollectionView! {
+        didSet {
+            collectionViewGenres.delegate = self
+            collectionViewGenres.dataSource = self
+            
+            // MARK: Registering collectionViewGenres cells
+            collectionViewGenres.register(UINib(nibName: GenreCollectionViewCell.identifier, bundle: nil), forCellWithReuseIdentifier: GenreCollectionViewCell.identifier)
+        }
+    }
+    
+    @IBOutlet private weak var tableViewGames: UITableView! {
+        didSet {
+            tableViewGames.delegate = self
+            tableViewGames.dataSource = self
+            
+            // MARK: Registering tableViewGames cells
+            tableViewGames.register(UINib(nibName: GameTableViewCell.identifier, bundle: nil), forCellReuseIdentifier: GameTableViewCell.identifier)
+            
+            // MARK: Automatic Dimension
+            tableViewGames.estimatedRowHeight = UITableView.automaticDimension
+        }
+    }
     
     // MARK: - Variables
     private var viewModel: GameListViewModelProtocol = GameListViewModel()
@@ -38,8 +59,8 @@ extension GameListViewController {
         navigationController?.navigationBar.compactAppearance = appearance
         navigationController?.navigationBar.scrollEdgeAppearance = appearance
         
-        // MARK: - Registering collectionViewGenres cells
-        collectionViewGenres.register(UINib(nibName: GenreCollectionViewCell.identifier, bundle: nil), forCellWithReuseIdentifier: GenreCollectionViewCell.identifier)
+        // MARK: Changing TabBar icon colors
+        self.tabBarController?.tabBar.tintColor = UIColor(red: 0.00, green: 0.75, blue: 1.00, alpha: 1.00)
         
         // MARK: - Preparing viewModel
         viewModel.delegate = self
@@ -65,13 +86,11 @@ extension GameListViewController: GameListViewModelDelegate {
     }
     
     func fetchedGames() {
-        
+        tableViewGames.reloadData()
     }
     
     func fetchedGenres() {
-        // MARK: - Preparing collectionViewGenres
-        collectionViewGenres.delegate = self
-        collectionViewGenres.dataSource = self
+        collectionViewGenres.reloadData()
     }
     
 }
@@ -84,7 +103,9 @@ extension GameListViewController: UICollectionViewDataSource, UICollectionViewDe
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GenreCollectionViewCell.identifier, for: indexPath) as! GenreCollectionViewCell
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GenreCollectionViewCell.identifier, for: indexPath) as? GenreCollectionViewCell
+        else { return UICollectionViewCell() }
+        
         if indexPath.row == 0 {
             // MARK: - Initializing "All" as a genre
             let genreAllJson = """
@@ -95,14 +116,42 @@ extension GameListViewController: UICollectionViewDataSource, UICollectionViewDe
             }
             """
 
-            let genreAll = try! JSONDecoder().decode(GenreModel.self, from: Data(genreAllJson.utf8))
+            let genreAll = try! JSONDecoder().decode(CommonModel.self, from: Data(genreAllJson.utf8))
             
             cell.configureCell(genre: genreAll)
         } else {
-            cell.configureCell(genre: viewModel.getGenre(at: indexPath.row - 1)!)
+            let cellModel = viewModel.getGenre(at: indexPath.row - 1)
+            cell.configureCell(genre: cellModel!)
         }
         
         return cell
+    }
+    
+}
+
+// MARK: - Extension: tableViewGames
+extension GameListViewController: UITableViewDataSource, UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return viewModel.getGameCount()
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: GameTableViewCell.identifier, for: indexPath) as? GameTableViewCell,
+              let cellModel = viewModel.getGame(at: indexPath.row)
+        else { return UITableViewCell() }
+        
+        cell.configureCell(game: cellModel)
+        
+        if indexPath.row == (viewModel.getGameCount() - 1) {
+            viewModel.fetchMoreGames(page: (viewModel.getCurrentPage() + 1))
+        }
+        
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        UITableView.automaticDimension
     }
     
 }

@@ -25,7 +25,7 @@ protocol GameListViewModelProtocol {
     
     // MARK: - GenreModel Methods
     func getGenreCount() -> Int
-    func getGenre(at index: Int) -> GenreModel?
+    func getGenre(at index: Int) -> CommonModel?
     func getGenreId(at index: Int) -> Int?
     func getGenreSlug(at index: Int) -> String?
     
@@ -52,7 +52,7 @@ final class GameListViewModel: GameListViewModelProtocol {
     
     // MARK: - Variables
     private var games: [GameModel]?
-    private var genres: [GenreModel]?
+    private var genres: [CommonModel]?
     
     private var currentPage: Int = 1
     private let batchSize: Int = 30
@@ -143,7 +143,7 @@ final class GameListViewModel: GameListViewModelProtocol {
         genres?.count ?? 0
     }
     
-    func getGenre(at index: Int) -> GenreModel? {
+    func getGenre(at index: Int) -> CommonModel? {
         guard let genres = genres else { return nil }
         guard genres.count > index && index >= 0 else { return nil }
         
@@ -154,14 +154,14 @@ final class GameListViewModel: GameListViewModelProtocol {
         guard let genres = genres else { return nil }
         guard genres.count > index && index >= 0 else { return nil }
         
-        return genres[index].genreId
+        return genres[index].id
     }
     
     func getGenreSlug(at index: Int) -> String? {
         guard let genres = genres else { return nil }
         guard genres.count > index && index >= 0 else { return nil }
         
-        return genres[index].genreSlug
+        return genres[index].slug
     }
     
     // MARK: - Filtering

@@ -98,8 +98,8 @@ final class RawGClient {
     // MARK: - getAllGenres
     /// Makes a request to the /genres endpoint and returns all genres
     /// - Parameter completion: Completion of where you handle response
-    static func getAllGenres(completion: @escaping (BaseResponseModel<GenreModel>?, Error?) -> Void) {
-        handleResponse(url: Endpoints.genres.getUrlWith(queryParameters: nil), responseType: BaseResponseModel<GenreModel>.self) { response, error in
+    static func getAllGenres(completion: @escaping (BaseResponseModel<CommonModel>?, Error?) -> Void) {
+        handleResponse(url: Endpoints.genres.getUrlWith(queryParameters: nil), responseType: BaseResponseModel<CommonModel>.self) { response, error in
             if let response = response {
                 completion(response, nil)
             } else {

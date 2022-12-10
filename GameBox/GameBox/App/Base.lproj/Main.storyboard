@@ -62,18 +62,27 @@
                                 </collectionViewFlowLayout>
                                 <cells/>
                             </collectionView>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="UFK-pb-fMW">
+                                <rect key="frame" x="0.0" y="178" width="393" height="591"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </tableView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="kUH-Sf-sNh"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="jCO-Tq-uj6" firstAttribute="top" secondItem="kUH-Sf-sNh" secondAttribute="top" id="9Ln-Yg-Bii"/>
                             <constraint firstItem="jCO-Tq-uj6" firstAttribute="trailing" secondItem="kUH-Sf-sNh" secondAttribute="trailing" id="EXu-HX-OI2"/>
+                            <constraint firstItem="UFK-pb-fMW" firstAttribute="top" secondItem="jCO-Tq-uj6" secondAttribute="bottom" id="KA6-ds-8xp"/>
+                            <constraint firstItem="UFK-pb-fMW" firstAttribute="leading" secondItem="kUH-Sf-sNh" secondAttribute="leading" id="SWz-C7-gm0"/>
+                            <constraint firstItem="kUH-Sf-sNh" firstAttribute="trailing" secondItem="UFK-pb-fMW" secondAttribute="trailing" id="eqO-ck-FD4"/>
+                            <constraint firstItem="kUH-Sf-sNh" firstAttribute="bottom" secondItem="UFK-pb-fMW" secondAttribute="bottom" id="pya-cj-4lu"/>
                             <constraint firstItem="jCO-Tq-uj6" firstAttribute="leading" secondItem="kUH-Sf-sNh" secondAttribute="leading" id="xjP-yW-gBv"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="VZM-nZ-GuP"/>
                     <connections>
                         <outlet property="collectionViewGenres" destination="jCO-Tq-uj6" id="dKc-cH-MKq"/>
+                        <outlet property="tableViewGames" destination="UFK-pb-fMW" id="469-EE-RfM"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="s4R-Ug-bdM" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
