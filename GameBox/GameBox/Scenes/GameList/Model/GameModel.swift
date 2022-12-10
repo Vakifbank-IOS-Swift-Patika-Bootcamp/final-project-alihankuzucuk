@@ -18,9 +18,16 @@ struct GameModel: Codable {
     let gameRatingTop: Int
     let gameRatings: [RatingModel]
     let gameRatingsCount: Int
+    let gameMetacritic: Int
     let gamePlaytime: Int
     let gameParentPlatforms: [ParentPlatformModel]
     let gameGenres: [GenreModel]
+    let gameTags: [TagModel]
+    let gameEsrbRating: EsrbRatingModel?
+    // Properties after this line will be bounded by GameDetail endpoint
+    let gameDescription: String
+    let gameDescriptionRaw: String
+    let gameWebsite: String
 
     enum CodingKeys: String, CodingKey {
         case gameId = "id"
@@ -32,9 +39,15 @@ struct GameModel: Codable {
         case gameRatingTop = "rating_top"
         case gameRatings = "ratings"
         case gameRatingsCount = "ratings_count"
+        case gameMetacritic = "metacritic"
         case gamePlaytime = "playtime"
         case gameParentPlatforms = "parent_platforms"
         case gameGenres = "genres"
+        case gameTags = "tags"
+        case gameEsrbRating = "esrb_rating"
+        case gameDescription = "description"
+        case gameDescriptionRaw = "description_raw"
+        case gameWebsite = "website"
     }
     
     init(from decoder: Decoder) throws {
@@ -48,9 +61,15 @@ struct GameModel: Codable {
         gameRatingTop = try values.decodeIfPresent(Int.self, forKey: .gameRatingTop) ?? -1
         gameRatings = try values.decodeIfPresent([RatingModel].self, forKey: .gameRatings) ?? []
         gameRatingsCount = try values.decodeIfPresent(Int.self, forKey: .gameRatingsCount) ?? -1
+        gameMetacritic = try values.decodeIfPresent(Int.self, forKey: .gameMetacritic) ?? -1
         gamePlaytime = try values.decodeIfPresent(Int.self, forKey: .gamePlaytime) ?? -1
         gameParentPlatforms = try values.decodeIfPresent([ParentPlatformModel].self, forKey: .gameParentPlatforms) ?? []
         gameGenres = try values.decodeIfPresent([GenreModel].self, forKey: .gameGenres) ?? []
+        gameTags = try values.decodeIfPresent([TagModel].self, forKey: .gameTags) ?? []
+        gameEsrbRating = try values.decodeIfPresent(EsrbRatingModel?.self, forKey: .gameEsrbRating) ?? nil
+        gameDescription = try values.decodeIfPresent(String.self, forKey: .gameDescription) ?? ""
+        gameDescriptionRaw = try values.decodeIfPresent(String.self, forKey: .gameDescriptionRaw) ?? ""
+        gameWebsite = try values.decodeIfPresent(String.self, forKey: .gameWebsite) ?? ""
     }
 }
 
@@ -111,5 +130,62 @@ struct GenreModel: Codable {
         genreId = try values.decodeIfPresent(Int.self, forKey: .genreId) ?? -1
         genreName = try values.decodeIfPresent(String.self, forKey: .genreName) ?? ""
         genreSlug = try values.decodeIfPresent(String.self, forKey: .genreSlug) ?? ""
+    }
+}
+
+// MARK: - TagModel
+struct TagModel: Codable {
+    let tagId: Int
+    let tagName: String
+    let tagSlug: String
+
+    enum CodingKeys: String, CodingKey {
+        case tagId = "id"
+        case tagName = "name"
+        case tagSlug = "slug"
+    }
+    
+    init(from decoder: Decoder) throws {
+        let values = try decoder.container(keyedBy: CodingKeys.self)
+        tagId = try values.decodeIfPresent(Int.self, forKey: .tagId) ?? -1
+        tagName = try values.decodeIfPresent(String.self, forKey: .tagName) ?? ""
+        tagSlug = try values.decodeIfPresent(String.self, forKey: .tagSlug) ?? ""
+    }
+}
+
+// MARK: - EsrbRatingModel
+struct EsrbRatingModel: Codable {
+    let esrbRatingId: Int
+    let esrbRatingName: String
+    let esrbRatingSlug: String
+
+    enum CodingKeys: String, CodingKey {
+        case esrbRatingId = "id"
+        case esrbRatingName = "name"
+        case esrbRatingSlug = "slug"
+    }
+    
+    init(from decoder: Decoder) throws {
+        let values = try decoder.container(keyedBy: CodingKeys.self)
+        esrbRatingId = try values.decodeIfPresent(Int.self, forKey: .esrbRatingId) ?? -1
+        esrbRatingName = try values.decodeIfPresent(String.self, forKey: .esrbRatingName) ?? ""
+        esrbRatingSlug = try values.decodeIfPresent(String.self, forKey: .esrbRatingSlug) ?? ""
+    }
+}
+
+// MARK: - ScreenshotModel
+struct ScreenshotModel: Codable {
+    let screenshotId: Int
+    let screenshotImage: String
+
+    enum CodingKeys: String, CodingKey {
+        case screenshotId = "id"
+        case screenshotImage = "image"
+    }
+    
+    init(from decoder: Decoder) throws {
+        let values = try decoder.container(keyedBy: CodingKeys.self)
+        screenshotId = try values.decodeIfPresent(Int.self, forKey: .screenshotId) ?? -1
+        screenshotImage = try values.decodeIfPresent(String.self, forKey: .screenshotImage) ?? ""
     }
 }

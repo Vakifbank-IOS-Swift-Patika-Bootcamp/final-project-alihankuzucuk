@@ -22,9 +22,10 @@ final class RawGClient {
         /// Creates and returns a url by appending each element in the queryParameters array to the queryString
         /// - Parameter queryParameters: Parameter array of type [Key : Value]
         /// - Returns: URL address complete with parameters
-        func getUrlWith(queryParameters: [String:String]?) -> URL {
+        func getUrlWith(endpointPostfix: String = "", queryParameters: [String:String]?) -> URL {
             var urlString = Endpoints.base
             urlString += "/\(self.rawValue)"
+            urlString += endpointPostfix
             urlString += "?key=\(Constants.API_KEY)"
 
             guard let queryParameters = queryParameters else { return URL(string: urlString)! }
@@ -99,6 +100,36 @@ final class RawGClient {
     /// - Parameter completion: Completion of where you handle response
     static func getAllGenres(completion: @escaping (BaseResponseModel<GenreModel>?, Error?) -> Void) {
         handleResponse(url: Endpoints.genres.getUrlWith(queryParameters: nil), responseType: BaseResponseModel<GenreModel>.self) { response, error in
+            if let response = response {
+                completion(response, nil)
+            } else {
+                completion(nil, error)
+            }
+        }
+    }
+    
+    // MARK: - getGameDetail
+    /// Puts /{gameId} after /games Endpoint and makes a request to the /games endpoint then returns game detail
+    /// - Parameters:
+    ///   - gameId: Id of the entity which you want to get detail
+    ///   - completion: Completion of where you handle response
+    static func getGameDetail(gameId: Int, completion: @escaping (GameModel?, Error?) -> Void) {
+        handleResponse(url: Endpoints.games.getUrlWith(endpointPostfix: "/\(gameId)", queryParameters: nil), responseType: GameModel?.self) { response, error in
+            if let response = response {
+                completion(response, nil)
+            } else {
+                completion(nil, error)
+            }
+        }
+    }
+    
+    // MARK: - getGameScreenshots
+    /// Puts /{gameId}/screenshots after /games Endpoint and makes a request to the /games endpoint then returns game screenshots
+    /// - Parameters:
+    ///   - gameId: Id of the entity which you want to get screenshots
+    ///   - completion: Completion of where you handle response
+    static func getGameScreenshots(gameId: Int, completion: @escaping (BaseResponseModel<ScreenshotModel>?, Error?) -> Void) {
+        handleResponse(url: Endpoints.games.getUrlWith(endpointPostfix: "/\(gameId)/screenshots", queryParameters: nil), responseType: BaseResponseModel<ScreenshotModel>.self) { response, error in
             if let response = response {
                 completion(response, nil)
             } else {
