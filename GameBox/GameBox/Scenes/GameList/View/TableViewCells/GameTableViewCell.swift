@@ -76,7 +76,7 @@ final class GameTableViewCell: UITableViewCell {
         lblParentPlatforms.attributedText = propertyText(boldText: "Platforms: ", normalText: parentPlatforms)
         
         var tags: String = ""
-        var maximumShowedGameTags: Int = game.gameTags.count >= 10 ? 10 : game.gameTags.count >= 5 ? 5 : game.gameTags.count >= 3 ? 3 : 0
+        let maximumShowedGameTags: Int = game.gameTags.count >= 10 ? 10 : game.gameTags.count >= 5 ? 5 : game.gameTags.count >= 3 ? 3 : 0
         for (index, tag) in game.gameTags[0..<maximumShowedGameTags].enumerated() {
             tags += tag.name
             if index != game.gameTags[0..<maximumShowedGameTags].endIndex-1 {

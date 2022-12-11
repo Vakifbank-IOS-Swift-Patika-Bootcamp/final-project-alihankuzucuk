@@ -175,7 +175,11 @@ extension GameListViewController: UISearchResultsUpdating {
     
     func updateSearchResults(for searchController: UISearchController) {
         guard let searchText = searchController.searchBar.text else { return }
-        viewModel.addFilter(filter: ["search" : searchText])
+        if searchText.isEmpty {
+            viewModel.removeFilter(filterKey: "search")
+        } else {
+            viewModel.addFilter(filter: ["search" : searchText])
+        }
         viewModel.fetchGames()
     }
     
