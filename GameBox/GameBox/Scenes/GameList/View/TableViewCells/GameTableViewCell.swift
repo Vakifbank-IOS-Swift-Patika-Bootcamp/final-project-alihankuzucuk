@@ -56,7 +56,7 @@ final class GameTableViewCell: UITableViewCell {
         gameDetail.labelWithBoldAndNormalText(&lblReleaseDate, boldText: "Release Date: ", normalText: "\(String(gameDetail.game!.releaseDate))")
         
         gameDetail.setParentPlatforms(&lblParentPlatforms)
-        gameDetail.setGameTags(&lblTags)
+        gameDetail.setGameTags(&lblTags, tagShowingType: .between0And10)
     }
     
 }

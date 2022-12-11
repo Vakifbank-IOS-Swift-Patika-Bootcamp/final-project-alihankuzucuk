@@ -17,7 +17,7 @@ protocol GameDetailViewModelProtocol {
     // MARK: Methods
     func setImageInputs(_ imageSlideshow: inout ImageSlideshow, gameId: Int)
     func setParentPlatforms(_ label: inout UILabel)
-    func setGameTags(_ label: inout UILabel)
+    func setGameTags(_ label: inout UILabel, tagShowingType: TagShowingType)
     func labelWithBoldAndNormalText(_ label: inout UILabel, boldText: String, normalText: String)
     func labelWithImageAttachment(_ label: inout UILabel, imageIconType: ImageIconType, imageName: String, text: String, textColor: UIColor)
 }
@@ -27,6 +27,11 @@ protocol GameDetailViewModelProtocol {
 enum ImageIconType {
     case systemImage
     case resourceImage
+}
+
+enum TagShowingType {
+    case all
+    case between0And10
 }
 
 // MARK: - GameDetailViewModel
@@ -77,7 +82,7 @@ final class GameDetailViewModel: GameDetailViewModelProtocol {
     
     /// Sets game tags to the given label
     /// - Parameter label: Current label of you want to use
-    func setGameTags(_ label: inout UILabel) {
+    func setGameTags(_ label: inout UILabel, tagShowingType: TagShowingType) {
         guard let game = self.game
         else {
             label.text = ""
@@ -85,7 +90,17 @@ final class GameDetailViewModel: GameDetailViewModelProtocol {
         }
         
         var tags: String = ""
-        let maximumShowedGameTags: Int = game.tags.count >= 10 ? 10 : game.tags.count >= 5 ? 5 : game.tags.count >= 3 ? 3 : 0
+        var maximumShowedGameTags: Int = 0
+        
+        if game.tags.count > 0 {
+            switch tagShowingType {
+                case .all:
+                    maximumShowedGameTags = game.tags.count
+                case .between0And10:
+                    maximumShowedGameTags = game.tags.count >= 10 ? 10 : game.tags.count >= 5 ? 5 : game.tags.count >= 3 ? 3 : 0
+            }
+        }
+        
         for (index, tag) in game.tags[0..<maximumShowedGameTags].enumerated() {
             tags += tag.name
             if index != game.tags[0..<maximumShowedGameTags].endIndex-1 {
