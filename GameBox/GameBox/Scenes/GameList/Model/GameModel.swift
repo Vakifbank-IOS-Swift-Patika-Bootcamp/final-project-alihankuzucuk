@@ -61,7 +61,7 @@ struct GameModel: Codable {
         gameRatingTop = try values.decodeIfPresent(Int.self, forKey: .gameRatingTop) ?? -1
         gameRatings = try values.decodeIfPresent([RatingModel].self, forKey: .gameRatings) ?? []
         gameRatingsCount = try values.decodeIfPresent(Int.self, forKey: .gameRatingsCount) ?? -1
-        gameMetacritic = try values.decodeIfPresent(Int.self, forKey: .gameMetacritic) ?? -1
+        gameMetacritic = try values.decodeIfPresent(Int.self, forKey: .gameMetacritic) ?? 0
         gamePlaytime = try values.decodeIfPresent(Int.self, forKey: .gamePlaytime) ?? -1
         gameParentPlatforms = try values.decodeIfPresent([ParentPlatformModel].self, forKey: .gameParentPlatforms) ?? []
         gameGenres = try values.decodeIfPresent([CommonModel].self, forKey: .gameGenres) ?? []

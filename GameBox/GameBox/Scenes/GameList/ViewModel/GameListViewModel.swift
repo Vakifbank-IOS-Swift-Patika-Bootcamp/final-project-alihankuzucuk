@@ -32,6 +32,8 @@ protocol GameListViewModelProtocol {
     // MARK: - Filtering
     func setFilter(filter: [String:String])
     func clearFilter()
+    func addFilter(filter: [String : String])
+    func removeFilter(filterKey: String)
 }
 
 protocol GameListViewModelDelegate: AnyObject {
@@ -85,8 +87,12 @@ final class GameListViewModel: GameListViewModelProtocol {
     func fetchMoreGames(page: Int) {
         guard self.games != nil else { return }
         
+        self.delegate?.preFetch()
+        
         RawGClient.getGamesInRange(page: page, pageSize: batchSize, queryFilters: filters) { [weak self] response, error in
             guard let self = self else { return }
+            
+            self.delegate?.postFetch()
             
             if let error = error {
                 self.delegate?.fetchFailed(error: error)
@@ -173,5 +179,21 @@ final class GameListViewModel: GameListViewModelProtocol {
     
     func clearFilter() {
         self.filters = [:]
+    }
+    
+    func addFilter(filter: [String : String]) {
+        if self.filters.isEmpty {
+            self.filters = filter
+        } else {
+            filter.forEach { queryFilter in
+                self.filters[queryFilter.key] = queryFilter.value
+            }
+        }
+    }
+    
+    func removeFilter(filterKey: String) {
+        if !self.filters.isEmpty {
+            self.filters[filterKey] = nil
+        }
     }
 }

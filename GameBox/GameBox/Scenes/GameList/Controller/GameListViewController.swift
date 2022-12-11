@@ -127,6 +127,15 @@ extension GameListViewController: UICollectionViewDataSource, UICollectionViewDe
         return cell
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if indexPath.row == 0 {
+            viewModel.removeFilter(filterKey: "search")
+        } else {
+            viewModel.addFilter(filter: ["search": viewModel.getGenre(at: (indexPath.row - 1))!.slug])
+        }
+        viewModel.fetchGames()
+    }
+    
 }
 
 // MARK: - Extension: tableViewGames
