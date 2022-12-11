@@ -59,6 +59,11 @@ extension GameListViewController {
         navigationController?.navigationBar.compactAppearance = appearance
         navigationController?.navigationBar.scrollEdgeAppearance = appearance
         
+        let search = UISearchController(searchResultsController: nil)
+        search.searchResultsUpdater = self
+        search.searchBar.placeholder = "Type something to search"
+        navigationItem.searchController = search
+        
         // MARK: Changing TabBar icon colors
         self.tabBarController?.tabBar.tintColor = UIColor(red: 0.00, green: 0.75, blue: 1.00, alpha: 1.00)
         
@@ -129,9 +134,9 @@ extension GameListViewController: UICollectionViewDataSource, UICollectionViewDe
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if indexPath.row == 0 {
-            viewModel.removeFilter(filterKey: "search")
+            viewModel.removeFilter(filterKey: "genres")
         } else {
-            viewModel.addFilter(filter: ["search": viewModel.getGenre(at: (indexPath.row - 1))!.slug])
+            viewModel.addFilter(filter: ["genres": viewModel.getGenre(at: (indexPath.row - 1))!.slug])
         }
         viewModel.fetchGames()
     }
@@ -161,6 +166,17 @@ extension GameListViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         UITableView.automaticDimension
+    }
+    
+}
+
+// MARK: - Extension: UISearchResultsUpdating
+extension GameListViewController: UISearchResultsUpdating {
+    
+    func updateSearchResults(for searchController: UISearchController) {
+        guard let searchText = searchController.searchBar.text else { return }
+        viewModel.addFilter(filter: ["search" : searchText])
+        viewModel.fetchGames()
     }
     
 }
