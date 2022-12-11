@@ -46,7 +46,7 @@ final class GameDetailViewModel: GameDetailViewModelProtocol {
             var imageSlideshowInputSource: [InputSource] = []
             
             screenshots.results?.forEach({ screenshot in
-                imageSlideshowInputSource.append(AlamofireSource(url: URL(string: screenshot.screenshotImage)!))
+                imageSlideshowInputSource.append(AlamofireSource(url: URL(string: screenshot.image)!))
             })
             
             imageSlideshow!.setImageInputs(imageSlideshowInputSource)
@@ -63,13 +63,16 @@ final class GameDetailViewModel: GameDetailViewModelProtocol {
             label.text = ""
             return
         }
+        
         var parentPlatforms: String = ""
-        for (index, platform) in game.gameParentPlatforms.enumerated() {
+        for (index, platform) in game.parentPlatforms.enumerated() {
             parentPlatforms += (platform.platform?.name ?? "")
-            if index != game.gameParentPlatforms.endIndex-1 {
+            if index != game.parentPlatforms.endIndex-1 {
                 parentPlatforms += ", "
             }
         }
+        
+        self.labelWithBoldAndNormalText(&label, boldText: "Platforms: ", normalText: parentPlatforms)
     }
     
     /// Sets game tags to the given label
@@ -80,14 +83,17 @@ final class GameDetailViewModel: GameDetailViewModelProtocol {
             label.text = ""
             return
         }
+        
         var tags: String = ""
-        let maximumShowedGameTags: Int = game.gameTags.count >= 10 ? 10 : game.gameTags.count >= 5 ? 5 : game.gameTags.count >= 3 ? 3 : 0
-        for (index, tag) in game.gameTags[0..<maximumShowedGameTags].enumerated() {
+        let maximumShowedGameTags: Int = game.tags.count >= 10 ? 10 : game.tags.count >= 5 ? 5 : game.tags.count >= 3 ? 3 : 0
+        for (index, tag) in game.tags[0..<maximumShowedGameTags].enumerated() {
             tags += tag.name
-            if index != game.gameTags[0..<maximumShowedGameTags].endIndex-1 {
+            if index != game.tags[0..<maximumShowedGameTags].endIndex-1 {
                 tags += ", "
             }
         }
+        
+        self.labelWithBoldAndNormalText(&label, boldText: "Tags: ", normalText: tags)
     }
     
     /// Combines bold text and normal text at once for properties

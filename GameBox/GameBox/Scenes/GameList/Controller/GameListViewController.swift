@@ -7,6 +7,7 @@
 
 import UIKit
 
+// MARK: - GameListViewController
 final class GameListViewController: BaseViewController {
     
     // MARK: - Outlets
@@ -52,6 +53,7 @@ extension GameListViewController {
         // MARK: - Preparing NavigationItem
         self.navigationItem.title = "Games"
         
+        // MARK: Setting appearance of NavigationBar
         let appearance = UINavigationBarAppearance()
         appearance.backgroundColor = UIColor(red: 0.00, green: 0.75, blue: 1.00, alpha: 1.00)
         
@@ -59,6 +61,7 @@ extension GameListViewController {
         navigationController?.navigationBar.compactAppearance = appearance
         navigationController?.navigationBar.scrollEdgeAppearance = appearance
         
+        // MARK: Initializing Search Bar
         let search = UISearchController(searchResultsController: nil)
         search.searchResultsUpdater = self
         search.searchBar.placeholder = "Type something to search"
@@ -112,7 +115,7 @@ extension GameListViewController: UICollectionViewDataSource, UICollectionViewDe
         else { return UICollectionViewCell() }
         
         if indexPath.row == 0 {
-            // MARK: - Initializing "All" as a genre
+            // Initializing "All" as a genre
             let genreAllJson = """
             {
                 "id": 0,
@@ -125,7 +128,7 @@ extension GameListViewController: UICollectionViewDataSource, UICollectionViewDe
             
             cell.configureCell(genre: genreAll)
         } else {
-            let cellModel = viewModel.getGenre(at: indexPath.row - 1)
+            let cellModel = viewModel.getGenre(at: (indexPath.row - 1))
             cell.configureCell(genre: cellModel!)
         }
         
@@ -152,10 +155,13 @@ extension GameListViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: GameTableViewCell.identifier, for: indexPath) as? GameTableViewCell,
-              let cellModel = viewModel.getGame(at: indexPath.row)
+              let cellGame = viewModel.getGame(at: indexPath.row)
         else { return UITableViewCell() }
         
-        cell.configureCell(game: cellModel)
+        let gameDetailViewModel = GameDetailViewModel()
+        gameDetailViewModel.game = cellGame
+        
+        cell.configureCell(gameDetail: gameDetailViewModel)
         
         if indexPath.row == (viewModel.getGameCount() - 1) {
             viewModel.fetchMoreGames(page: (viewModel.getCurrentPage() + 1))

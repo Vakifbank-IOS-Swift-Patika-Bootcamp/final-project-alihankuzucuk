@@ -8,19 +8,30 @@
 import UIKit
 import MaterialActivityIndicator
 
-class BaseViewController: UIViewController {
+// MARK: - Protocols
+// MARK: BaseViewControllerProtocol
+protocol BaseViewControllerProtocol {
+    // MARK: Variables
+    var indicator: MaterialActivityIndicatorView { get }
     
-    // MARK: - Variables
+    // MARK: Methods
+    func showAlert(title: String, message: String)
+}
+
+// MARK: - BaseViewController
+class BaseViewController: UIViewController, BaseViewControllerProtocol {
+    
+    // MARK: Variables
     let indicator = MaterialActivityIndicatorView()
 
-    // MARK: - Life Cycle
+    // MARK: Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupActivityIndicatorView()
     }
     
-    // MARK: - Activity Indicator Methods
+    // MARK: Activity Indicator Methods
     private func setupActivityIndicatorView() {
         view.addSubview(indicator)
         setupActivityIndicatorViewConstraints()
@@ -32,7 +43,7 @@ class BaseViewController: UIViewController {
         indicator.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
     }
     
-    // MARK: - UIAlert
+    // MARK: UIAlert
     func showAlert(title: String, message: String) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
         let alertBtnOk = UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil)

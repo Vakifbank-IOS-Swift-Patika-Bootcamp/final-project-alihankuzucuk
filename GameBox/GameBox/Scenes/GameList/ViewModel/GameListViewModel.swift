@@ -8,40 +8,42 @@
 import Foundation
 
 // MARK: - Protocols
-protocol GameListViewModelProtocol {
-    // MARK: - Delegates
+// MARK: GameListViewModelProtocol
+protocol GameListViewModelProtocol: AnyObject {
+    // MARK: Delegates
     var delegate: GameListViewModelDelegate? { get set }
     
-    // MARK: - Fetching
+    // MARK: Fetching
     func fetchGames()
     func fetchMoreGames(page: Int)
     func fetchGenres()
     
-    // MARK: - GameModel Methods
+    // MARK: GameModel Methods
     func getGameCount() -> Int
     func getGame(at index: Int) -> GameModel?
     func getGameId(at index: Int) -> Int?
     func getCurrentPage() -> Int
     
-    // MARK: - GenreModel Methods
+    // MARK: GenreModel Methods
     func getGenreCount() -> Int
     func getGenre(at index: Int) -> CommonModel?
     func getGenreId(at index: Int) -> Int?
     func getGenreSlug(at index: Int) -> String?
     
-    // MARK: - Filtering
+    // MARK: Filtering
     func setFilter(filter: [String:String])
     func clearFilter()
     func addFilter(filter: [String : String])
     func removeFilter(filterKey: String)
 }
 
+// MARK: - GameListViewModelDelegate
 protocol GameListViewModelDelegate: AnyObject {
-    // MARK: - Indicator
+    // MARK: Indicator
     func preFetch()
     func postFetch()
     
-    // MARK: - Fetching
+    // MARK: Fetching
     func fetchFailed(error: Error)
     func fetchedGames()
     func fetchedGenres()
@@ -49,16 +51,19 @@ protocol GameListViewModelDelegate: AnyObject {
 
 // MARK: - GameListViewModel
 final class GameListViewModel: GameListViewModelProtocol {
-    // MARK: - Delegates
+    
+    // MARK: Delegates
     weak var delegate: GameListViewModelDelegate?
     
-    // MARK: - Variables
+    // MARK: Variables
     private var games: [GameModel]?
     private var genres: [CommonModel]?
     
     private var currentPage: Int = 1
     private let batchSize: Int = 30
     private var filters: [String:String] = [:]
+    
+    // MARK: - Methods
     
     // MARK: - Fetching Methods
     /// This method fetches the games variable with the setted filters which default value is empty
@@ -139,7 +144,7 @@ final class GameListViewModel: GameListViewModelProtocol {
         guard let games = games else { return nil }
         guard games.count > index && index >= 0 else { return nil }
         
-        return games[index].gameId
+        return games[index].id
     }
     
     func getCurrentPage() -> Int { currentPage }
@@ -196,4 +201,5 @@ final class GameListViewModel: GameListViewModelProtocol {
             self.filters[filterKey] = nil
         }
     }
+    
 }

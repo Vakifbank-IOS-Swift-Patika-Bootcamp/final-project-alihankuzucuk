@@ -29,126 +29,34 @@ final class GameTableViewCell: UITableViewCell {
     // MARK: - Methods
     
     // MARK: Configuring Cell
-    func configureCell(game: GameModel) {
+    func configureCell(gameDetail: GameDetailViewModel) {
         // MARK: Preparing Background
         viewBackground.round(with: RoundType.all, radius: 30)
         
         // MARK: Preparing Slideshow
-        prepareImageInputs(gameId: game.gameId)
-        imageSlideshow.slideshowInterval = 3
-        imageSlideshow.contentScaleMode = UIViewContentMode.center
+        gameDetail.setImageInputs(&imageSlideshow, gameId: gameDetail.game!.id)
         
         // MARK: Preparing Card Detail
-        switch game.gameId%2 {
+        switch gameDetail.game!.id%2 {
             case 0:
-                viewGameDetailBackground.backgroundColor = UIColor(red: 0.00, green: 0.75, blue: 1.00, alpha: 1.00)
-            case 1:
                 viewGameDetailBackground.backgroundColor = UIColor(red: 0.16, green: 0.16, blue: 0.16, alpha: 1.00)
+            case 1:
+                viewGameDetailBackground.backgroundColor = UIColor(red: 0.00, green: 0.75, blue: 1.00, alpha: 1.00)
             default:
                 viewGameDetailBackground.backgroundColor = UIColor(red: 0.00, green: 0.75, blue: 1.00, alpha: 1.00)
                 break
         }
-        lblGameName.text = game.gameName
+        lblGameName.text = gameDetail.game!.name
         
-        labelRatingWithImageAttachment(&lblMetacritic,
-                                       ratingImageIconType: .resourceImage,
-                                       imageName: "metacritic",
-                                       text: " \(game.gameMetacritic)",
-                                       textColor: UIColor.white)
+        gameDetail.labelWithImageAttachment(&lblMetacritic, imageIconType: .resourceImage, imageName: "metacritic", text: " \(gameDetail.game!.metacritic)", textColor: UIColor.white)
         
-        labelRatingWithImageAttachment(&lblRating,
-                                       ratingImageIconType: .systemImage,
-                                       imageName: "star.fill",
-                                       text: "\(game.gameRating) / \(game.gameRatingTop) (\(game.gameRatingsCount))",
-                                       textColor: UIColor.yellow)
+        gameDetail.labelWithImageAttachment(&lblRating, imageIconType: .systemImage, imageName: "star.fill", text: "\(gameDetail.game!.rating) / \(gameDetail.game!.ratingTop) (\(gameDetail.game!.ratingsCount))", textColor: UIColor.yellow)
         
-        lblPlaytime.attributedText = propertyText(boldText: "Playtime: ", normalText: "\(String(game.gamePlaytime)) Hours")
-        lblReleaseDate.attributedText = propertyText(boldText: "Release Date: ", normalText: "\(String(game.gameReleaseDate))")
+        gameDetail.labelWithBoldAndNormalText(&lblPlaytime, boldText: "Playtime: ", normalText: "\(String(gameDetail.game!.playtime)) Hours")
+        gameDetail.labelWithBoldAndNormalText(&lblReleaseDate, boldText: "Release Date: ", normalText: "\(String(gameDetail.game!.releaseDate))")
         
-        var parentPlatforms: String = ""
-        for (index, platform) in game.gameParentPlatforms.enumerated() {
-            parentPlatforms += (platform.platform?.name ?? "")
-            if index != game.gameParentPlatforms.endIndex-1 {
-                parentPlatforms += ", "
-            }
-        }
-        
-        lblParentPlatforms.attributedText = propertyText(boldText: "Platforms: ", normalText: parentPlatforms)
-        
-        var tags: String = ""
-        let maximumShowedGameTags: Int = game.gameTags.count >= 10 ? 10 : game.gameTags.count >= 5 ? 5 : game.gameTags.count >= 3 ? 3 : 0
-        for (index, tag) in game.gameTags[0..<maximumShowedGameTags].enumerated() {
-            tags += tag.name
-            if index != game.gameTags[0..<maximumShowedGameTags].endIndex-1 {
-                tags += ", "
-            }
-        }
-        
-        lblTags.attributedText = propertyText(boldText: "Tags: ", normalText: tags)
+        gameDetail.setParentPlatforms(&lblParentPlatforms)
+        gameDetail.setGameTags(&lblTags)
     }
     
-    // MARK: - Setting Image Inputs
-    private func prepareImageInputs(gameId: Int) {
-        RawGClient.getGameScreenshots(gameId: gameId) { [weak self] screenshots, error in
-            guard let screenshots = screenshots,
-                  let self = self
-            else { return }
-            
-            var imageSlideshowInputSource: [InputSource] = []
-            
-            screenshots.results?.forEach({ screenshot in
-                imageSlideshowInputSource.append(AlamofireSource(url: URL(string: screenshot.screenshotImage)!))
-            })
-            
-            self.imageSlideshow.setImageInputs(imageSlideshowInputSource)
-        }
-    }
-    
-    // MARK: - Combining bold text and normal text at once
-    private func propertyText(boldText: String, normalText: String) -> NSMutableAttributedString {
-        let attributes = [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 18)]
-        let boldString = NSMutableAttributedString(string: boldText, attributes: attributes)
-        let normalString = NSMutableAttributedString(string: normalText)
-        let resultString = NSMutableAttributedString()
-        
-        resultString.append(boldString)
-        resultString.append(normalString)
-        
-        return resultString
-    }
-    
-    // MARK: - Creating the rating label
-    private func labelRatingWithImageAttachment(_ label: inout UILabel, ratingImageIconType: RatingImageIconType, imageName: String, text: String, textColor: UIColor) {
-        let completeText = NSMutableAttributedString(string: "")
-        
-        let imageAttachment = NSTextAttachment()
-        
-        switch ratingImageIconType {
-            case .systemImage:
-                imageAttachment.image = UIImage(systemName: imageName)?.withTintColor(textColor)
-            case .resourceImage:
-                imageAttachment.image = UIImage(named: imageName)
-        }
-        imageAttachment.bounds = CGRect(x: 0, y: -5, width: 30, height: 30)
-        
-        let attachmentString = NSAttributedString(attachment: imageAttachment)
-        
-        completeText.append(attachmentString)
-        
-        let textAfterIconAttributes = [NSAttributedString.Key.foregroundColor : textColor,
-                                       NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 20)]
-        let textAfterIcon = NSAttributedString(string: text, attributes: textAfterIconAttributes)
-        
-        completeText.append(textAfterIcon)
-        
-        label.textAlignment = .center
-        label.attributedText = completeText
-    }
-    
-}
-
-// MARK: - Enum: RatingImageIconType
-enum RatingImageIconType {
-    case systemImage
-    case resourceImage
 }

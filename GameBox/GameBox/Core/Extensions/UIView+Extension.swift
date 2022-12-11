@@ -7,7 +7,8 @@
 
 import UIKit
 
-// MARK: - Enum: RoundType
+// MARK: - Enums
+// MARK: RoundType
 enum RoundType {
     case top
     case none
@@ -15,8 +16,11 @@ enum RoundType {
     case all
 }
 
+// MARK: - Extensions
+// MARK: Extension: UIView
 extension UIView {
     
+    // MARK: round
     /// Provides radius on which view it is used
     /// - Parameters:
     ///   - type: Type of which corners you want to give radius

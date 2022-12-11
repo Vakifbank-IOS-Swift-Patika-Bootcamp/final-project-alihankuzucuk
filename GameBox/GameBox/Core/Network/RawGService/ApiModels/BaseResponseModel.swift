@@ -7,8 +7,9 @@
 
 import Foundation
 
-// MARK: - BaseResponseModel
+// MARK: BaseResponseModel
 struct BaseResponseModel<T>: Codable where T: Codable {
+    
     let responseCount: Int
     let nextPage: String?
     let previousPage: String?
@@ -18,7 +19,7 @@ struct BaseResponseModel<T>: Codable where T: Codable {
         case responseCount = "count"
         case nextPage = "next"
         case previousPage = "previous"
-        case results = "results"
+        case results
     }
     
     init(from decoder: Decoder) throws {
@@ -28,4 +29,5 @@ struct BaseResponseModel<T>: Codable where T: Codable {
         previousPage = try values.decodeIfPresent(String.self, forKey: .previousPage) ?? nil
         results = try values.decodeIfPresent([T].self, forKey: .results) ?? []
     }
+    
 }
