@@ -89,6 +89,21 @@
             </objects>
             <point key="canvasLocation" x="1617.5572519083969" y="-748.59154929577471"/>
         </scene>
+        <!--Game Detail View Controller-->
+        <scene sceneID="itp-nw-erV">
+            <objects>
+                <viewController storyboardIdentifier="GameDetailViewController" id="gUd-36-GMY" customClass="GameDetailViewController" customModule="GameBox" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="UOE-mZ-Jf0">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="pyn-Y4-Lhm"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="goF-XP-F9m" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2516.7938931297708" y="-749.29577464788736"/>
+        </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="Z4N-br-a3o">
             <objects>

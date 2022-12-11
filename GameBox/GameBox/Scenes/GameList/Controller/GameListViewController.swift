@@ -168,6 +168,14 @@ extension GameListViewController: UITableViewDataSource, UITableViewDelegate {
         UITableView.automaticDimension
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let selectedGame = viewModel.getGame(at: indexPath.row) else { return }
+        
+        guard let gameDetailViewController = storyboard?.instantiateViewController(withIdentifier: GameDetailViewController.identifier) as? GameDetailViewController else { return }
+        gameDetailViewController.viewModel.game = selectedGame
+        self.navigationController?.pushViewController(gameDetailViewController, animated: true)
+    }
+    
 }
 
 // MARK: - Extension: UISearchResultsUpdating
