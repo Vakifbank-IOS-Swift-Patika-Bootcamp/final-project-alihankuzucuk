@@ -30,13 +30,13 @@ final class GameTableViewCell: UITableViewCell {
     
     // MARK: Configuring Cell
     func configureCell(gameDetail: GameDetailViewModel) {
-        // MARK: Preparing Background
+        // Preparing Background
         viewBackground.round(with: RoundType.all, radius: 30)
         
-        // MARK: Preparing Slideshow
+        // Preparing Slideshow
         gameDetail.setImageInputs(&imageSlideshow, gameId: gameDetail.game!.id)
         
-        // MARK: Preparing Card Detail
+        // Preparing Card Detail
         switch gameDetail.game!.id%2 {
             case 0:
                 viewGameDetailBackground.backgroundColor = UIColor(red: 0.16, green: 0.16, blue: 0.16, alpha: 1.00)

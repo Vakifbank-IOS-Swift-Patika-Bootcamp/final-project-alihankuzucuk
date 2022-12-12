@@ -15,9 +15,13 @@ protocol GameDetailViewModelProtocol {
     var game: GameModel? { get set }
     
     // MARK: Methods
+    // Methods with Specific Type
     func setImageInputs(_ imageSlideshow: inout ImageSlideshow, gameId: Int)
     func setParentPlatforms(_ label: inout UILabel)
     func setGameTags(_ label: inout UILabel, tagShowingType: TagShowingType)
+    func setGenres(_ label: inout UILabel)
+    
+    // Methods with Dynamic Type
     func labelWithBoldAndNormalText(_ label: inout UILabel, boldText: String, normalText: String)
     func labelWithImageAttachment(_ label: inout UILabel, imageIconType: ImageIconType, imageName: String, text: String, textColor: UIColor)
 }
@@ -109,6 +113,26 @@ final class GameDetailViewModel: GameDetailViewModelProtocol {
         }
         
         self.labelWithBoldAndNormalText(&label, boldText: "Tags: ", normalText: tags)
+    }
+    
+    /// Sets genres to the given label
+    /// - Parameter label: Current label of you want to use
+    func setGenres(_ label: inout UILabel) {
+        guard let game = self.game
+        else {
+            label.text = ""
+            return
+        }
+        
+        var genres: String = ""
+        for (index, genre) in game.genres.enumerated() {
+            genres += (genre.name)
+            if index != game.genres.endIndex-1 {
+                genres += ", "
+            }
+        }
+        
+        self.labelWithBoldAndNormalText(&label, boldText: "Genres: ", normalText: genres)
     }
     
     /// Combines bold text and normal text at once for properties
