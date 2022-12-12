@@ -51,12 +51,30 @@ final class GameDetailViewController: BaseViewController {
         }
     }
     
+    @objc func rightBarBtnFavoriteClicked() {
+        switch (GameBoxCoreDataManager.shared.checkFavoriteByGameId(game: viewModel.game!.id)) {
+            case true:
+                if GameBoxCoreDataManager.shared.deleteFavoriteBy(gameId: viewModel.game!.id) == true {
+                    setRightBarBtnFavoriteImage()
+                }
+            case false:
+                if GameBoxCoreDataManager.shared.favoriteGame(gameId: viewModel.game!.id) == true {
+                    setRightBarBtnFavoriteImage()
+                }
+        }
+    }
+    
 }
 
 // MARK: - Extension: Helper Methods
 extension GameDetailViewController {
     
     private func prepareScreen() {
+        // Preparing NavigationItem
+        self.navigationItem.title = "Game Detail"
+        
+        setRightBarBtnFavoriteImage()
+        
         // Setting Background Color
         switch viewModel.game!.id%2 {
             case 0:
@@ -87,6 +105,16 @@ extension GameDetailViewController {
         RawGClient.getGameDetail(gameId: viewModel.game!.id) { [weak self] detailedGame, error in
             guard let self = self else { return }
             self.lblDescriptionText.text = detailedGame?.descriptionRaw
+        }
+    }
+    
+    /// Sets rightBarButtonItem's image according to game is favorite or not
+    private func setRightBarBtnFavoriteImage() {
+        switch (GameBoxCoreDataManager.shared.checkFavoriteByGameId(game: viewModel.game!.id)) {
+            case true:
+                self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "heart.fill"), style: .plain, target: self, action: #selector(rightBarBtnFavoriteClicked))
+            case false:
+                self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "heart"), style: .plain, target: self, action: #selector(rightBarBtnFavoriteClicked))
         }
     }
     
