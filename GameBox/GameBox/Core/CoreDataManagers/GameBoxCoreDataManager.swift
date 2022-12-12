@@ -40,7 +40,7 @@ final class GameBoxCoreDataManager: GameBoxCoreDataProtocol {
     
     // MARK: - Methods
     @discardableResult
-    func favoriteGame(game gameId: Int) -> Bool {
+    func favoriteGame(gameId: Int) -> Bool {
         let entity = NSEntityDescription.entity(forEntityName: GameBoxCoreDataKeys.Entities.favorites.rawValue, in: managedContext)!
         
         let favorite = NSManagedObject(entity: entity, insertInto: managedContext)
@@ -93,6 +93,46 @@ final class GameBoxCoreDataManager: GameBoxCoreDataProtocol {
         }
         
         return false
+    }
+    
+    @discardableResult
+    func deleteFavoriteBy(gameId: Int) -> Bool {
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: GameBoxCoreDataKeys.Entities.favorites.rawValue)
+        fetchRequest.predicate = NSPredicate(format: "gameId = %@", String(gameId))
+        
+        fetchRequest.returnsObjectsAsFaults = false // It provides speed when reading large data
+        
+        do {
+            let results = try managedContext.fetch(fetchRequest)
+            for result in results as! [NSManagedObject] {
+                managedContext.delete(result)
+
+                do  {
+                    try managedContext.save()
+                    return true
+                } catch {
+                    print("Could not save. \(error)")
+                }
+                break
+            }
+        } catch {
+            print("Could not delete. \(error)")
+        }
+        
+        return false
+    }
+    
+    func checkFavoriteByGameId(game gameId: Int) -> Bool {
+        guard getFavorites() != [] else { return false }
+        var isFavorite: Bool = false
+        
+        getFavorites().forEach { favorite in
+            if favorite.gameId == gameId {
+                isFavorite = true
+            }
+        }
+        
+        return isFavorite
     }
     
 }

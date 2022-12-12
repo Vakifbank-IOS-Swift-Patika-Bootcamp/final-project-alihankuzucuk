@@ -50,10 +50,10 @@ final class GameListViewController: BaseViewController {
 extension GameListViewController {
     
     private func prepareScreen() {
-        // MARK: - Preparing NavigationItem
+        // Preparing NavigationItem
         self.navigationItem.title = "Games"
         
-        // MARK: Setting appearance of NavigationBar
+        // Setting appearance of NavigationBar
         let appearance = UINavigationBarAppearance()
         appearance.backgroundColor = UIColor(red: 0.00, green: 0.75, blue: 1.00, alpha: 1.00)
         
@@ -61,16 +61,16 @@ extension GameListViewController {
         navigationController?.navigationBar.compactAppearance = appearance
         navigationController?.navigationBar.scrollEdgeAppearance = appearance
         
-        // MARK: Initializing Search Bar
+        // Initializing Search Bar
         let search = UISearchController(searchResultsController: nil)
         search.searchResultsUpdater = self
         search.searchBar.placeholder = "Type something to search"
         navigationItem.searchController = search
         
-        // MARK: Changing TabBar icon colors
+        // Changing TabBar icon colors
         self.tabBarController?.tabBar.tintColor = UIColor(red: 0.00, green: 0.75, blue: 1.00, alpha: 1.00)
         
-        // MARK: - Preparing viewModel
+        // Preparing viewModel
         viewModel.delegate = self
         viewModel.fetchGenres()
         viewModel.fetchGames()
