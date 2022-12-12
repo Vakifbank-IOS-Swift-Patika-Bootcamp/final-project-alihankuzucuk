@@ -13,6 +13,7 @@
 		C30942972941B33800AF712F /* GameModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C30942962941B33800AF712F /* GameModel.swift */; };
 		C309429B2941BD4900AF712F /* RawGClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = C309429A2941BD4900AF712F /* RawGClient.swift */; };
 		C309429D2941BF6900AF712F /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C309429C2941BF6900AF712F /* Constants.swift */; };
+		C338719B2947200600BDB9E1 /* GameBoxCoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C338719A2947200600BDB9E1 /* GameBoxCoreDataManager.swift */; };
 		C373D45829423C7B007D3833 /* GameListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C373D45729423C7B007D3833 /* GameListViewModel.swift */; };
 		C37548682941A4F100C52AFF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C37548672941A4F100C52AFF /* AppDelegate.swift */; };
 		C375486A2941A4F100C52AFF /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C37548692941A4F100C52AFF /* SceneDelegate.swift */; };
@@ -64,6 +65,7 @@
 		C30942962941B33800AF712F /* GameModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameModel.swift; sourceTree = "<group>"; };
 		C309429A2941BD4900AF712F /* RawGClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RawGClient.swift; sourceTree = "<group>"; };
 		C309429C2941BF6900AF712F /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		C338719A2947200600BDB9E1 /* GameBoxCoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameBoxCoreDataManager.swift; sourceTree = "<group>"; };
 		C373D45729423C7B007D3833 /* GameListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameListViewModel.swift; sourceTree = "<group>"; };
 		C37548642941A4F100C52AFF /* GameBox.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GameBox.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C37548672941A4F100C52AFF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -179,6 +181,15 @@
 			path = RawGService;
 			sourceTree = "<group>";
 		};
+		C338719929471FE600BDB9E1 /* CoreDataManagers */ = {
+			isa = PBXGroup;
+			children = (
+				C338719A2947200600BDB9E1 /* GameBoxCoreDataManager.swift */,
+				C37548702941A4F100C52AFF /* GameBox.xcdatamodeld */,
+			);
+			path = CoreDataManagers;
+			sourceTree = "<group>";
+		};
 		C373D45629423C63007D3833 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
@@ -256,7 +267,7 @@
 				C395A0F02943494F001680EF /* BaseViewController.swift */,
 				C30942982941BC5A00AF712F /* Network */,
 				C3B393832944F06900700860 /* Extensions */,
-				C37548702941A4F100C52AFF /* GameBox.xcdatamodeld */,
+				C338719929471FE600BDB9E1 /* CoreDataManagers */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -604,6 +615,7 @@
 				C399FF282941E8D100BF4957 /* BaseResponseModel.swift in Sources */,
 				C30942972941B33800AF712F /* GameModel.swift in Sources */,
 				C395A0F929435F6B001680EF /* GenreCollectionCardView.swift in Sources */,
+				C338719B2947200600BDB9E1 /* GameBoxCoreDataManager.swift in Sources */,
 				C309429B2941BD4900AF712F /* RawGClient.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
