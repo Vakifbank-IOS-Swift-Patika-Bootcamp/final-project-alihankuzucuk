@@ -7,8 +7,18 @@
 
 import UIKit
 
+// MARK: - Enums
+// MARK: GameListRedirection
+enum GameListRedirection {
+    case toDetailPage
+    case toNotePage
+}
+
 // MARK: - GameListViewController
 final class GameListViewController: BaseViewController {
+    
+    // MARK: - Constants
+    static let identifier = String(describing: GameListViewController.self)
     
     // MARK: - Outlets
     @IBOutlet private weak var collectionViewGenres: UICollectionView! {
@@ -36,6 +46,11 @@ final class GameListViewController: BaseViewController {
     
     // MARK: - Variables
     private var viewModel: GameListViewModelProtocol = GameListViewModel()
+    
+    // Variables for colorizing page
+    var gameListRedirection: GameListRedirection?
+    private var pageColorNavigationBar: UIColor = Constants.Colors.PageColors.blue
+    private var pageColorGenreCard: UIColor = Constants.Colors.PageColors.blue
 
     // MARK: - Life Cycle
     override func viewDidLoad() {
@@ -54,12 +69,29 @@ final class GameListViewController: BaseViewController {
 extension GameListViewController {
     
     private func prepareScene() {
+        // Page redirection stabilized
+        gameListRedirection = gameListRedirection == nil ? .toDetailPage : .toNotePage
+        
         // Preparing NavigationItem
         self.navigationItem.title = "Games"
         
         // Setting appearance of NavigationBar
         let appearance = UINavigationBarAppearance()
-        appearance.backgroundColor = Constants.Colors.PageColors.blue
+        
+        // Preparing Page Colors
+        switch gameListRedirection {
+            case .toDetailPage:
+                pageColorNavigationBar = Constants.Colors.PageColors.blue
+                pageColorGenreCard = Constants.Colors.BackgroundColors.blue
+            case .toNotePage:
+                pageColorNavigationBar = Constants.Colors.PageColors.green
+                pageColorGenreCard = Constants.Colors.BackgroundColors.green
+            default:
+                showAlert(title: "Error", message: "An error occurred while determining target page")
+                break
+        }
+        
+        appearance.backgroundColor = pageColorNavigationBar
         
         navigationController?.navigationBar.standardAppearance = appearance
         navigationController?.navigationBar.compactAppearance = appearance
@@ -133,10 +165,10 @@ extension GameListViewController: UICollectionViewDataSource, UICollectionViewDe
 
             let genreAll = try! JSONDecoder().decode(CommonModel.self, from: Data(genreAllJson.utf8))
             
-            cell.configureCell(genre: genreAll, backgroundColorType: .blue)
+            cell.configureCell(genre: genreAll, genreBackgroundColor: pageColorGenreCard)
         } else {
             let cellModel = viewModel.getGenre(at: (indexPath.row - 1))
-            cell.configureCell(genre: cellModel!, backgroundColorType: .blue)
+            cell.configureCell(genre: cellModel!, genreBackgroundColor: pageColorGenreCard)
         }
         
         return cell
@@ -165,7 +197,8 @@ extension GameListViewController: UITableViewDataSource, UITableViewDelegate {
               let cellGame = viewModel.getGame(at: indexPath.row)
         else { return UITableViewCell() }
         
-        cell.configureCell(game: cellGame)
+        let cellColor = gameListRedirection == .toNotePage ? Constants.Colors.BackgroundColors.gray : Constants.Colors.BackgroundColors.blue
+        cell.configureCell(game: cellGame, gameCardColor: cellColor)
         
         if indexPath.row == (viewModel.getGameCount() - 1) {
             viewModel.fetchMoreGames(page: (viewModel.getCurrentPage() + 1))
@@ -180,12 +213,20 @@ extension GameListViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let selectedGame = viewModel.getGame(at: indexPath.row) else { return }
-        
-        guard let gameDetailViewController = storyboard?.instantiateViewController(withIdentifier: GameDetailViewController.identifier) as? GameDetailViewController else { return }
-        tableView.deselectRow(at: indexPath, animated: true)
-        
-        gameDetailViewController.gameDetail = selectedGame
-        self.navigationController?.pushViewController(gameDetailViewController, animated: true)
+        switch gameListRedirection {
+            case .toNotePage:
+                // TODO: Redirect to Note Page
+                print("GoToNotePage")
+            case .toDetailPage:
+                guard let gameDetailViewController = storyboard?.instantiateViewController(withIdentifier: GameDetailViewController.identifier) as? GameDetailViewController else { return }
+                tableView.deselectRow(at: indexPath, animated: true)
+                
+                gameDetailViewController.gameDetail = selectedGame
+                self.navigationController?.pushViewController(gameDetailViewController, animated: true)
+            default:
+                showAlert(title: "Error", message: "An error occurred while determining target page")
+                break
+        }
     }
     
 }
