@@ -20,18 +20,30 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4AZ-tQ-oPC" customClass="GenreCollectionCardView" customModule="GameBox" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="200" height="50"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Genre" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JBY-rX-YvB">
-                                <rect key="frame" x="16" y="14.666666666666664" width="168" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="esB-dr-kAy">
+                                <rect key="frame" x="0.0" y="0.0" width="200" height="50"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Genre" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JBY-rX-YvB">
+                                        <rect key="frame" x="16" y="14.666666666666664" width="168" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="JBY-rX-YvB" secondAttribute="trailing" constant="16" id="PuL-ID-ksG"/>
+                                    <constraint firstItem="JBY-rX-YvB" firstAttribute="centerY" secondItem="esB-dr-kAy" secondAttribute="centerY" id="PvA-Ms-1qt"/>
+                                    <constraint firstItem="JBY-rX-YvB" firstAttribute="leading" secondItem="esB-dr-kAy" secondAttribute="leading" constant="16" id="df3-Y1-ApM"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="JBY-rX-YvB" secondAttribute="trailing" constant="16" id="3ae-e3-Mdh"/>
-                            <constraint firstItem="JBY-rX-YvB" firstAttribute="leading" secondItem="4AZ-tQ-oPC" secondAttribute="leading" constant="16" id="hOA-jt-znT"/>
-                            <constraint firstItem="JBY-rX-YvB" firstAttribute="centerY" secondItem="4AZ-tQ-oPC" secondAttribute="centerY" id="so8-fr-L6D"/>
+                            <constraint firstAttribute="trailing" secondItem="esB-dr-kAy" secondAttribute="trailing" id="4GX-oN-9Hg"/>
+                            <constraint firstAttribute="bottom" secondItem="esB-dr-kAy" secondAttribute="bottom" id="MYQ-my-2Jn"/>
+                            <constraint firstItem="esB-dr-kAy" firstAttribute="top" secondItem="4AZ-tQ-oPC" secondAttribute="top" id="gnC-j2-26j"/>
+                            <constraint firstItem="esB-dr-kAy" firstAttribute="leading" secondItem="4AZ-tQ-oPC" secondAttribute="leading" id="vlN-gB-dYD"/>
                         </constraints>
                     </view>
                 </subviews>
@@ -43,11 +55,12 @@
                 <constraint firstAttribute="trailing" secondItem="4AZ-tQ-oPC" secondAttribute="trailing" id="xG8-tj-XDW"/>
                 <constraint firstItem="4AZ-tQ-oPC" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="yrx-9Y-JWq"/>
             </constraints>
-            <size key="customSize" width="200" height="50"/>
+            <size key="customSize" width="200" height="216"/>
             <connections>
                 <outlet property="lblGenreName" destination="JBY-rX-YvB" id="fWe-bO-eDW"/>
+                <outlet property="viewGenreBackground" destination="esB-dr-kAy" id="vdj-Ri-fmo"/>
             </connections>
-            <point key="canvasLocation" x="167.93893129770993" y="-11.267605633802818"/>
+            <point key="canvasLocation" x="221.37404580152671" y="19.718309859154932"/>
         </collectionViewCell>
     </objects>
     <resources>
