@@ -173,16 +173,4 @@ final class GameBoxCoreDataManager: GameBoxCoreDataProtocol {
         return false
     }
     
-    func searchInNotes(searchText: String) -> [Notes] {
-        let noteList = self.getNotes()
-        
-        guard !noteList.isEmpty &&
-                noteList.count > 0
-        else { return [] }
-        
-        return noteList.filter { note in
-            return note.note!.contains(searchText) ? true : false
-        }
-    }
-    
 }
