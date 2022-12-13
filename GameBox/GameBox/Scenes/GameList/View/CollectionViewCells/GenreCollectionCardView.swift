@@ -21,7 +21,6 @@ final class GenreCollectionCardView: UIView {
     
     private func initialSetup() {
         layer.shadowColor = UIColor.blue.cgColor
-        layer.backgroundColor = CGColor(red: 0.00, green: 0.75, blue: 1.00, alpha: 1.00)
         layer.shadowOffset = .zero
         layer.cornerRadius = 10
         layer.shadowOpacity = 0.3
