@@ -165,10 +165,7 @@ extension GameListViewController: UITableViewDataSource, UITableViewDelegate {
               let cellGame = viewModel.getGame(at: indexPath.row)
         else { return UITableViewCell() }
         
-        let gameDetailViewModel = GameDetailViewModel()
-        gameDetailViewModel.game = cellGame
-        
-        cell.configureCell(gameDetail: gameDetailViewModel)
+        cell.configureCell(game: cellGame)
         
         if indexPath.row == (viewModel.getGameCount() - 1) {
             viewModel.fetchMoreGames(page: (viewModel.getCurrentPage() + 1))
@@ -185,7 +182,9 @@ extension GameListViewController: UITableViewDataSource, UITableViewDelegate {
         guard let selectedGame = viewModel.getGame(at: indexPath.row) else { return }
         
         guard let gameDetailViewController = storyboard?.instantiateViewController(withIdentifier: GameDetailViewController.identifier) as? GameDetailViewController else { return }
-        gameDetailViewController.viewModel.game = selectedGame
+        tableView.deselectRow(at: indexPath, animated: true)
+        
+        gameDetailViewController.gameDetail = selectedGame
         self.navigationController?.pushViewController(gameDetailViewController, animated: true)
     }
     

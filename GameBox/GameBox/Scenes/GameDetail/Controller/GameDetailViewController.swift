@@ -29,7 +29,7 @@ final class GameDetailViewController: BaseViewController {
     @IBOutlet private weak var lblDescriptionText: UILabel!
     
     // MARK: - Variables
-    public var viewModel: GameDetailViewModelProtocol = GameDetailViewModel()
+    public var gameDetail: GameModel?
 
     // MARK: - Life Cycle
     override func viewDidLoad() {
@@ -40,7 +40,7 @@ final class GameDetailViewController: BaseViewController {
     
     // MARK: - Actions
     @IBAction func btnGoToGameWebsiteClicked(_ sender: Any) {
-        RawGClient.getGameDetail(gameId: viewModel.game!.id) { detailedGame, error in
+        RawGClient.getGameDetail(gameId: gameDetail!.id) { detailedGame, error in
             if let url = URL(string: detailedGame?.website ?? ""), UIApplication.shared.canOpenURL(url) {
                if #available(iOS 10.0, *) {
                   UIApplication.shared.open(url, options: [:], completionHandler: nil)
@@ -52,18 +52,18 @@ final class GameDetailViewController: BaseViewController {
     }
     
     @objc func rightBarBtnFavoriteClicked() {
-        switch (GameBoxCoreDataManager.shared.checkFavoriteByGameId(game: viewModel.game!.id)) {
+        switch (GameBoxCoreDataManager.shared.checkFavoriteByGameId(game: gameDetail!.id)) {
             case true:
-                if GameBoxCoreDataManager.shared.deleteFavoriteBy(gameId: viewModel.game!.id) == true {
+                if GameBoxCoreDataManager.shared.deleteFavoriteBy(gameId: gameDetail!.id) == true {
                     NotificationCenter.default.post(name: NSNotification.Name(rawValue: NSNotificationNames.gameDeletedFromFavorites.rawValue), object: nil)
                     setRightBarBtnFavoriteImage()
-                    showAlert(title: "Game Favorites", message: "\(viewModel.game!.name) removed from your favorite game list")
+                    showAlert(title: "Game Favorites", message: "\(gameDetail!.name) removed from your favorite game list")
                 }
             case false:
-                if GameBoxCoreDataManager.shared.favoriteGame(gameId: viewModel.game!.id) == true {
+                if GameBoxCoreDataManager.shared.favoriteGame(gameId: gameDetail!.id) == true {
                     NotificationCenter.default.post(name: NSNotification.Name(rawValue: NSNotificationNames.newFavoriteGame.rawValue), object: nil)
                     setRightBarBtnFavoriteImage()
-                    showAlert(title: "Game Favorites", message: "\(viewModel.game!.name) added to your favorite game list")
+                    showAlert(title: "Game Favorites", message: "\(gameDetail!.name) added to your favorite game list")
                 }
         }
     }
@@ -80,7 +80,7 @@ extension GameDetailViewController {
         setRightBarBtnFavoriteImage()
         
         // Setting Background Color
-        switch viewModel.game!.id%2 {
+        switch gameDetail!.id%2 {
             case 0:
                 viewGameDetailBackground.backgroundColor = UIColor(red: 0.16, green: 0.16, blue: 0.16, alpha: 1.00)
             case 1:
@@ -91,22 +91,22 @@ extension GameDetailViewController {
         }
         
         // Setting ImageSlideshow & Label with Images
-        viewModel.setImageInputs(&imageSlideshow, gameId: viewModel.game!.id)
-        lblGameName.text = viewModel.game!.name
-        viewModel.labelWithImageAttachment(&lblMetacritic, imageIconType: .resourceImage, imageName: "metacritic", text: " \(viewModel.game!.metacritic)", textColor: UIColor.white)
-        viewModel.labelWithImageAttachment(&lblRating, imageIconType: .systemImage, imageName: "star.fill", text: "\(viewModel.game!.rating) / \(viewModel.game!.ratingTop) (\(viewModel.game!.ratingsCount))", textColor: UIColor.yellow)
+        ViewUtility.setImageInputs(&imageSlideshow, gameId: gameDetail!.id)
+        lblGameName.text = gameDetail!.name
+        ViewUtility.labelWithImageAttachment(&lblMetacritic, imageIconType: .resourceImage, imageName: "metacritic", text: " \(gameDetail!.metacritic)", textColor: UIColor.white)
+        ViewUtility.labelWithImageAttachment(&lblRating, imageIconType: .systemImage, imageName: "star.fill", text: "\(gameDetail!.rating) / \(gameDetail!.ratingTop) (\(gameDetail!.ratingsCount))", textColor: UIColor.yellow)
         
         // Setting Property Labels
-        viewModel.labelWithBoldAndNormalText(&lblPlaytime, boldText: "Playtime: ", normalText: "\(String(viewModel.game!.playtime)) Hours")
-        viewModel.labelWithBoldAndNormalText(&lblReleaseDate, boldText: "Release Date: ", normalText: "\(String(viewModel.game!.releaseDate))")
+        ViewUtility.labelWithBoldAndNormalText(&lblPlaytime, boldText: "Playtime: ", normalText: "\(String(gameDetail!.playtime)) Hours")
+        ViewUtility.labelWithBoldAndNormalText(&lblReleaseDate, boldText: "Release Date: ", normalText: "\(String(gameDetail!.releaseDate))")
         
-        viewModel.setParentPlatforms(&lblParentPlatforms)
-        viewModel.setGameTags(&lblTags, tagShowingType: .all)
-        viewModel.setGenres(&lblGenres)
+        GameDetailSceneUtility.setParentPlatforms(&lblParentPlatforms, game: gameDetail!)
+        GameDetailSceneUtility.setGameTags(&lblTags, game: gameDetail!, tagShowingType: .all)
+        GameDetailSceneUtility.setGenres(&lblGenres, game: gameDetail!)
         
-        viewModel.labelWithBoldAndNormalText(&lblAgeRating, boldText: "Age Rating: ", normalText: viewModel.game!.esrbRating!.name)
+        ViewUtility.labelWithBoldAndNormalText(&lblAgeRating, boldText: "Age Rating: ", normalText: gameDetail!.esrbRating!.name)
         
-        RawGClient.getGameDetail(gameId: viewModel.game!.id) { [weak self] detailedGame, error in
+        RawGClient.getGameDetail(gameId: gameDetail!.id) { [weak self] detailedGame, error in
             guard let self = self else { return }
             self.lblDescriptionText.text = detailedGame?.descriptionRaw
         }
@@ -114,7 +114,7 @@ extension GameDetailViewController {
     
     /// Sets rightBarButtonItem's image according to game is favorite or not
     private func setRightBarBtnFavoriteImage() {
-        switch (GameBoxCoreDataManager.shared.checkFavoriteByGameId(game: viewModel.game!.id)) {
+        switch (GameBoxCoreDataManager.shared.checkFavoriteByGameId(game: gameDetail!.id)) {
             case true:
                 self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "heart.fill"), style: .plain, target: self, action: #selector(rightBarBtnFavoriteClicked))
             case false:

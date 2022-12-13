@@ -172,10 +172,7 @@ extension FavoriteListViewController: UITableViewDataSource, UITableViewDelegate
               let cellGame = viewModel.getFavoriteGame(at: indexPath.row)
         else { return UITableViewCell() }
         
-        let gameDetailViewModel = GameDetailViewModel()
-        gameDetailViewModel.game = cellGame
-        
-        cell.configureCell(gameDetail: gameDetailViewModel)
+        cell.configureCell(game: cellGame)
         
         return cell
     }
@@ -186,9 +183,10 @@ extension FavoriteListViewController: UITableViewDataSource, UITableViewDelegate
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let selectedGame = viewModel.getFavoriteGame(at: indexPath.row) else { return }
+        tableView.deselectRow(at: indexPath, animated: true)
         
         guard let gameDetailViewController = storyboard?.instantiateViewController(withIdentifier: GameDetailViewController.identifier) as? GameDetailViewController else { return }
-        gameDetailViewController.viewModel.game = selectedGame
+        gameDetailViewController.gameDetail = selectedGame
         self.navigationController?.pushViewController(gameDetailViewController, animated: true)
     }
     

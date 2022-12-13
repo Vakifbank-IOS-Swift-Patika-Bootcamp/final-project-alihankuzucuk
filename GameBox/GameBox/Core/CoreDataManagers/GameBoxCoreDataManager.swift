@@ -27,6 +27,7 @@ struct GameBoxCoreDataKeys {
     }
 }
 
+// MARK: - GameBoxCoreDataManager
 final class GameBoxCoreDataManager: GameBoxCoreDataProtocol {
     
     // MARK: - Variables
