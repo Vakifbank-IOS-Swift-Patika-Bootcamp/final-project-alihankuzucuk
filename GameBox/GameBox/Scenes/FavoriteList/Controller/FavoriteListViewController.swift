@@ -40,11 +40,11 @@ final class FavoriteListViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        prepareScreen()
+        prepareScene()
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        self.tabBarController?.tabBar.tintColor = UIColor(red: 1.00, green: 0.75, blue: 0.00, alpha: 1.00)
+        self.tabBarController?.tabBar.tintColor = Constants.Colors.PageColors.orange
     }
 
 }
@@ -52,13 +52,13 @@ final class FavoriteListViewController: BaseViewController {
 // MARK: - Extension: Helper Methods
 extension FavoriteListViewController {
     
-    private func prepareScreen() {
+    private func prepareScene() {
         // Preparing NavigationItem
         self.navigationItem.title = "Favorite List"
         
         // Setting appearance of NavigationBar
         let appearance = UINavigationBarAppearance()
-        appearance.backgroundColor = UIColor(red: 1.00, green: 0.75, blue: 0.00, alpha: 1.00)
+        appearance.backgroundColor = Constants.Colors.PageColors.orange
         
         navigationController?.navigationBar.standardAppearance = appearance
         navigationController?.navigationBar.compactAppearance = appearance
@@ -74,7 +74,7 @@ extension FavoriteListViewController {
         navigationItem.hidesSearchBarWhenScrolling = false
         
         // Changing TabBar icon colors
-        self.tabBarController?.tabBar.tintColor = UIColor(red: 1.00, green: 0.75, blue: 0.00, alpha: 1.00)
+        self.tabBarController?.tabBar.tintColor = Constants.Colors.PageColors.orange
         
         // Preparing viewModel
         viewModel.delegate = self

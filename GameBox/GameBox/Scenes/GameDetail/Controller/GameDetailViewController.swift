@@ -35,7 +35,7 @@ final class GameDetailViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        prepareScreen()
+        prepareScene()
     }
     
     // MARK: - Actions
@@ -73,7 +73,7 @@ final class GameDetailViewController: BaseViewController {
 // MARK: - Extension: Helper Methods
 extension GameDetailViewController {
     
-    private func prepareScreen() {
+    private func prepareScene() {
         // Preparing NavigationItem
         self.navigationItem.title = "Game Detail"
         
@@ -82,11 +82,11 @@ extension GameDetailViewController {
         // Setting Background Color
         switch gameDetail!.id%2 {
             case 0:
-                viewGameDetailBackground.backgroundColor = UIColor(red: 0.16, green: 0.16, blue: 0.16, alpha: 1.00)
+                viewGameDetailBackground.backgroundColor = Constants.Colors.BackgroundColors.gray
             case 1:
-                viewGameDetailBackground.backgroundColor = UIColor(red: 0.00, green: 0.75, blue: 1.00, alpha: 1.00)
+                viewGameDetailBackground.backgroundColor = Constants.Colors.BackgroundColors.blue
             default:
-                viewGameDetailBackground.backgroundColor = UIColor(red: 0.00, green: 0.75, blue: 1.00, alpha: 1.00)
+                viewGameDetailBackground.backgroundColor = Constants.Colors.BackgroundColors.blue
                 break
         }
         

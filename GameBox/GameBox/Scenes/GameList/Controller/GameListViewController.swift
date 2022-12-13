@@ -41,11 +41,11 @@ final class GameListViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        prepareScreen()
+        prepareScene()
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        self.tabBarController?.tabBar.tintColor = UIColor(red: 0.00, green: 0.75, blue: 1.00, alpha: 1.00)
+        self.tabBarController?.tabBar.tintColor = Constants.Colors.PageColors.blue
     }
 
 }
@@ -53,13 +53,13 @@ final class GameListViewController: BaseViewController {
 // MARK: - Extension: Helper Methods
 extension GameListViewController {
     
-    private func prepareScreen() {
+    private func prepareScene() {
         // Preparing NavigationItem
         self.navigationItem.title = "Games"
         
         // Setting appearance of NavigationBar
         let appearance = UINavigationBarAppearance()
-        appearance.backgroundColor = UIColor(red: 0.00, green: 0.75, blue: 1.00, alpha: 1.00)
+        appearance.backgroundColor = Constants.Colors.PageColors.blue
         
         navigationController?.navigationBar.standardAppearance = appearance
         navigationController?.navigationBar.compactAppearance = appearance
@@ -75,7 +75,7 @@ extension GameListViewController {
         navigationItem.hidesSearchBarWhenScrolling = false
         
         // Changing TabBar icon colors
-        self.tabBarController?.tabBar.tintColor = UIColor(red: 0.00, green: 0.75, blue: 1.00, alpha: 1.00)
+        self.tabBarController?.tabBar.tintColor = Constants.Colors.PageColors.blue
         
         // Preparing viewModel
         viewModel.delegate = self

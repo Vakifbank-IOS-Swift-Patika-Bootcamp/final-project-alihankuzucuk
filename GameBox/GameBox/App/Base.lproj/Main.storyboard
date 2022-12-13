@@ -55,23 +55,23 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oID-Gu-obx" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1579" y="-149"/>
+            <point key="canvasLocation" x="1607" y="-149"/>
         </scene>
-        <!--Notes-->
+        <!--Note List View Controller-->
         <scene sceneID="OPf-5Q-Lg6">
             <objects>
-                <viewController id="Hll-3B-I2Y" sceneMemberID="viewController">
+                <viewController id="Hll-3B-I2Y" customClass="NoteListViewController" customModule="GameBox" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="QPT-I0-Tyf">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <viewLayoutGuide key="safeArea" id="W9d-ty-fM9"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Notes" image="note.text" catalog="system" id="aga-Pf-eKg"/>
+                    <navigationItem key="navigationItem" id="B9u-fd-SzK"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3Dq-yq-1aJ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="691" y="489"/>
+            <point key="canvasLocation" x="1617.5572519083969" y="488.73239436619718"/>
         </scene>
         <!--Game List View Controller-->
         <scene sceneID="13V-BT-feO">
@@ -324,7 +324,7 @@
                     <connections>
                         <segue destination="4kB-WL-hyf" kind="relationship" relationship="viewControllers" id="xMI-xb-5wX"/>
                         <segue destination="p0n-c0-uze" kind="relationship" relationship="viewControllers" id="cN3-oh-AIy"/>
-                        <segue destination="Hll-3B-I2Y" kind="relationship" relationship="viewControllers" id="XpI-c4-Bos"/>
+                        <segue destination="Gbt-xD-Coh" kind="relationship" relationship="viewControllers" id="XpI-c4-Bos"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZcT-zm-M45" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -368,6 +368,25 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="THZ-67-u4c" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="691" y="-149"/>
+        </scene>
+        <!--Notes-->
+        <scene sceneID="rlU-O1-xA3">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Gbt-xD-Coh" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Notes" image="note.text" catalog="system" id="aga-Pf-eKg"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="UJy-qn-Ezt">
+                        <rect key="frame" x="0.0" y="59" width="393" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="Hll-3B-I2Y" kind="relationship" relationship="rootViewController" id="aPs-jl-xhd"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="TOG-0M-oA2" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="690.83969465648852" y="488.73239436619718"/>
         </scene>
     </scenes>
     <resources>

@@ -29,9 +29,9 @@ final class GenreCollectionViewCell: UICollectionViewCell {
         var backgroundColor: UIColor
         switch backgroundColorType {
             case .blue:
-                backgroundColor = UIColor(red: 0.00, green: 0.75, blue: 1.00, alpha: 1.00)
+                backgroundColor = Constants.Colors.BackgroundColors.blue
             case .orange:
-                backgroundColor = UIColor(red: 1.00, green: 0.75, blue: 0.00, alpha: 1.00)
+                backgroundColor = Constants.Colors.BackgroundColors.orange
         }
         
         viewGenreBackground.backgroundColor = backgroundColor
