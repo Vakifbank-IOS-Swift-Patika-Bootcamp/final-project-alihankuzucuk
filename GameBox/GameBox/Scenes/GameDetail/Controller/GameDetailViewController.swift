@@ -52,7 +52,7 @@ final class GameDetailViewController: BaseViewController {
     }
     
     @objc func rightBarBtnFavoriteClicked() {
-        switch (GameBoxCoreDataManager.shared.checkFavoriteByGameId(game: gameDetail!.id)) {
+        switch (GameBoxCoreDataManager.shared.checkFavoriteGameById(game: gameDetail!.id)) {
             case true:
                 if GameBoxCoreDataManager.shared.deleteFavoriteBy(gameId: gameDetail!.id) == true {
                     NotificationCenter.default.post(name: NSNotification.Name(rawValue: NSNotificationNames.gameDeletedFromFavorites.rawValue), object: nil)
@@ -60,7 +60,7 @@ final class GameDetailViewController: BaseViewController {
                     showAlert(title: "Game Favorites", message: "\(gameDetail!.name) removed from your favorite game list")
                 }
             case false:
-                if GameBoxCoreDataManager.shared.favoriteGame(gameId: gameDetail!.id) == true {
+                if GameBoxCoreDataManager.shared.saveFavoriteGame(gameId: gameDetail!.id) == true {
                     NotificationCenter.default.post(name: NSNotification.Name(rawValue: NSNotificationNames.newFavoriteGame.rawValue), object: nil)
                     setRightBarBtnFavoriteImage()
                     showAlert(title: "Game Favorites", message: "\(gameDetail!.name) added to your favorite game list")
@@ -114,7 +114,7 @@ extension GameDetailViewController {
     
     /// Sets rightBarButtonItem's image according to game is favorite or not
     private func setRightBarBtnFavoriteImage() {
-        switch (GameBoxCoreDataManager.shared.checkFavoriteByGameId(game: gameDetail!.id)) {
+        switch (GameBoxCoreDataManager.shared.checkFavoriteGameById(game: gameDetail!.id)) {
             case true:
                 self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "heart.fill"), style: .plain, target: self, action: #selector(rightBarBtnFavoriteClicked))
             case false:
