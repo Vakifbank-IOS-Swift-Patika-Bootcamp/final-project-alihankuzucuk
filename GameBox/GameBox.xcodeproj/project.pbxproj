@@ -37,6 +37,8 @@
 		C3B393812944DFFB00700860 /* GameTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3B3937F2944DFFA00700860 /* GameTableViewCell.swift */; };
 		C3B393822944DFFB00700860 /* GameTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C3B393802944DFFA00700860 /* GameTableViewCell.xib */; };
 		C3B393852944F09000700860 /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3B393842944F09000700860 /* UIView+Extension.swift */; };
+		C3D3EA292948731400B0530B /* FavoriteListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D3EA282948731400B0530B /* FavoriteListViewController.swift */; };
+		C3D3EA2C2948766100B0530B /* NSNotificationNames.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D3EA2B2948766100B0530B /* NSNotificationNames.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -95,6 +97,8 @@
 		C3B3937F2944DFFA00700860 /* GameTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameTableViewCell.swift; sourceTree = "<group>"; };
 		C3B393802944DFFA00700860 /* GameTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GameTableViewCell.xib; sourceTree = "<group>"; };
 		C3B393842944F09000700860 /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
+		C3D3EA282948731400B0530B /* FavoriteListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteListViewController.swift; sourceTree = "<group>"; };
+		C3D3EA2B2948766100B0530B /* NSNotificationNames.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSNotificationNames.swift; sourceTree = "<group>"; };
 		C5D504B7E5F6AA42381EF36B /* Pods_GameBox_GameBoxUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GameBox_GameBoxUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE8CCD80AF5528DBAA7D47AB /* Pods-GameBox.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GameBox.release.xcconfig"; path = "Target Support Files/Pods-GameBox/Pods-GameBox.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -200,6 +204,7 @@
 			children = (
 				C33871A329474BF300BDB9E1 /* Model */,
 				C33871A0294740AE00BDB9E1 /* ViewModel */,
+				C3D3EA272948725400B0530B /* Controller */,
 			);
 			path = FavoriteList;
 			sourceTree = "<group>";
@@ -298,6 +303,7 @@
 				C30942982941BC5A00AF712F /* Network */,
 				C3B393832944F06900700860 /* Extensions */,
 				C338719929471FE600BDB9E1 /* CoreDataManagers */,
+				C3D3EA2A2948762100B0530B /* Enums */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -377,6 +383,22 @@
 				C3B393842944F09000700860 /* UIView+Extension.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		C3D3EA272948725400B0530B /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				C3D3EA282948731400B0530B /* FavoriteListViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		C3D3EA2A2948762100B0530B /* Enums */ = {
+			isa = PBXGroup;
+			children = (
+				C3D3EA2B2948766100B0530B /* NSNotificationNames.swift */,
+			);
+			path = Enums;
 			sourceTree = "<group>";
 		};
 		C4B1C06A93DC31074FC3A2B2 /* Frameworks */ = {
@@ -638,11 +660,13 @@
 				C37548722941A4F100C52AFF /* GameBox.xcdatamodeld in Sources */,
 				C39BFF4F2946408800B0BA62 /* GameDetailViewController.swift in Sources */,
 				C33871A2294740C900BDB9E1 /* FavoriteListViewModel.swift in Sources */,
+				C3D3EA292948731400B0530B /* FavoriteListViewController.swift in Sources */,
 				C309429D2941BF6900AF712F /* Constants.swift in Sources */,
 				C395A0EF2943492A001680EF /* GameListViewController.swift in Sources */,
 				C395A0F12943494F001680EF /* BaseViewController.swift in Sources */,
 				C3B393852944F09000700860 /* UIView+Extension.swift in Sources */,
 				C373D45829423C7B007D3833 /* GameListViewModel.swift in Sources */,
+				C3D3EA2C2948766100B0530B /* NSNotificationNames.swift in Sources */,
 				C39BFF4C29463B7800B0BA62 /* GameDetailViewModel.swift in Sources */,
 				C399FF282941E8D100BF4957 /* BaseResponseModel.swift in Sources */,
 				C30942972941B33800AF712F /* GameModel.swift in Sources */,

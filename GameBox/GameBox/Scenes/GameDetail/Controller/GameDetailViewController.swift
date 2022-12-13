@@ -55,11 +55,15 @@ final class GameDetailViewController: BaseViewController {
         switch (GameBoxCoreDataManager.shared.checkFavoriteByGameId(game: viewModel.game!.id)) {
             case true:
                 if GameBoxCoreDataManager.shared.deleteFavoriteBy(gameId: viewModel.game!.id) == true {
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: NSNotificationNames.gameDeletedFromFavorites.rawValue), object: nil)
                     setRightBarBtnFavoriteImage()
+                    showAlert(title: "Game Favorites", message: "\(viewModel.game!.name) removed from your favorite game list")
                 }
             case false:
                 if GameBoxCoreDataManager.shared.favoriteGame(gameId: viewModel.game!.id) == true {
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: NSNotificationNames.newFavoriteGame.rawValue), object: nil)
                     setRightBarBtnFavoriteImage()
+                    showAlert(title: "Game Favorites", message: "\(viewModel.game!.name) added to your favorite game list")
                 }
         }
     }

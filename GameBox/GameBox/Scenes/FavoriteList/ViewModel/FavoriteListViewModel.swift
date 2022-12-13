@@ -41,7 +41,6 @@ protocol FavoriteListViewModelDelegate: AnyObject {
     // MARK: Fetching
     func fetchFailed(error: Error)
     func fetchedFavoriteGames()
-    func fetchGenres()
     func fetchedGenres()
     
 }
@@ -56,30 +55,42 @@ final class FavoriteListViewModel: FavoriteListViewModelProtocol {
     private var favoriteGames: [FavoriteGameModel] = []
     private var genres: [CommonModel]?
     
-    private var filterGenre: String = ""
     private var filterSearch: String = ""
+    private var filterGenre: String = ""
     
     // MARK: - Methods
     
     /// This method fetches the favorite games from GameBoxCoreDataManager
     func fetchFavoriteGames() {
+        favoriteGames = []
+        
+        let dispatchGroup = DispatchGroup()
+        
         self.delegate?.preFetch()
         
-        GameBoxCoreDataManager.shared.getFavorites().forEach { favorite in
-            RawGClient.getGameDetail(gameId: Int(favorite.gameId)) { [weak self, weak favorite] detailedGame, error in
-                guard let self = self,
-                      let favorite = favorite,
-                      let detailedGame = detailedGame
-                else { return }
-                
-                self.delegate?.postFetch()
-                
-                var favoriteGame = FavoriteGameModel(favoriteGameId: favorite.id!, favoriteGame: detailedGame)
-                
-                self.favoriteGames.append(favoriteGame)
-                
-                self.delegate?.fetchedFavoriteGames()
+        let favoriteGameList = GameBoxCoreDataManager.shared.getFavorites()
+        
+        if favoriteGameList.count > 0 {
+            for index in 0..<(favoriteGameList.count) {
+                dispatchGroup.enter()
+                RawGClient.getGameDetail(gameId: Int(favoriteGameList[index].gameId)) { [weak self] detailedGame, error in
+                    defer {
+                        dispatchGroup.leave()
+                    }
+                    guard let self = self,
+                          let detailedGame = detailedGame
+                    else { return }
+                    
+                    let favoriteGame = FavoriteGameModel(favoriteGameId: favoriteGameList[index].id!, favoriteGame: detailedGame)
+                    
+                    self.favoriteGames.append(favoriteGame)
+                }
             }
+        }
+        
+        dispatchGroup.notify(queue: .main) { [self] in
+            self.delegate?.postFetch()
+            self.delegate?.fetchedFavoriteGames()
         }
     }
     
@@ -102,17 +113,29 @@ final class FavoriteListViewModel: FavoriteListViewModelProtocol {
     // MARK: - FavoriteGame Methods
     func getFavoriteGameCount() -> Int {
         return favoriteGames.filter { favoriteGame in
-            if favoriteGame.favoriteGame.name.contains(filterSearch) {
-                
-                return favoriteGame.favoriteGame.genres.filter { commonModel in
-                    if commonModel.slug == filterGenre {
-                        return true
+            switch (filterSearch, filterGenre) {
+                case ("",""):
+                    return true
+                case ("",let filteredGenre):
+                    return favoriteGame.favoriteGame.genres.filter { commonModel in
+                        if commonModel.slug.contains(filteredGenre) {
+                            return true
+                        }
+                        return false
+                    }.count > 0 ? true : false
+                case (let filteredSearch, let filteredGenre):
+                    if favoriteGame.favoriteGame.name.contains(filteredSearch) {
+
+                        return favoriteGame.favoriteGame.genres.filter { commonModel in
+                            if commonModel.slug.contains(filteredGenre) || filteredGenre == "" {
+                                return true
+                            }
+                            return false
+                        }.count > 0 ? true : false
+
                     }
                     return false
-                }.count > 0 ? true : false
-                
             }
-            return false
         }.count
     }
     
@@ -123,17 +146,29 @@ final class FavoriteListViewModel: FavoriteListViewModelProtocol {
         else { return nil }
         
         return favoriteGames.filter { favoriteGame in
-            if favoriteGame.favoriteGame.name.contains(filterSearch) {
-                
-                return favoriteGame.favoriteGame.genres.filter { commonModel in
-                    if commonModel.slug == filterGenre {
-                        return true
+            switch (filterSearch, filterGenre) {
+                case ("",""):
+                    return true
+                case ("",let filteredGenre):
+                    return favoriteGame.favoriteGame.genres.filter { commonModel in
+                        if commonModel.slug.contains(filteredGenre) {
+                            return true
+                        }
+                        return false
+                    }.count > 0 ? true : false
+                case (let filteredSearch, let filteredGenre):
+                    if favoriteGame.favoriteGame.name.contains(filteredSearch) {
+
+                        return favoriteGame.favoriteGame.genres.filter { commonModel in
+                            if commonModel.slug.contains(filteredGenre) || filteredGenre == "" {
+                                return true
+                            }
+                            return false
+                        }.count > 0 ? true : false
+
                     }
                     return false
-                }.count > 0 ? true : false
-                
             }
-            return false
         }[index].favoriteGame
     }
     
