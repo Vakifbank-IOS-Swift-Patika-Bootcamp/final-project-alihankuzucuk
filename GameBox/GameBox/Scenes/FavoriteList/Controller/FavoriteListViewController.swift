@@ -140,10 +140,10 @@ extension FavoriteListViewController: UICollectionViewDataSource, UICollectionVi
 
             let genreAll = try! JSONDecoder().decode(CommonModel.self, from: Data(genreAllJson.utf8))
             
-            cell.configureCell(genre: genreAll, backgroundColorType: .orange)
+            cell.configureCell(genre: genreAll, genreBackgroundColor: Constants.Colors.BackgroundColors.orange)
         } else {
             let cellModel = viewModel.getGenre(at: (indexPath.row - 1))
-            cell.configureCell(genre: cellModel!, backgroundColorType: .orange)
+            cell.configureCell(genre: cellModel!, genreBackgroundColor: Constants.Colors.BackgroundColors.orange)
         }
         
         return cell
@@ -172,7 +172,7 @@ extension FavoriteListViewController: UITableViewDataSource, UITableViewDelegate
               let cellGame = viewModel.getFavoriteGame(at: indexPath.row)
         else { return UITableViewCell() }
         
-        cell.configureCell(game: cellGame)
+        cell.configureCell(game: cellGame, gameCardColor: Constants.Colors.BackgroundColors.orange)
         
         return cell
     }

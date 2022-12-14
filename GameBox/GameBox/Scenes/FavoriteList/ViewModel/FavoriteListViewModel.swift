@@ -10,6 +10,7 @@ import Foundation
 // MARK: - Protocols
 // MARK: FavoriteListViewModelProtocol
 protocol FavoriteListViewModelProtocol: AnyObject {
+    
     // MARK: Delegates
     var delegate: FavoriteListViewModelDelegate? { get set }
     
@@ -30,10 +31,12 @@ protocol FavoriteListViewModelProtocol: AnyObject {
     // MARK: Filtering
     func changeFilterSearch(filter: String)
     func changeFilterGenre(filter: String)
+    
 }
 
 // MARK: FavoriteListViewModelDelegate
 protocol FavoriteListViewModelDelegate: AnyObject {
+    
     // MARK: Indicator
     func preFetch()
     func postFetch()

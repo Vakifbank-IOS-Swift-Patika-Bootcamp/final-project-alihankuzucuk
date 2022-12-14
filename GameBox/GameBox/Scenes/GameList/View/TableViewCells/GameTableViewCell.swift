@@ -29,7 +29,7 @@ final class GameTableViewCell: UITableViewCell {
     // MARK: - Methods
     
     // MARK: Configuring Cell
-    func configureCell(game: GameModel) {
+    func configureCell(game: GameModel, gameCardColor: UIColor) {
         // Preparing Background
         viewBackground.round(with: RoundType.all, radius: 30)
         
@@ -37,15 +37,8 @@ final class GameTableViewCell: UITableViewCell {
         ViewUtility.setImageInputs(&imageSlideshow, gameId: game.id)
         
         // Preparing Card Detail
-        switch game.id%2 {
-            case 0:
-                viewGameDetailBackground.backgroundColor = Constants.Colors.BackgroundColors.gray
-            case 1:
-                viewGameDetailBackground.backgroundColor = Constants.Colors.BackgroundColors.blue
-            default:
-                viewGameDetailBackground.backgroundColor = Constants.Colors.BackgroundColors.blue
-                break
-        }
+        viewGameDetailBackground.backgroundColor = gameCardColor
+        
         lblGameName.text = game.name
         
         ViewUtility.labelWithImageAttachment(&lblMetacritic, imageIconType: .resourceImage, imageName: "metacritic", text: " \(game.metacritic)", textColor: UIColor.white)

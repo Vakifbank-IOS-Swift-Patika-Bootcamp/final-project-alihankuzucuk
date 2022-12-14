@@ -35,7 +35,14 @@ final class NoteListViewController: BaseViewController {
     
     // MARK: - Actions
     @objc func didFloatingButtonClicked() {
+        guard let gameListViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: GameListViewController.identifier) as? GameListViewController else { return }
         
+        gameListViewController.gameListRedirection = .toNotePage
+        
+        // Creating a navigation controller with gameListViewController at the root of the navigation stack
+        let gameListNavController = UINavigationController(rootViewController: gameListViewController)
+        
+        self.present(gameListNavController, animated:true, completion: nil)
     }
 
 }
