@@ -108,6 +108,9 @@ extension GameListViewController {
         // Prevented automatic hiding of SearchController
         navigationItem.hidesSearchBarWhenScrolling = false
         
+        // Filtering Menu
+        prepareNavigationMenu()
+        
         // Changing TabBar icon colors
         self.tabBarController?.tabBar.tintColor = Constants.Colors.PageColors.blue
         
@@ -115,6 +118,48 @@ extension GameListViewController {
         viewModel.delegate = self
         viewModel.fetchGenres()
         viewModel.fetchGames()
+    }
+    
+    private func prepareNavigationMenu() {
+        // Options
+        let actionClearFilter = UIAction(title: "Clear All Filters", image: UIImage(systemName: "trash")) { [weak self] _ in
+            guard let self = self else { return }
+            self.viewModel.clearFilter()
+            self.tableViewGames.setContentOffset(.zero, animated: true)
+            self.viewModel.fetchGames()
+        }
+        
+        // Ordering Menu
+        let orderActionRating = UIAction(title: "Rating", image: UIImage(systemName: "gamecontroller")) { [weak self] (_) in
+            guard let self = self else { return }
+            self.viewModel.setFilter(filter: ["ordering" : "rating"])
+            self.viewModel.fetchGames()
+        }
+        
+        let orderActionRatingReversed = UIAction(title: "Rating (Reverse)", image: UIImage(systemName: "gamecontroller")) { [weak self] (_) in
+            guard let self = self else { return }
+            self.viewModel.setFilter(filter: ["ordering" : "-rating"])
+            self.viewModel.fetchGames()
+        }
+        
+        let orderActionMetacritic = UIAction(title: "Metacritic", image: UIImage(systemName: "gamecontroller")) { [weak self] (_) in
+            guard let self = self else { return }
+            self.viewModel.setFilter(filter: ["ordering" : "metacritic"])
+            self.viewModel.fetchGames()
+        }
+        
+        let orderActionMetacriticReversed = UIAction(title: "Metacritic (Reverse)", image: UIImage(systemName: "gamecontroller")) { [weak self] (_) in
+            guard let self = self else { return }
+            self.viewModel.setFilter(filter: ["ordering" : "-metacritic"])
+            self.viewModel.fetchGames()
+        }
+        
+        let subMenuOrdering = UIMenu(title: "Ordering", image: UIImage(systemName: "list.number"), options: .displayInline, children: [orderActionRating, orderActionRatingReversed, orderActionMetacritic, orderActionMetacriticReversed])
+        
+        // Navigation Menu
+        let navigationMenu = UIMenu(title: "Options", children: [actionClearFilter, subMenuOrdering])
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: nil, image: UIImage(named: "filter"), primaryAction: nil, menu: navigationMenu)
     }
     
 }
