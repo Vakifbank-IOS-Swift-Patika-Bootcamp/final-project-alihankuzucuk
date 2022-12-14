@@ -36,18 +36,24 @@ final class AddNoteViewController: BaseViewController {
         checkNoteDetail()
         
         // Check for user input is valid or not
-        guard let noteText = txtFldNote.text
+        guard let noteText = txtFldNote.text,
+                var noteModel = noteModel
         else {
             showAlert(title: "Error", message: "Your note couldn't save")
             return
         }
         
+        guard !noteText.isEmpty else {
+            showAlert(title: "Warning", message: "Please fill the required fields")
+            return
+        }
+        
         // Operation is performed according to the note status
-        switch noteModel!.noteState {
+        switch noteModel.noteState {
             case .addNote:
-                noteModel!.date = Date().format()
-                noteModel!.note = noteText
-                if GameBoxCoreDataManager.shared.saveNote(noteModel: noteModel!) == true {
+                noteModel.date = Date().format()
+                noteModel.note = noteText
+                if GameBoxCoreDataManager.shared.saveNote(noteModel: noteModel) {
                     // Closing presented AddNoteViewController because new note is saved
                     showAlert(title: "Add Note", message: "Your new note has been saved") { [weak self] _ in
                         guard let self = self else { return }
@@ -56,9 +62,14 @@ final class AddNoteViewController: BaseViewController {
                     }
                 }
             case .editNote:
-                noteModel!.date = Date().format()
-                noteModel!.note = noteText
-                // TODO: Note will be edited here
+                if GameBoxCoreDataManager.shared.updateNoteBy(id: noteModel.id, updatedNote: noteText, updatedDate: Date().format()) {
+                    // Closing presented AddNoteViewController because note is successfully edited
+                    showAlert(title: "Edit Note", message: "Your note successfully updated") { [weak self] _ in
+                        guard let self = self else { return }
+                        NotificationCenter.default.post(name: NSNotification.Name(rawValue: NSNotificationNames.noteUpdated.rawValue), object: nil)
+                        self.closePresentSheet();
+                    }
+                }
             case .listNote:
                 closePresentSheet()
         }
