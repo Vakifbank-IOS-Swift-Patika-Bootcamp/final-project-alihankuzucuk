@@ -64,10 +64,25 @@
                     <view key="view" contentMode="scaleToFill" id="QPT-I0-Tyf">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="FCP-tT-Aad">
+                                <rect key="frame" x="0.0" y="103" width="393" height="666"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </tableView>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="W9d-ty-fM9"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="FCP-tT-Aad" firstAttribute="leading" secondItem="W9d-ty-fM9" secondAttribute="leading" id="ITV-mi-0hW"/>
+                            <constraint firstItem="FCP-tT-Aad" firstAttribute="top" secondItem="W9d-ty-fM9" secondAttribute="top" id="ajc-hJ-Qkc"/>
+                            <constraint firstItem="W9d-ty-fM9" firstAttribute="bottom" secondItem="FCP-tT-Aad" secondAttribute="bottom" id="gQL-UU-zQl"/>
+                            <constraint firstItem="W9d-ty-fM9" firstAttribute="trailing" secondItem="FCP-tT-Aad" secondAttribute="trailing" id="n5O-sK-bNF"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="B9u-fd-SzK"/>
+                    <connections>
+                        <outlet property="tableViewNotes" destination="FCP-tT-Aad" id="67P-0p-yA7"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3Dq-yq-1aJ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -108,7 +123,7 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="EoP-Gy-yJM">
+                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="top" borderStyle="roundedRect" placeholder="Type your note" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="EoP-Gy-yJM">
                                 <rect key="frame" x="8" y="225.33333333333337" width="377" height="300"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="300" id="V9L-l4-ob7"/>
