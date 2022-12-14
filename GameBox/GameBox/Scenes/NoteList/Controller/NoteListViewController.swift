@@ -100,6 +100,7 @@ extension NoteListViewController {
         
         // NotificationCenter Observers
         NotificationCenter.default.addObserver(self, selector: #selector(fetchNotes), name: NSNotification.Name(rawValue: NSNotificationNames.newNote.rawValue), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(fetchNotes), name: NSNotification.Name(rawValue: NSNotificationNames.noteUpdated.rawValue), object: nil)
     }
     
     @objc private func fetchNotes() {

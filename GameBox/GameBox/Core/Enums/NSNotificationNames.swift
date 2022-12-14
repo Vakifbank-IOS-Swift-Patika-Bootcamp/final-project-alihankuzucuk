@@ -8,5 +8,5 @@
 import Foundation
 
 enum NSNotificationNames: String {
-    case newFavoriteGame, gameDeletedFromFavorites, newNote
+    case newFavoriteGame, gameDeletedFromFavorites, newNote, noteUpdated
 }

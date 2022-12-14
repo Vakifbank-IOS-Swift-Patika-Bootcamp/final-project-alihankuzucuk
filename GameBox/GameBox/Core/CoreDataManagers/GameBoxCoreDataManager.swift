@@ -79,7 +79,7 @@ final class GameBoxCoreDataManager: GameBoxCoreDataProtocol {
             let favorites = try managedContext.fetch(fetchRequest)
             return favorites as! [Favorites]
         } catch let error as NSError {
-            print("Could not save. \(error), \(error.userInfo)")
+            print("Could not get. \(error), \(error.userInfo)")
         }
         return []
     }
@@ -154,7 +154,7 @@ final class GameBoxCoreDataManager: GameBoxCoreDataProtocol {
             let notes = try managedContext.fetch(fetchRequest)
             return notes as! [Notes]
         } catch let error as NSError {
-            print("Could not save. \(error), \(error.userInfo)")
+            print("Could not get. \(error), \(error.userInfo)")
         }
         return []
     }
@@ -181,6 +181,42 @@ final class GameBoxCoreDataManager: GameBoxCoreDataProtocol {
             }
         } catch {
             print("Could not delete. \(error)")
+        }
+        
+        return false
+    }
+    
+    func getNoteBy(id noteId: UUID) -> Notes? {
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: GameBoxCoreDataKeys.Entities.notes.rawValue)
+        fetchRequest.predicate = NSPredicate(format: "id = %@", noteId.uuidString)
+        
+        fetchRequest.returnsObjectsAsFaults = false
+        
+        do {
+            let results = try managedContext.fetch(fetchRequest)
+            for result in results as! [NSManagedObject] {
+                return result as? Notes
+            }
+        } catch {
+            print("Could not get. \(error)")
+        }
+        
+        return nil
+    }
+    
+    @discardableResult
+    func updateNoteBy(id noteId: UUID, updatedNote: String, updatedDate: Date) -> Bool {
+        var note = getNoteBy(id: noteId)
+        guard let note = note else { return false }
+        note.note = String(updatedNote)
+        note.date = updatedDate
+        
+        do {
+            try managedContext.save()
+            return true
+        }
+        catch {
+            print("Could not update. \(error)")
         }
         
         return false
