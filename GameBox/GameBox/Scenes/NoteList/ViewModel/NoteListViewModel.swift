@@ -70,7 +70,7 @@ final class NoteListViewModel: NoteListViewModelProtocol {
                           let detailedGame = detailedGame
                     else { return }
                     
-                    let note = NoteModel(id: noteList[index].id!, gameId: Int(noteList[index].gameId), note: noteList[index].note!, noteGame: detailedGame)
+                    let note = NoteModel(id: noteList[index].id!, gameId: Int(noteList[index].gameId), note: noteList[index].note!, noteGame: detailedGame, noteState: .listNote)
                     
                     self.notes.append(note)
                 }

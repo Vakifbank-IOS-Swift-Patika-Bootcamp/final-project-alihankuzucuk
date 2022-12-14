@@ -7,11 +7,19 @@
 
 import Foundation
 
+// MARK: - Enums
+enum NoteModelState {
+    case addNote, editNote, listNote
+}
+
 // MARK: - NoteModel
-struct NoteModel: Codable {
+struct NoteModel {
     let id: UUID
     let gameId: Int
-    let note: String
+    var date: Date?
+    var note: String
     
     var noteGame: GameModel?
+    
+    var noteState: NoteModelState
 }

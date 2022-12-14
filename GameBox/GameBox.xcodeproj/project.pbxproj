@@ -14,6 +14,7 @@
 		C309429B2941BD4900AF712F /* RawGClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = C309429A2941BD4900AF712F /* RawGClient.swift */; };
 		C309429D2941BF6900AF712F /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C309429C2941BF6900AF712F /* Constants.swift */; };
 		C309BB212949BA0E00CF6321 /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C309BB202949BA0E00CF6321 /* Date+Extension.swift */; };
+		C309BB252949C57B00CF6321 /* AddNoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C309BB242949C57B00CF6321 /* AddNoteViewController.swift */; };
 		C338719B2947200600BDB9E1 /* GameBoxCoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C338719A2947200600BDB9E1 /* GameBoxCoreDataManager.swift */; };
 		C33871A2294740C900BDB9E1 /* FavoriteListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C33871A1294740C900BDB9E1 /* FavoriteListViewModel.swift */; };
 		C33871A529474C1C00BDB9E1 /* FavoriteGameModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C33871A429474C1C00BDB9E1 /* FavoriteGameModel.swift */; };
@@ -76,6 +77,7 @@
 		C309429A2941BD4900AF712F /* RawGClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RawGClient.swift; sourceTree = "<group>"; };
 		C309429C2941BF6900AF712F /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		C309BB202949BA0E00CF6321 /* Date+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extension.swift"; sourceTree = "<group>"; };
+		C309BB242949C57B00CF6321 /* AddNoteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNoteViewController.swift; sourceTree = "<group>"; };
 		C338719A2947200600BDB9E1 /* GameBoxCoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameBoxCoreDataManager.swift; sourceTree = "<group>"; };
 		C33871A1294740C900BDB9E1 /* FavoriteListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteListViewModel.swift; sourceTree = "<group>"; };
 		C33871A429474C1C00BDB9E1 /* FavoriteGameModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteGameModel.swift; sourceTree = "<group>"; };
@@ -163,6 +165,7 @@
 				C39BFF4929463B5100B0BA62 /* GameDetail */,
 				C338719C29473D9600BDB9E1 /* FavoriteList */,
 				C3AD743E2948B63E0086749B /* NoteList */,
+				C309BB222949C55900CF6321 /* AddNote */,
 			);
 			path = Scenes;
 			sourceTree = "<group>";
@@ -201,6 +204,22 @@
 				C309429A2941BD4900AF712F /* RawGClient.swift */,
 			);
 			path = RawGService;
+			sourceTree = "<group>";
+		};
+		C309BB222949C55900CF6321 /* AddNote */ = {
+			isa = PBXGroup;
+			children = (
+				C309BB232949C56900CF6321 /* Controller */,
+			);
+			path = AddNote;
+			sourceTree = "<group>";
+		};
+		C309BB232949C56900CF6321 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				C309BB242949C57B00CF6321 /* AddNoteViewController.swift */,
+			);
+			path = Controller;
 			sourceTree = "<group>";
 		};
 		C338719929471FE600BDB9E1 /* CoreDataManagers */ = {
@@ -734,6 +753,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C309BB252949C57B00CF6321 /* AddNoteViewController.swift in Sources */,
 				C37D66BF2949197C00996474 /* NoteModel.swift in Sources */,
 				C3B393812944DFFB00700860 /* GameTableViewCell.swift in Sources */,
 				C37548682941A4F100C52AFF /* AppDelegate.swift in Sources */,
