@@ -43,6 +43,11 @@ final class AddNoteViewController: BaseViewController {
             return
         }
         
+        guard !noteText.isEmpty else {
+            showAlert(title: "Warning", message: "Please fill the required fields")
+            return
+        }
+        
         // Operation is performed according to the note status
         switch noteModel.noteState {
             case .addNote:
