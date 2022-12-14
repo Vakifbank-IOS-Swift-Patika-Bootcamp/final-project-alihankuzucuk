@@ -23,14 +23,11 @@ struct GameBoxCoreDataKeys {
     }
     
     enum FavoritesDataKeys: String {
-        case id
-        case gameId
+        case id, gameId
     }
     
     enum NotesDataKeys: String {
-        case id
-        case gameId
-        case note
+        case id, gameId, note, date
     }
 }
 
@@ -117,13 +114,14 @@ final class GameBoxCoreDataManager: GameBoxCoreDataProtocol {
     }
     
     @discardableResult
-    func saveNote(gameId: Int, note: String) -> Bool {
+    func saveNote(gameId: Int, note: String, date: Date) -> Bool {
         let entity = NSEntityDescription.entity(forEntityName: GameBoxCoreDataKeys.Entities.favorites.rawValue, in: managedContext)!
         
         let note = NSManagedObject(entity: entity, insertInto: managedContext)
         note.setValue(UUID(), forKey: GameBoxCoreDataKeys.NotesDataKeys.id.rawValue)
         note.setValue(gameId, forKeyPath: GameBoxCoreDataKeys.NotesDataKeys.gameId.rawValue)
         note.setValue(note, forKeyPath: GameBoxCoreDataKeys.NotesDataKeys.note.rawValue)
+        note.setValue(date, forKeyPath: GameBoxCoreDataKeys.NotesDataKeys.date.rawValue)
         
         do {
             try managedContext.save()
