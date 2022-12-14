@@ -13,6 +13,7 @@
 		C30942972941B33800AF712F /* GameModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C30942962941B33800AF712F /* GameModel.swift */; };
 		C309429B2941BD4900AF712F /* RawGClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = C309429A2941BD4900AF712F /* RawGClient.swift */; };
 		C309429D2941BF6900AF712F /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C309429C2941BF6900AF712F /* Constants.swift */; };
+		C309BB212949BA0E00CF6321 /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C309BB202949BA0E00CF6321 /* Date+Extension.swift */; };
 		C338719B2947200600BDB9E1 /* GameBoxCoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C338719A2947200600BDB9E1 /* GameBoxCoreDataManager.swift */; };
 		C33871A2294740C900BDB9E1 /* FavoriteListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C33871A1294740C900BDB9E1 /* FavoriteListViewModel.swift */; };
 		C33871A529474C1C00BDB9E1 /* FavoriteGameModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C33871A429474C1C00BDB9E1 /* FavoriteGameModel.swift */; };
@@ -74,6 +75,7 @@
 		C30942962941B33800AF712F /* GameModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameModel.swift; sourceTree = "<group>"; };
 		C309429A2941BD4900AF712F /* RawGClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RawGClient.swift; sourceTree = "<group>"; };
 		C309429C2941BF6900AF712F /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		C309BB202949BA0E00CF6321 /* Date+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extension.swift"; sourceTree = "<group>"; };
 		C338719A2947200600BDB9E1 /* GameBoxCoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameBoxCoreDataManager.swift; sourceTree = "<group>"; };
 		C33871A1294740C900BDB9E1 /* FavoriteListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteListViewModel.swift; sourceTree = "<group>"; };
 		C33871A429474C1C00BDB9E1 /* FavoriteGameModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteGameModel.swift; sourceTree = "<group>"; };
@@ -460,6 +462,7 @@
 			isa = PBXGroup;
 			children = (
 				C3B393842944F09000700860 /* UIView+Extension.swift */,
+				C309BB202949BA0E00CF6321 /* Date+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -739,6 +742,7 @@
 				C33871A529474C1C00BDB9E1 /* FavoriteGameModel.swift in Sources */,
 				C37D66C229491AAE00996474 /* NoteListViewModel.swift in Sources */,
 				C37548722941A4F100C52AFF /* GameBox.xcdatamodeld in Sources */,
+				C309BB212949BA0E00CF6321 /* Date+Extension.swift in Sources */,
 				C39BFF4F2946408800B0BA62 /* GameDetailViewController.swift in Sources */,
 				C33871A2294740C900BDB9E1 /* FavoriteListViewModel.swift in Sources */,
 				C3D3EA292948731400B0530B /* FavoriteListViewController.swift in Sources */,
