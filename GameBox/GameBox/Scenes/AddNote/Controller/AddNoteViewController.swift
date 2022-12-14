@@ -51,6 +51,7 @@ final class AddNoteViewController: BaseViewController {
                     // Closing presented AddNoteViewController because new note is saved
                     showAlert(title: "Add Note", message: "Your new note has been saved") { [weak self] _ in
                         guard let self = self else { return }
+                        NotificationCenter.default.post(name: NSNotification.Name(rawValue: NSNotificationNames.newNote.rawValue), object: nil)
                         self.closePresentSheet();
                     }
                 }

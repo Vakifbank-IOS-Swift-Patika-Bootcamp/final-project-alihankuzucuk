@@ -130,7 +130,7 @@ final class GameBoxCoreDataManager: GameBoxCoreDataProtocol {
                 noteModel.noteState == .addNote
         else { return false }
         
-        let entity = NSEntityDescription.entity(forEntityName: GameBoxCoreDataKeys.Entities.favorites.rawValue, in: managedContext)!
+        let entity = NSEntityDescription.entity(forEntityName: GameBoxCoreDataKeys.Entities.notes.rawValue, in: managedContext)!
         
         let note = NSManagedObject(entity: entity, insertInto: managedContext)
         note.setValue(noteModel.id, forKey: GameBoxCoreDataKeys.NotesDataKeys.id.rawValue)
