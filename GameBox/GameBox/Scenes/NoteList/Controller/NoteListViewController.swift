@@ -137,7 +137,6 @@ extension NoteListViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
         guard let cell = tableView.dequeueReusableCell(withIdentifier: NoteTableViewCell.identifier, for: indexPath) as? NoteTableViewCell,
               let cellNote = viewModel.getNote(at: indexPath.row)
         else { return UITableViewCell() }
@@ -145,7 +144,33 @@ extension NoteListViewController: UITableViewDataSource, UITableViewDelegate {
         cell.configureCell(note: cellNote)
 
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let selectedNote = viewModel.getNote(at: indexPath.row) else { return }
+        tableView.deselectRow(at: indexPath, animated: true)
         
+        guard let editNoteViewController = storyboard?.instantiateViewController(withIdentifier: AddNoteViewController.identifier) as? AddNoteViewController else { return }
+
+        editNoteViewController.noteModel = NoteModel(id: selectedNote.id, gameId: selectedNote.gameId, note: selectedNote.note, noteGame: selectedNote.noteGame, noteState: .editNote)
+        let editNoteNavController = UINavigationController(rootViewController: editNoteViewController)
+        self.present(editNoteNavController, animated: true)
+    }
+    
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let action = UIContextualAction(style: .normal, title: "Delete", handler: { [weak self] (action, view, completionHandler) in
+            guard let self = self else { return }
+            if GameBoxCoreDataManager.shared.deleteNoteBy(id: self.viewModel.getNote(at: indexPath.row)!.id) == true {
+                self.viewModel.fetchNotes()
+                completionHandler(true)
+            } else {
+                completionHandler(false)
+            }
+          })
+        action.image = UIImage(systemName: "trash")
+        action.backgroundColor = .red
+        let configuration = UISwipeActionsConfiguration(actions: [action])
+        return configuration
     }
     
 }

@@ -206,7 +206,7 @@ extension FavoriteListViewController: UITableViewDataSource, UITableViewDelegate
                 completionHandler(false)
             }
           })
-        action.image = UIImage(systemName: "heart")
+        action.image = UIImage(systemName: "heart.slash")
         action.backgroundColor = .red
         let configuration = UISwipeActionsConfiguration(actions: [action])
         return configuration

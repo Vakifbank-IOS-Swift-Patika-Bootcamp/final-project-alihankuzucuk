@@ -81,6 +81,7 @@ extension AddNoteViewController {
             case .editNote:
                 self.navigationItem.title = "Edit Note"
                 btnSaveNote.setTitle("Edit Note", for: .normal)
+                txtFldNote.text = noteModel!.note
             case .listNote:
                 closePresentSheet()
         }

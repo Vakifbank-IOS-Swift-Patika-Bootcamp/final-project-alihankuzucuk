@@ -225,12 +225,12 @@ extension GameListViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let selectedGame = viewModel.getGame(at: indexPath.row) else { return }
+        tableView.deselectRow(at: indexPath, animated: true)
         
         switch gameListRedirection {
             case .toNotePage:
             
                 guard let addNoteViewController = storyboard?.instantiateViewController(withIdentifier: AddNoteViewController.identifier) as? AddNoteViewController else { return }
-                tableView.deselectRow(at: indexPath, animated: true)
 
                 addNoteViewController.noteModel = NoteModel(id: UUID(), gameId: selectedGame.id, note: "", noteGame: selectedGame, noteState: .addNote)
                 self.navigationController?.pushViewController(addNoteViewController, animated: true)
@@ -238,7 +238,6 @@ extension GameListViewController: UITableViewDataSource, UITableViewDelegate {
             case .toDetailPage:
             
                 guard let gameDetailViewController = storyboard?.instantiateViewController(withIdentifier: GameDetailViewController.identifier) as? GameDetailViewController else { return }
-                tableView.deselectRow(at: indexPath, animated: true)
                 
                 gameDetailViewController.gameDetail = selectedGame
                 self.navigationController?.pushViewController(gameDetailViewController, animated: true)

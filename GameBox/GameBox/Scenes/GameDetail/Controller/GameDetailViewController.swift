@@ -80,15 +80,7 @@ extension GameDetailViewController {
         setRightBarBtnFavoriteImage()
         
         // Setting Background Color
-        switch gameDetail!.id%2 {
-            case 0:
-                viewGameDetailBackground.backgroundColor = Constants.Colors.BackgroundColors.gray
-            case 1:
-                viewGameDetailBackground.backgroundColor = Constants.Colors.BackgroundColors.blue
-            default:
-                viewGameDetailBackground.backgroundColor = Constants.Colors.BackgroundColors.blue
-                break
-        }
+        viewGameDetailBackground.backgroundColor = Constants.Colors.BackgroundColors.gray
         
         // Setting ImageSlideshow & Label with Images
         ViewUtility.setImageInputs(&imageSlideshow, gameId: gameDetail!.id)
