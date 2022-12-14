@@ -12,6 +12,17 @@ import CoreData
 // MARK: GameBoxCoreDataProtocol
 protocol GameBoxCoreDataProtocol {
     static var shared: GameBoxCoreDataManager { get }
+    
+    // MARK: - Favorites Entity Methods
+    func saveFavoriteGame(gameId: Int) -> Bool
+    func getFavorites() -> [Favorites]
+    func deleteFavoriteBy(gameId: Int) -> Bool
+    func checkFavoriteGameById(game gameId: Int) -> Bool
+    
+    // MARK: - Notes Entity Methods
+    func saveNote(noteModel: NoteModel) -> Bool
+    func getNotes() -> [Notes]
+    func deleteNoteBy(id noteId: UUID) -> Bool
 }
 
 // MARK: - Enums
@@ -114,14 +125,18 @@ final class GameBoxCoreDataManager: GameBoxCoreDataProtocol {
     }
     
     @discardableResult
-    func saveNote(gameId: Int, note: String, date: Date) -> Bool {
-        let entity = NSEntityDescription.entity(forEntityName: GameBoxCoreDataKeys.Entities.favorites.rawValue, in: managedContext)!
+    func saveNote(noteModel: NoteModel) -> Bool {
+        guard noteModel.date != nil &&
+                noteModel.noteState == .addNote
+        else { return false }
+        
+        let entity = NSEntityDescription.entity(forEntityName: GameBoxCoreDataKeys.Entities.notes.rawValue, in: managedContext)!
         
         let note = NSManagedObject(entity: entity, insertInto: managedContext)
-        note.setValue(UUID(), forKey: GameBoxCoreDataKeys.NotesDataKeys.id.rawValue)
-        note.setValue(gameId, forKeyPath: GameBoxCoreDataKeys.NotesDataKeys.gameId.rawValue)
-        note.setValue(note, forKeyPath: GameBoxCoreDataKeys.NotesDataKeys.note.rawValue)
-        note.setValue(date, forKeyPath: GameBoxCoreDataKeys.NotesDataKeys.date.rawValue)
+        note.setValue(noteModel.id, forKey: GameBoxCoreDataKeys.NotesDataKeys.id.rawValue)
+        note.setValue(noteModel.gameId, forKeyPath: GameBoxCoreDataKeys.NotesDataKeys.gameId.rawValue)
+        note.setValue(noteModel.note, forKeyPath: GameBoxCoreDataKeys.NotesDataKeys.note.rawValue)
+        note.setValue(noteModel.date, forKeyPath: GameBoxCoreDataKeys.NotesDataKeys.date.rawValue)
         
         do {
             try managedContext.save()

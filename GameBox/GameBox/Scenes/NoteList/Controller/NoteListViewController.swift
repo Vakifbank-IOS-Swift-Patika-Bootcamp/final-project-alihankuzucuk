@@ -10,7 +10,23 @@ import UIKit
 // MARK: - NoteListViewController
 final class NoteListViewController: BaseViewController {
     
+    // MARK: - Outlets
+    @IBOutlet private weak var tableViewNotes: UITableView! {
+        didSet {
+            tableViewNotes.delegate = self
+            tableViewNotes.dataSource = self
+
+            // MARK: Registering tableViewNotes cells
+            tableViewNotes.register(UINib(nibName: NoteTableViewCell.identifier, bundle: nil), forCellReuseIdentifier: NoteTableViewCell.identifier)
+
+            // MARK: Automatic Dimension
+            tableViewNotes.estimatedRowHeight = UITableView.automaticDimension
+        }
+    }
+    
     // MARK: - Variables
+    private var viewModel: NoteListViewModelProtocol = NoteListViewModel()
+    
     static let floatingBtnNoteListSize: Int = 60
     let floatingButton = FloatingButton.getFloatingButton(systemImage: "plus", size: floatingBtnNoteListSize, backgroundColor: Constants.Colors.PageColors.green)
 
@@ -77,6 +93,84 @@ extension NoteListViewController {
         // FloatingButton
         view.addSubview(floatingButton)
         floatingButton.addTarget(self, action: #selector(didFloatingButtonClicked), for: .touchUpInside)
+        
+        // Preparing viewModel
+        viewModel.delegate = self
+        viewModel.fetchNotes()
+        
+        // NotificationCenter Observers
+        NotificationCenter.default.addObserver(self, selector: #selector(fetchNotes), name: NSNotification.Name(rawValue: NSNotificationNames.newNote.rawValue), object: nil)
+    }
+    
+    @objc private func fetchNotes() {
+        viewModel.fetchNotes()
+    }
+    
+}
+
+// MARK: - Extension: viewModel
+extension NoteListViewController: NoteListViewModelDelegate {
+
+    func preFetch() {
+        indicator.startAnimating()
+    }
+
+    func postFetch() {
+        indicator.stopAnimating()
+    }
+
+    func fetchFailed(error: Error) {
+        showAlert(title: "Error", message: error.localizedDescription)
+    }
+
+    func fetchedNotes() {
+        tableViewNotes.reloadData()
+    }
+
+}
+
+// MARK: - Extension: tableViewNotes
+extension NoteListViewController: UITableViewDataSource, UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return viewModel.getNoteCount()
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: NoteTableViewCell.identifier, for: indexPath) as? NoteTableViewCell,
+              let cellNote = viewModel.getNote(at: indexPath.row)
+        else { return UITableViewCell() }
+
+        cell.configureCell(note: cellNote)
+
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let selectedNote = viewModel.getNote(at: indexPath.row) else { return }
+        tableView.deselectRow(at: indexPath, animated: true)
+        
+        guard let editNoteViewController = storyboard?.instantiateViewController(withIdentifier: AddNoteViewController.identifier) as? AddNoteViewController else { return }
+
+        editNoteViewController.noteModel = NoteModel(id: selectedNote.id, gameId: selectedNote.gameId, note: selectedNote.note, noteGame: selectedNote.noteGame, noteState: .editNote)
+        let editNoteNavController = UINavigationController(rootViewController: editNoteViewController)
+        self.present(editNoteNavController, animated: true)
+    }
+    
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let action = UIContextualAction(style: .normal, title: "Delete", handler: { [weak self] (action, view, completionHandler) in
+            guard let self = self else { return }
+            if GameBoxCoreDataManager.shared.deleteNoteBy(id: self.viewModel.getNote(at: indexPath.row)!.id) == true {
+                self.viewModel.fetchNotes()
+                completionHandler(true)
+            } else {
+                completionHandler(false)
+            }
+          })
+        action.image = UIImage(systemName: "trash")
+        action.backgroundColor = .red
+        let configuration = UISwipeActionsConfiguration(actions: [action])
+        return configuration
     }
     
 }
@@ -85,13 +179,17 @@ extension NoteListViewController {
 extension NoteListViewController: UISearchResultsUpdating {
     
     func updateSearchResults(for searchController: UISearchController) {
-        guard let searchText = searchController.searchBar.text else { return }
-        if searchText.isEmpty {
-            // TODO: Removing search filter
+        if searchController.isActive {
+            guard let searchText = searchController.searchBar.text else { return }
+            if searchText.isEmpty {
+                viewModel.changeFilterSearch(filter: "")
+            } else {
+                viewModel.changeFilterSearch(filter: searchText)
+            }
         } else {
-            // TODO: Searching with filter
+            viewModel.changeFilterSearch(filter: "")
         }
-        // TODO: Fetching data
+        tableViewNotes.reloadData()
     }
     
 }

@@ -127,7 +127,7 @@ final class FavoriteListViewModel: FavoriteListViewModelProtocol {
                         return false
                     }.count > 0 ? true : false
                 case (let filteredSearch, let filteredGenre):
-                    if favoriteGame.favoriteGame.name.contains(filteredSearch) {
+                    if favoriteGame.favoriteGame.name.lowercased().contains(filteredSearch.lowercased()) {
 
                         return favoriteGame.favoriteGame.genres.filter { commonModel in
                             if commonModel.slug.contains(filteredGenre) || filteredGenre == "" {
@@ -160,7 +160,7 @@ final class FavoriteListViewModel: FavoriteListViewModelProtocol {
                         return false
                     }.count > 0 ? true : false
                 case (let filteredSearch, let filteredGenre):
-                    if favoriteGame.favoriteGame.name.contains(filteredSearch) {
+                    if favoriteGame.favoriteGame.name.lowercased().contains(filteredSearch.lowercased()) {
 
                         return favoriteGame.favoriteGame.genres.filter { commonModel in
                             if commonModel.slug.contains(filteredGenre) || filteredGenre == "" {

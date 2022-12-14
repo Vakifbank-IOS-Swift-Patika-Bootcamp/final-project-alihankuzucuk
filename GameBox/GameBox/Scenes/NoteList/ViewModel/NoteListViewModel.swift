@@ -70,7 +70,7 @@ final class NoteListViewModel: NoteListViewModelProtocol {
                           let detailedGame = detailedGame
                     else { return }
                     
-                    let note = NoteModel(id: noteList[index].id!, gameId: Int(noteList[index].gameId), note: noteList[index].note!, noteGame: detailedGame)
+                    let note = NoteModel(id: noteList[index].id!, gameId: Int(noteList[index].gameId), date: noteList[index].date!, note: noteList[index].note!, noteGame: detailedGame, noteState: .listNote)
                     
                     self.notes.append(note)
                 }
@@ -88,7 +88,7 @@ final class NoteListViewModel: NoteListViewModelProtocol {
             if filterSearch == "" {
                 return true
             }
-            return note.note.contains(filterSearch) ? true : false
+            return note.note.lowercased().contains(filterSearch.lowercased()) ? true : false
         }.count
     }
     
@@ -102,7 +102,7 @@ final class NoteListViewModel: NoteListViewModelProtocol {
             if filterSearch == "" {
                 return true
             }
-            return note.note.contains(filterSearch) ? true : false
+            return note.note.lowercased().contains(filterSearch.lowercased()) ? true : false
         }[index]
     }
     

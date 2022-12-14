@@ -48,9 +48,11 @@ final class GameListViewController: BaseViewController {
     private var viewModel: GameListViewModelProtocol = GameListViewModel()
     
     // Variables for colorizing page
-    var gameListRedirection: GameListRedirection?
+    public var gameListRedirection: GameListRedirection?
     private var pageColorNavigationBar: UIColor = Constants.Colors.PageColors.blue
     private var pageColorGenreCard: UIColor = Constants.Colors.PageColors.blue
+    
+    private var selectedGenreIndex: Int = 0
 
     // MARK: - Life Cycle
     override func viewDidLoad() {
@@ -134,6 +136,7 @@ extension GameListViewController: GameListViewModelDelegate {
     
     func fetchedGames() {
         tableViewGames.reloadData()
+        collectionViewGenres.reloadData()
     }
     
     func fetchedGenres() {
@@ -153,6 +156,14 @@ extension GameListViewController: UICollectionViewDataSource, UICollectionViewDe
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GenreCollectionViewCell.identifier, for: indexPath) as? GenreCollectionViewCell
         else { return UICollectionViewCell() }
         
+        var selectedGenreColor: UIColor
+        switch gameListRedirection! {
+            case .toDetailPage:
+                selectedGenreColor = (selectedGenreIndex == indexPath.row) ? Constants.Colors.PageColors.green : pageColorGenreCard
+            case .toNotePage:
+                selectedGenreColor = (selectedGenreIndex == indexPath.row) ? Constants.Colors.PageColors.blue : pageColorGenreCard
+        }
+        
         if indexPath.row == 0 {
             // Initializing "All" as a genre
             let genreAllJson = """
@@ -165,10 +176,10 @@ extension GameListViewController: UICollectionViewDataSource, UICollectionViewDe
 
             let genreAll = try! JSONDecoder().decode(CommonModel.self, from: Data(genreAllJson.utf8))
             
-            cell.configureCell(genre: genreAll, genreBackgroundColor: pageColorGenreCard)
+            cell.configureCell(genre: genreAll, genreBackgroundColor: selectedGenreColor)
         } else {
             let cellModel = viewModel.getGenre(at: (indexPath.row - 1))
-            cell.configureCell(genre: cellModel!, genreBackgroundColor: pageColorGenreCard)
+            cell.configureCell(genre: cellModel!, genreBackgroundColor: selectedGenreColor)
         }
         
         return cell
@@ -180,6 +191,7 @@ extension GameListViewController: UICollectionViewDataSource, UICollectionViewDe
         } else {
             viewModel.addFilter(filter: ["genres": viewModel.getGenre(at: (indexPath.row - 1))!.slug])
         }
+        selectedGenreIndex = indexPath.row
         viewModel.fetchGames()
     }
     
@@ -213,20 +225,28 @@ extension GameListViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let selectedGame = viewModel.getGame(at: indexPath.row) else { return }
+        tableView.deselectRow(at: indexPath, animated: true)
+        
         switch gameListRedirection {
             case .toNotePage:
-                // TODO: Redirect to Note Page
-                print("GoToNotePage")
+            
+                guard let addNoteViewController = storyboard?.instantiateViewController(withIdentifier: AddNoteViewController.identifier) as? AddNoteViewController else { return }
+
+                addNoteViewController.noteModel = NoteModel(id: UUID(), gameId: selectedGame.id, note: "", noteGame: selectedGame, noteState: .addNote)
+                self.navigationController?.pushViewController(addNoteViewController, animated: true)
+            
             case .toDetailPage:
+            
                 guard let gameDetailViewController = storyboard?.instantiateViewController(withIdentifier: GameDetailViewController.identifier) as? GameDetailViewController else { return }
-                tableView.deselectRow(at: indexPath, animated: true)
                 
                 gameDetailViewController.gameDetail = selectedGame
                 self.navigationController?.pushViewController(gameDetailViewController, animated: true)
+            
             default:
                 showAlert(title: "Error", message: "An error occurred while determining target page")
                 break
         }
+        
     }
     
 }
@@ -235,11 +255,15 @@ extension GameListViewController: UITableViewDataSource, UITableViewDelegate {
 extension GameListViewController: UISearchResultsUpdating {
     
     func updateSearchResults(for searchController: UISearchController) {
-        guard let searchText = searchController.searchBar.text else { return }
-        if searchText.isEmpty {
-            viewModel.removeFilter(filterKey: "search")
+        if searchController.isActive {
+            guard let searchText = searchController.searchBar.text else { return }
+            if searchText.isEmpty {
+                viewModel.removeFilter(filterKey: "search")
+            } else {
+                viewModel.addFilter(filter: ["search" : searchText])
+            }
         } else {
-            viewModel.addFilter(filter: ["search" : searchText])
+            viewModel.removeFilter(filterKey: "search")
         }
         viewModel.fetchGames()
     }
