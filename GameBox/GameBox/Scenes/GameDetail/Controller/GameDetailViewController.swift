@@ -35,7 +35,7 @@ final class GameDetailViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        prepareScreen()
+        prepareScene()
     }
     
     // MARK: - Actions
@@ -52,7 +52,7 @@ final class GameDetailViewController: BaseViewController {
     }
     
     @objc func rightBarBtnFavoriteClicked() {
-        switch (GameBoxCoreDataManager.shared.checkFavoriteByGameId(game: gameDetail!.id)) {
+        switch (GameBoxCoreDataManager.shared.checkFavoriteGameById(game: gameDetail!.id)) {
             case true:
                 if GameBoxCoreDataManager.shared.deleteFavoriteBy(gameId: gameDetail!.id) == true {
                     NotificationCenter.default.post(name: NSNotification.Name(rawValue: NSNotificationNames.gameDeletedFromFavorites.rawValue), object: nil)
@@ -60,7 +60,7 @@ final class GameDetailViewController: BaseViewController {
                     showAlert(title: "Game Favorites", message: "\(gameDetail!.name) removed from your favorite game list")
                 }
             case false:
-                if GameBoxCoreDataManager.shared.favoriteGame(gameId: gameDetail!.id) == true {
+                if GameBoxCoreDataManager.shared.saveFavoriteGame(gameId: gameDetail!.id) == true {
                     NotificationCenter.default.post(name: NSNotification.Name(rawValue: NSNotificationNames.newFavoriteGame.rawValue), object: nil)
                     setRightBarBtnFavoriteImage()
                     showAlert(title: "Game Favorites", message: "\(gameDetail!.name) added to your favorite game list")
@@ -73,22 +73,14 @@ final class GameDetailViewController: BaseViewController {
 // MARK: - Extension: Helper Methods
 extension GameDetailViewController {
     
-    private func prepareScreen() {
+    private func prepareScene() {
         // Preparing NavigationItem
         self.navigationItem.title = "Game Detail"
         
         setRightBarBtnFavoriteImage()
         
         // Setting Background Color
-        switch gameDetail!.id%2 {
-            case 0:
-                viewGameDetailBackground.backgroundColor = UIColor(red: 0.16, green: 0.16, blue: 0.16, alpha: 1.00)
-            case 1:
-                viewGameDetailBackground.backgroundColor = UIColor(red: 0.00, green: 0.75, blue: 1.00, alpha: 1.00)
-            default:
-                viewGameDetailBackground.backgroundColor = UIColor(red: 0.00, green: 0.75, blue: 1.00, alpha: 1.00)
-                break
-        }
+        viewGameDetailBackground.backgroundColor = Constants.Colors.BackgroundColors.gray
         
         // Setting ImageSlideshow & Label with Images
         ViewUtility.setImageInputs(&imageSlideshow, gameId: gameDetail!.id)
@@ -114,7 +106,7 @@ extension GameDetailViewController {
     
     /// Sets rightBarButtonItem's image according to game is favorite or not
     private func setRightBarBtnFavoriteImage() {
-        switch (GameBoxCoreDataManager.shared.checkFavoriteByGameId(game: gameDetail!.id)) {
+        switch (GameBoxCoreDataManager.shared.checkFavoriteGameById(game: gameDetail!.id)) {
             case true:
                 self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "heart.fill"), style: .plain, target: self, action: #selector(rightBarBtnFavoriteClicked))
             case false:

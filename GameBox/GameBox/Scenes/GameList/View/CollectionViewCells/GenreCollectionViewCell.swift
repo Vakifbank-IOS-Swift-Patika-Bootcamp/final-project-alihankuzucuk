@@ -7,11 +7,6 @@
 
 import UIKit
 
-// MARK: - Enums
-enum GenreCardBackgroundColorType: String {
-    case blue, orange
-}
-
 // MARK: - GenreCollectionViewCell
 final class GenreCollectionViewCell: UICollectionViewCell {
     
@@ -23,19 +18,11 @@ final class GenreCollectionViewCell: UICollectionViewCell {
     @IBOutlet private weak var viewGenreBackground: UIView!
 
     // MARK: - Methods
-    func configureCell(genre: CommonModel, backgroundColorType: GenreCardBackgroundColorType) {
+    func configureCell(genre: CommonModel, genreBackgroundColor: UIColor) {
         lblGenreName.text = genre.name
         
-        var backgroundColor: UIColor
-        switch backgroundColorType {
-            case .blue:
-                backgroundColor = UIColor(red: 0.00, green: 0.75, blue: 1.00, alpha: 1.00)
-            case .orange:
-                backgroundColor = UIColor(red: 1.00, green: 0.75, blue: 0.00, alpha: 1.00)
-        }
-        
-        viewGenreBackground.backgroundColor = backgroundColor
-        viewGenreBackground.layer.shadowColor = backgroundColor.cgColor
+        viewGenreBackground.backgroundColor = genreBackgroundColor
+        viewGenreBackground.layer.shadowColor = genreBackgroundColor.cgColor
         viewGenreBackground.layer.shadowOffset = .zero
         viewGenreBackground.layer.cornerRadius = 10
         viewGenreBackground.layer.shadowOpacity = 0.3

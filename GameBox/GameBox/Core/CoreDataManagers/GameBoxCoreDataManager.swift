@@ -12,6 +12,17 @@ import CoreData
 // MARK: GameBoxCoreDataProtocol
 protocol GameBoxCoreDataProtocol {
     static var shared: GameBoxCoreDataManager { get }
+    
+    // MARK: - Favorites Entity Methods
+    func saveFavoriteGame(gameId: Int) -> Bool
+    func getFavorites() -> [Favorites]
+    func deleteFavoriteBy(gameId: Int) -> Bool
+    func checkFavoriteGameById(game gameId: Int) -> Bool
+    
+    // MARK: - Notes Entity Methods
+    func saveNote(noteModel: NoteModel) -> Bool
+    func getNotes() -> [Notes]
+    func deleteNoteBy(id noteId: UUID) -> Bool
 }
 
 // MARK: - Enums
@@ -19,11 +30,15 @@ protocol GameBoxCoreDataProtocol {
 struct GameBoxCoreDataKeys {
     enum Entities: String {
         case favorites = "Favorites"
+        case notes = "Notes"
     }
     
     enum FavoritesDataKeys: String {
-        case id
-        case gameId
+        case id, gameId
+    }
+    
+    enum NotesDataKeys: String {
+        case id, gameId, note, date
     }
 }
 
@@ -41,7 +56,7 @@ final class GameBoxCoreDataManager: GameBoxCoreDataProtocol {
     
     // MARK: - Methods
     @discardableResult
-    func favoriteGame(gameId: Int) -> Bool {
+    func saveFavoriteGame(gameId: Int) -> Bool {
         let entity = NSEntityDescription.entity(forEntityName: GameBoxCoreDataKeys.Entities.favorites.rawValue, in: managedContext)!
         
         let favorite = NSManagedObject(entity: entity, insertInto: managedContext)
@@ -64,36 +79,9 @@ final class GameBoxCoreDataManager: GameBoxCoreDataProtocol {
             let favorites = try managedContext.fetch(fetchRequest)
             return favorites as! [Favorites]
         } catch let error as NSError {
-            print("Could not save. \(error), \(error.userInfo)")
+            print("Could not get. \(error), \(error.userInfo)")
         }
         return []
-    }
-    
-    @discardableResult
-    func deleteFavoriteBy(id favoriteId: UUID) -> Bool {
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: GameBoxCoreDataKeys.Entities.favorites.rawValue)
-        fetchRequest.predicate = NSPredicate(format: "id = %@", favoriteId.uuidString)
-        
-        fetchRequest.returnsObjectsAsFaults = false // It provides speed when reading large data
-        
-        do {
-            let results = try managedContext.fetch(fetchRequest)
-            for result in results as! [NSManagedObject] {
-                managedContext.delete(result)
-
-                do  {
-                    try managedContext.save()
-                    return true
-                } catch {
-                    print("Could not save. \(error)")
-                }
-                break
-            }
-        } catch {
-            print("Could not delete. \(error)")
-        }
-        
-        return false
     }
     
     @discardableResult
@@ -123,7 +111,7 @@ final class GameBoxCoreDataManager: GameBoxCoreDataProtocol {
         return false
     }
     
-    func checkFavoriteByGameId(game gameId: Int) -> Bool {
+    func checkFavoriteGameById(game gameId: Int) -> Bool {
         guard getFavorites() != [] else { return false }
         var isFavorite: Bool = false
         
@@ -134,6 +122,104 @@ final class GameBoxCoreDataManager: GameBoxCoreDataProtocol {
         }
         
         return isFavorite
+    }
+    
+    @discardableResult
+    func saveNote(noteModel: NoteModel) -> Bool {
+        guard noteModel.date != nil &&
+                noteModel.noteState == .addNote
+        else { return false }
+        
+        let entity = NSEntityDescription.entity(forEntityName: GameBoxCoreDataKeys.Entities.notes.rawValue, in: managedContext)!
+        
+        let note = NSManagedObject(entity: entity, insertInto: managedContext)
+        note.setValue(noteModel.id, forKey: GameBoxCoreDataKeys.NotesDataKeys.id.rawValue)
+        note.setValue(noteModel.gameId, forKeyPath: GameBoxCoreDataKeys.NotesDataKeys.gameId.rawValue)
+        note.setValue(noteModel.note, forKeyPath: GameBoxCoreDataKeys.NotesDataKeys.note.rawValue)
+        note.setValue(noteModel.date, forKeyPath: GameBoxCoreDataKeys.NotesDataKeys.date.rawValue)
+        
+        do {
+            try managedContext.save()
+            return true
+        } catch let error as NSError {
+            print("Could not save. \(error), \(error.userInfo)")
+        }
+        
+        return false
+    }
+    
+    func getNotes() -> [Notes] {
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: GameBoxCoreDataKeys.Entities.notes.rawValue)
+        do {
+            let notes = try managedContext.fetch(fetchRequest)
+            return notes as! [Notes]
+        } catch let error as NSError {
+            print("Could not get. \(error), \(error.userInfo)")
+        }
+        return []
+    }
+    
+    @discardableResult
+    func deleteNoteBy(id noteId: UUID) -> Bool {
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: GameBoxCoreDataKeys.Entities.notes.rawValue)
+        fetchRequest.predicate = NSPredicate(format: "id = %@", noteId.uuidString)
+        
+        fetchRequest.returnsObjectsAsFaults = false // It provides speed when reading large data
+        
+        do {
+            let results = try managedContext.fetch(fetchRequest)
+            for result in results as! [NSManagedObject] {
+                managedContext.delete(result)
+
+                do  {
+                    try managedContext.save()
+                    return true
+                } catch {
+                    print("Could not save. \(error)")
+                }
+                break
+            }
+        } catch {
+            print("Could not delete. \(error)")
+        }
+        
+        return false
+    }
+    
+    func getNoteBy(id noteId: UUID) -> Notes? {
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: GameBoxCoreDataKeys.Entities.notes.rawValue)
+        fetchRequest.predicate = NSPredicate(format: "id = %@", noteId.uuidString)
+        
+        fetchRequest.returnsObjectsAsFaults = false
+        
+        do {
+            let results = try managedContext.fetch(fetchRequest)
+            for result in results as! [NSManagedObject] {
+                return result as? Notes
+            }
+        } catch {
+            print("Could not get. \(error)")
+        }
+        
+        return nil
+    }
+    
+    @discardableResult
+    func updateNoteBy(id noteId: UUID, updatedNote: String, updatedDate: Date) -> Bool {
+        var note = getNoteBy(id: noteId)
+        guard let note = note else { return false }
+        note.note = String(updatedNote)
+        note.date = updatedDate
+        
+        do {
+            try managedContext.save()
+            return true
+        }
+        catch {
+            print("Could not update. \(error)")
+        }
+        
+        return false
     }
     
 }
