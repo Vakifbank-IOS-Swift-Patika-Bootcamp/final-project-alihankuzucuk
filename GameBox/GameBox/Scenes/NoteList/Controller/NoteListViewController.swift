@@ -7,7 +7,7 @@
 
 import UIKit
 
-// MARK: - NoteListViewController
+// MARK: NoteListViewController
 final class NoteListViewController: BaseViewController {
     
     // MARK: - Outlets
@@ -66,6 +66,7 @@ final class NoteListViewController: BaseViewController {
 // MARK: - Extension: Helper Methods
 extension NoteListViewController {
     
+    // MARK: - prepareScene
     private func prepareScene() {
         // Preparing NavigationItem
         self.navigationItem.title = "Note List"
@@ -103,6 +104,7 @@ extension NoteListViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(fetchNotes), name: NSNotification.Name(rawValue: NSNotificationNames.noteUpdated.rawValue), object: nil)
     }
     
+    // MARK: - fetchNotes
     @objc private func fetchNotes() {
         viewModel.fetchNotes()
     }

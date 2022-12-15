@@ -20,7 +20,7 @@ enum RoundType {
 // MARK: Extension: UIView
 extension UIView {
     
-    // MARK: round
+    // MARK: - round
     /// Provides radius on which view it is used
     /// - Parameters:
     ///   - type: Type of which corners you want to give radius

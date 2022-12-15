@@ -7,9 +7,10 @@
 
 import UIKit
 
-// MARK: - FavoriteListViewController
+// MARK: FavoriteListViewController
 final class FavoriteListViewController: BaseViewController {
     
+    // MARK: - Outlets
     @IBOutlet private weak var collectionViewGenres: UICollectionView! {
         didSet {
             collectionViewGenres.delegate = self
@@ -54,6 +55,7 @@ final class FavoriteListViewController: BaseViewController {
 // MARK: - Extension: Helper Methods
 extension FavoriteListViewController {
     
+    // MARK: - prepareScene
     private func prepareScene() {
         // Preparing NavigationItem
         self.navigationItem.title = "Favorite List"
@@ -88,6 +90,7 @@ extension FavoriteListViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(fetchFavoriteGames), name: NSNotification.Name(rawValue: NSNotificationNames.gameDeletedFromFavorites.rawValue), object: nil)
     }
     
+    // MARK: - fetchFavoriteGames
     @objc private func fetchFavoriteGames() {
         viewModel.fetchFavoriteGames()
     }

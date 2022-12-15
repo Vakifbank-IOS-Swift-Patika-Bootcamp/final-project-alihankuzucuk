@@ -7,7 +7,7 @@
 
 import UIKit
 
-// MARK: - GenreCollectionViewCell
+// MARK: GenreCollectionViewCell
 final class GenreCollectionViewCell: UICollectionViewCell {
     
     // MARK: - Constants

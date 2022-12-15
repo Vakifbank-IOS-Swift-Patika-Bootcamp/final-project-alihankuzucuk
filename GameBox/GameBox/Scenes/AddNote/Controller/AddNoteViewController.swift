@@ -7,6 +7,7 @@
 
 import UIKit
 
+// MARK: AddNoteViewController
 final class AddNoteViewController: BaseViewController {
     
     // MARK: - Constants
@@ -81,6 +82,7 @@ final class AddNoteViewController: BaseViewController {
 // MARK: - Extension: Helper Methods
 extension AddNoteViewController {
     
+    // MARK: - prepareScene
     private func prepareScene() {
         checkNoteDetail()
         
@@ -112,6 +114,7 @@ extension AddNoteViewController {
         ViewUtility.labelWithBoldAndNormalText(&lblNoteDate, boldText: "Note Date: ", normalText: Date().formatString())
     }
     
+    // MARK: - checkNoteDetail
     private func checkNoteDetail() {
         // Check model is valid or not
         guard noteModel != nil &&
@@ -126,6 +129,7 @@ extension AddNoteViewController {
         }
     }
     
+    // MARK: - closePresentSheet
     private func closePresentSheet() {
         self.dismiss(animated: true)
     }

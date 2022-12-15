@@ -8,6 +8,7 @@
 import UIKit
 import ImageSlideshow
 
+// MARK: - GameDetailViewController
 final class GameDetailViewController: BaseViewController {
     
     // MARK: - Constants
@@ -39,6 +40,8 @@ final class GameDetailViewController: BaseViewController {
     }
     
     // MARK: - Actions
+    
+    // MARK: - btnGoToGameWebsiteClicked
     @IBAction func btnGoToGameWebsiteClicked(_ sender: Any) {
         RawGClient.getGameDetail(gameId: gameDetail!.id) { detailedGame, error in
             if let url = URL(string: detailedGame?.website ?? ""), UIApplication.shared.canOpenURL(url) {
@@ -51,6 +54,7 @@ final class GameDetailViewController: BaseViewController {
         }
     }
     
+    // MARK: - rightBarBtnFavoriteClicked
     @objc func rightBarBtnFavoriteClicked() {
         switch (GameBoxCoreDataManager.shared.checkFavoriteGameById(game: gameDetail!.id)) {
             case true:
@@ -73,6 +77,7 @@ final class GameDetailViewController: BaseViewController {
 // MARK: - Extension: Helper Methods
 extension GameDetailViewController {
     
+    // MARK: - prepareScene
     private func prepareScene() {
         // Preparing NavigationItem
         self.navigationItem.title = "Game Detail"
@@ -104,6 +109,7 @@ extension GameDetailViewController {
         }
     }
     
+    // MARK: - setRightBarBtnFavoriteImage
     /// Sets rightBarButtonItem's image according to game is favorite or not
     private func setRightBarBtnFavoriteImage() {
         switch (GameBoxCoreDataManager.shared.checkFavoriteGameById(game: gameDetail!.id)) {

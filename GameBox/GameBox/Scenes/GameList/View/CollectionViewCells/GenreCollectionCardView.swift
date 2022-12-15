@@ -7,6 +7,7 @@
 
 import UIKit
 
+// MARK: GenreCollectionCardView
 final class GenreCollectionCardView: UIView {
     
     override init(frame: CGRect) {

@@ -10,6 +10,13 @@ import UIKit
 // MARK: - FloatingButton
 final class FloatingButton {
     
+    // MARK: - getFloatingButton
+    /// Sets and returns FloatingButton
+    /// - Parameters:
+    ///   - systemImage: Image of FloatingButton
+    ///   - size: Size of FloatingButton
+    ///   - backgroundColor: Background Color of FloatingButton
+    /// - Returns: FloatingButton
     static func getFloatingButton(systemImage: String, size: Int, backgroundColor: UIColor) -> UIButton {
         let floatingButton: UIButton = {
             let button = UIButton(

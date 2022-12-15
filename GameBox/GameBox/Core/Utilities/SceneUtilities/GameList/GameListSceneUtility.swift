@@ -10,6 +10,7 @@ import UIKit
 // MARK: - GameListSceneUtility
 final class GameListSceneUtility {
     
+    // MARK: - getPullDownMenu
     /// Creates PullDownMenu and returns
     /// - Parameter selfObject: Scene currently showing
     /// - Returns: PullDownMenu which contains filtering and ordering options

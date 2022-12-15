@@ -8,6 +8,7 @@
 import UIKit
 import ImageSlideshow
 
+// MARK: GameTableViewCell
 final class GameTableViewCell: UITableViewCell {
     
     // MARK: - Constants
@@ -28,7 +29,7 @@ final class GameTableViewCell: UITableViewCell {
     
     // MARK: - Methods
     
-    // MARK: Configuring Cell
+    // MARK: - configureCell
     func configureCell(game: GameModel, gameCardColor: UIColor) {
         // Preparing Background
         viewBackground.round(with: RoundType.all, radius: 30)
@@ -52,6 +53,7 @@ final class GameTableViewCell: UITableViewCell {
         GameDetailSceneUtility.setGameTags(&lblTags, game: game, tagShowingType: .between0And10)
     }
     
+    // MARK: - prepareForReuse
     override func prepareForReuse() {
         // imageSlideshow pictures have been temporarily deleted
         imageSlideshow.setImageInputs([])

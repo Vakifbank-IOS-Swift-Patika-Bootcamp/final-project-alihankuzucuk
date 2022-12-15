@@ -7,6 +7,7 @@
 
 import Foundation
 
+// MARK: FavoriteGameModel
 struct FavoriteGameModel {
     let favoriteGameId: UUID
     let favoriteGame: GameModel
