@@ -58,6 +58,8 @@ final class GameListViewController: BaseViewController {
     // Variables for PullDownMenu
     internal var pullDownMenu: UIBarButtonItem!
     private var selectedPullDownMenuActionName: String = ""
+    private var selectedPullDownMenuParentPlatformActionName: String = ""
+    private var selectedPullDownMenuOrderingActionName: String = ""
 
     // MARK: - Life Cycle
     override func viewDidLoad() {
@@ -139,17 +141,42 @@ extension GameListViewController {
         return self.selectedPullDownMenuActionName
     }
     
+    public func getSelectedPullDownOrderingActionName() -> String {
+        return self.selectedPullDownMenuOrderingActionName
+    }
+    
+    public func getSelectedPullDownParentPlatformActionName() -> String {
+        return self.selectedPullDownMenuParentPlatformActionName
+    }
+    
     public func clearFilters() {
-        self.viewModel.clearFilter()
-        self.tableViewGames.setContentOffset(.zero, animated: true)
+        selectedPullDownMenuOrderingActionName = ""
+        selectedPullDownMenuParentPlatformActionName = ""
+        viewModel.clearFilter()
+        selectedGenreIndex = 0
+        collectionViewGenres.reloadData()
+        tableViewGames.setContentOffset(.zero, animated: true)
     }
     
     public func setSelectedPullDownAction(actionName: String) {
-        self.selectedPullDownMenuActionName = actionName
+        if actionName.split(separator: ".")[1] == "ordering" {
+            selectedPullDownMenuActionName = actionName
+            selectedPullDownMenuOrderingActionName = actionName
+        } else if actionName.split(separator: ".")[1] == "parentPlatform" {
+            selectedPullDownMenuActionName = actionName
+            selectedPullDownMenuParentPlatformActionName = actionName
+        } else {
+            selectedPullDownMenuActionName = actionName
+        }
     }
     
     public func setPullDownMenuFilter(filterFromPullDown: [String: String]) {
-        self.viewModel.setFilter(filter: filterFromPullDown)
+        if selectedGenreIndex == 0 {
+            viewModel.removeFilter(filterKey: "genres")
+        } else {
+            viewModel.addFilter(filter: ["genres": viewModel.getGenre(at: (selectedGenreIndex - 1))!.slug])
+        }
+        viewModel.addFilter(filter: filterFromPullDown)
     }
     
     public func pullDownFetchGames(){
