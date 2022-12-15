@@ -50,6 +50,7 @@
 		C3B393812944DFFB00700860 /* GameTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3B3937F2944DFFA00700860 /* GameTableViewCell.swift */; };
 		C3B393822944DFFB00700860 /* GameTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C3B393802944DFFA00700860 /* GameTableViewCell.xib */; };
 		C3B393852944F09000700860 /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3B393842944F09000700860 /* UIView+Extension.swift */; };
+		C3C5F594294BB6C8004BEBFA /* LocalNotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C5F593294BB6C8004BEBFA /* LocalNotificationManager.swift */; };
 		C3D3EA292948731400B0530B /* FavoriteListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D3EA282948731400B0530B /* FavoriteListViewController.swift */; };
 		C3D3EA2C2948766100B0530B /* NSNotificationNames.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D3EA2B2948766100B0530B /* NSNotificationNames.swift */; };
 /* End PBXBuildFile section */
@@ -123,6 +124,7 @@
 		C3B3937F2944DFFA00700860 /* GameTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameTableViewCell.swift; sourceTree = "<group>"; };
 		C3B393802944DFFA00700860 /* GameTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GameTableViewCell.xib; sourceTree = "<group>"; };
 		C3B393842944F09000700860 /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
+		C3C5F593294BB6C8004BEBFA /* LocalNotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNotificationManager.swift; sourceTree = "<group>"; };
 		C3D3EA282948731400B0530B /* FavoriteListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteListViewController.swift; sourceTree = "<group>"; };
 		C3D3EA2B2948766100B0530B /* NSNotificationNames.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSNotificationNames.swift; sourceTree = "<group>"; };
 		C5D504B7E5F6AA42381EF36B /* Pods_GameBox_GameBoxUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GameBox_GameBoxUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -424,6 +426,7 @@
 				C30942982941BC5A00AF712F /* Network */,
 				C3B393832944F06900700860 /* Extensions */,
 				C338719929471FE600BDB9E1 /* CoreDataManagers */,
+				C3C5F592294BB6AB004BEBFA /* NotificationManagers */,
 				C3D3EA2A2948762100B0530B /* Enums */,
 				C34076A1294898E500D37051 /* Utilities */,
 				C3AD74422948BEFF0086749B /* Components */,
@@ -558,6 +561,14 @@
 				C309BB202949BA0E00CF6321 /* Date+Extension.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		C3C5F592294BB6AB004BEBFA /* NotificationManagers */ = {
+			isa = PBXGroup;
+			children = (
+				C3C5F593294BB6C8004BEBFA /* LocalNotificationManager.swift */,
+			);
+			path = NotificationManagers;
 			sourceTree = "<group>";
 		};
 		C3D3EA272948725400B0530B /* Controller */ = {
@@ -830,6 +841,7 @@
 			files = (
 				C309BB252949C57B00CF6321 /* AddNoteViewController.swift in Sources */,
 				C37D66BF2949197C00996474 /* NoteModel.swift in Sources */,
+				C3C5F594294BB6C8004BEBFA /* LocalNotificationManager.swift in Sources */,
 				C3B393812944DFFB00700860 /* GameTableViewCell.swift in Sources */,
 				C37548682941A4F100C52AFF /* AppDelegate.swift in Sources */,
 				C34D143A294B4970006D1F14 /* OnboardingModel.swift in Sources */,

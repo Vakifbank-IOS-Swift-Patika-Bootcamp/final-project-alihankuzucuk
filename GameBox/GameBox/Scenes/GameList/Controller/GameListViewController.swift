@@ -60,10 +60,16 @@ final class GameListViewController: BaseViewController {
     private var selectedPullDownMenuActionName: String = ""
     private var selectedPullDownMenuParentPlatformActionName: String = ""
     private var selectedPullDownMenuOrderingActionName: String = ""
+    
+    // Variables for Local Notification
+    private var localNotificationManager: LocalNotificationManagerProtocol = LocalNotificationManager()
 
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // Local Notification pushed
+        localNotificationManager.scheduleLocalNotification(notificationTitle: "GameBox", notificationSubtitle: "Welcome to the game world", notificationBody: "There are hundreds of thousands of games to review. GameBox is ready for you...")
         
         prepareScene()
     }
