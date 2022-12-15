@@ -151,28 +151,66 @@ extension NoteListViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let selectedNote = viewModel.getNote(at: indexPath.row) else { return }
+        
         tableView.deselectRow(at: indexPath, animated: true)
         
-        guard let editNoteViewController = storyboard?.instantiateViewController(withIdentifier: AddNoteViewController.identifier) as? AddNoteViewController else { return }
+        let alertSheet = UIAlertController(title: "Options", message: "Please select an option", preferredStyle: .actionSheet)
 
-        editNoteViewController.noteModel = NoteModel(id: selectedNote.id, gameId: selectedNote.gameId, note: selectedNote.note, noteGame: selectedNote.noteGame, noteState: .editNote)
-        let editNoteNavController = UINavigationController(rootViewController: editNoteViewController)
-        self.present(editNoteNavController, animated: true)
+        // MARK: - ActionSheet Edit
+        alertSheet.addAction(UIAlertAction(title: "Edit", style: .default, handler: { (UIAlertAction) in
+            guard let editNoteViewController = self.storyboard?.instantiateViewController(withIdentifier: AddNoteViewController.identifier) as? AddNoteViewController else { return }
+            
+            editNoteViewController.noteModel = NoteModel(id: selectedNote.id, gameId: selectedNote.gameId, note: selectedNote.note, noteGame: selectedNote.noteGame, noteState: .editNote)
+            
+            let editNoteNavController = UINavigationController(rootViewController: editNoteViewController)
+            self.present(editNoteNavController, animated: true)
+        }))
+        
+        // MARK: - ActionSheet Delete
+        alertSheet.addAction(UIAlertAction(title: "Delete", style: .destructive, handler: { (UIAlertAction) in
+            if GameBoxCoreDataManager.shared.deleteNoteBy(id: selectedNote.id) == true {
+                self.viewModel.fetchNotes()
+            }
+        }))
+        
+        // MARK: - ActionSheet Cancel
+        alertSheet.addAction(UIAlertAction(title: "Dismiss", style: .cancel, handler: { (UIAlertAction) in
+            
+        }))
+        
+        self.present(alertSheet, animated: true)
     }
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let action = UIContextualAction(style: .normal, title: "Delete", handler: { [weak self] (action, view, completionHandler) in
+        guard let selectedNote = viewModel.getNote(at: indexPath.row) else { return UISwipeActionsConfiguration() }
+        
+        // MARK: - Contextual Action Edit
+        let actionEdit = UIContextualAction(style: .normal, title: "Edit", handler: { [weak self] (action, view, completionHandler) in
             guard let self = self else { return }
-            if GameBoxCoreDataManager.shared.deleteNoteBy(id: self.viewModel.getNote(at: indexPath.row)!.id) == true {
+            guard let editNoteViewController = self.storyboard?.instantiateViewController(withIdentifier: AddNoteViewController.identifier) as? AddNoteViewController else { return }
+
+            editNoteViewController.noteModel = NoteModel(id: selectedNote.id, gameId: selectedNote.gameId, note: selectedNote.note, noteGame: selectedNote.noteGame, noteState: .editNote)
+            
+            let editNoteNavController = UINavigationController(rootViewController: editNoteViewController)
+            
+            self.present(editNoteNavController, animated: true)
+          })
+        
+        actionEdit.image = UIImage(systemName: "note.text")
+        actionEdit.backgroundColor = Constants.Colors.PageColors.green
+        
+        // MARK: - Contextual Action Delete
+        let actionDelete = UIContextualAction(style: .normal, title: "Delete", handler: { [weak self] (action, view, completionHandler) in
+            guard let self = self else { return }
+            if GameBoxCoreDataManager.shared.deleteNoteBy(id: selectedNote.id) == true {
                 self.viewModel.fetchNotes()
-                completionHandler(true)
-            } else {
-                completionHandler(false)
             }
           })
-        action.image = UIImage(systemName: "trash")
-        action.backgroundColor = .red
-        let configuration = UISwipeActionsConfiguration(actions: [action])
+        
+        actionDelete.image = UIImage(systemName: "trash")
+        actionDelete.backgroundColor = .red
+        
+        let configuration = UISwipeActionsConfiguration(actions: [actionDelete, actionEdit])
         return configuration
     }
     

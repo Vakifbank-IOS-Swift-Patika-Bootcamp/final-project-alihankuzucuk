@@ -192,26 +192,66 @@ extension FavoriteListViewController: UITableViewDataSource, UITableViewDelegate
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let selectedGame = viewModel.getFavoriteGame(at: indexPath.row) else { return }
+        
         tableView.deselectRow(at: indexPath, animated: true)
         
-        guard let gameDetailViewController = storyboard?.instantiateViewController(withIdentifier: GameDetailViewController.identifier) as? GameDetailViewController else { return }
-        gameDetailViewController.gameDetail = selectedGame
-        self.navigationController?.pushViewController(gameDetailViewController, animated: true)
+        // MARK: - ActionSheet
+        let alertSheet = UIAlertController(title: "Options", message: "Please select an option", preferredStyle: .actionSheet)
+        
+        // MARK: - ActionSheet Detail
+        alertSheet.addAction(UIAlertAction(title: "Detail", style: .default, handler: { (UIAlertAction) in
+            guard let gameDetailViewController = self.storyboard?.instantiateViewController(withIdentifier: GameDetailViewController.identifier) as? GameDetailViewController else { return }
+            
+            gameDetailViewController.gameDetail = selectedGame
+            
+            self.navigationController?.pushViewController(gameDetailViewController, animated: true)
+        }))
+        
+        // MARK: - ActionSheet Delete
+        alertSheet.addAction(UIAlertAction(title: "Delete", style: .destructive, handler: { (UIAlertAction) in
+            if GameBoxCoreDataManager.shared.deleteFavoriteBy(gameId: selectedGame.id) == true {
+                self.viewModel.fetchFavoriteGames()
+            }
+        }))
+        
+        // MARK: - ActionSheet Cancel
+        alertSheet.addAction(UIAlertAction(title: "Dismiss", style: .cancel, handler: { (UIAlertAction) in
+            
+        }))
+        
+        self.present(alertSheet, animated: true)
     }
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let action = UIContextualAction(style: .normal, title: "Unfavorite", handler: { [weak self] (action, view, completionHandler) in
+        guard let selectedGame = viewModel.getFavoriteGame(at: indexPath.row) else { return UISwipeActionsConfiguration() }
+        
+        // MARK: - Contextual Action Detail
+        let actionDetail = UIContextualAction(style: .normal, title: "Detail", handler: { [weak self] (action, view, completionHandler) in
             guard let self = self else { return }
-            if GameBoxCoreDataManager.shared.deleteFavoriteBy(gameId: self.viewModel.getFavoriteGame(at: indexPath.row)!.id) == true {
+            
+            guard let gameDetailViewController = self.storyboard?.instantiateViewController(withIdentifier: GameDetailViewController.identifier) as? GameDetailViewController else { return }
+            
+            gameDetailViewController.gameDetail = selectedGame
+            
+            self.navigationController?.pushViewController(gameDetailViewController, animated: true)
+          })
+        
+        actionDetail.image = UIImage(systemName: "note.text")
+        actionDetail.backgroundColor = Constants.Colors.PageColors.orange
+        
+        // MARK: - Contextual Action Unfavorite
+        let actionUnfavorite = UIContextualAction(style: .normal, title: "Unfavorite", handler: { [weak self] (action, view, completionHandler) in
+            guard let self = self else { return }
+            
+            if GameBoxCoreDataManager.shared.deleteFavoriteBy(gameId: selectedGame.id) == true {
                 self.viewModel.fetchFavoriteGames()
-                completionHandler(true)
-            } else {
-                completionHandler(false)
             }
           })
-        action.image = UIImage(systemName: "heart.slash")
-        action.backgroundColor = .red
-        let configuration = UISwipeActionsConfiguration(actions: [action])
+        
+        actionUnfavorite.image = UIImage(systemName: "heart.slash")
+        actionUnfavorite.backgroundColor = .red
+        
+        let configuration = UISwipeActionsConfiguration(actions: [actionUnfavorite, actionDetail])
         return configuration
     }
     

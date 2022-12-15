@@ -112,6 +112,10 @@ extension AddNoteViewController {
         ViewUtility.labelWithBoldAndNormalText(&lblGameId, boldText: "Game Id: ", normalText: String(noteModel!.gameId))
         ViewUtility.labelWithBoldAndNormalText(&lblGameName, boldText: "Game Name: ", normalText: String(noteModel!.noteGame!.name))
         ViewUtility.labelWithBoldAndNormalText(&lblNoteDate, boldText: "Note Date: ", normalText: Date().formatString())
+        
+        // We are giving gestureRecognizer to the view because the keyboard will be closed no matter where is clicked except the keyboard
+        let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
+        view.addGestureRecognizer(gestureRecognizer)
     }
     
     // MARK: - checkNoteDetail
@@ -132,6 +136,10 @@ extension AddNoteViewController {
     // MARK: - closePresentSheet
     private func closePresentSheet() {
         self.dismiss(animated: true)
+    }
+    
+    @objc private func hideKeyboard() {
+        view.endEditing(true)
     }
     
 }
