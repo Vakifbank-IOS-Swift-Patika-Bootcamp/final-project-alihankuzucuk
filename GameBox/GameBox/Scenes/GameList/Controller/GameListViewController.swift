@@ -52,7 +52,12 @@ final class GameListViewController: BaseViewController {
     private var pageColorNavigationBar: UIColor = Constants.Colors.PageColors.blue
     private var pageColorGenreCard: UIColor = Constants.Colors.PageColors.blue
     
+    // Variable for Genre categories detection
     private var selectedGenreIndex: Int = 0
+    
+    // Variables for PullDownMenu
+    internal var pullDownMenu: UIBarButtonItem!
+    private var selectedPullDownMenuActionName: String = ""
 
     // MARK: - Life Cycle
     override func viewDidLoad() {
@@ -109,7 +114,12 @@ extension GameListViewController {
         navigationItem.hidesSearchBarWhenScrolling = false
         
         // Filtering Menu
-        prepareNavigationMenu()
+        let pullDownMenu = UIBarButtonItem(title: "",
+                                           image: UIImage(named: "filter"),
+                                           primaryAction: nil,
+                                           menu: generatePullDownMenu())
+        self.pullDownMenu = pullDownMenu
+        navigationItem.rightBarButtonItem = pullDownMenu
         
         // Changing TabBar icon colors
         self.tabBarController?.tabBar.tintColor = Constants.Colors.PageColors.blue
@@ -120,46 +130,34 @@ extension GameListViewController {
         viewModel.fetchGames()
     }
     
-    private func prepareNavigationMenu() {
-        // Options
-        let actionClearFilter = UIAction(title: "Clear All Filters", image: UIImage(systemName: "trash")) { [weak self] _ in
-            guard let self = self else { return }
-            self.viewModel.clearFilter()
-            self.tableViewGames.setContentOffset(.zero, animated: true)
-            self.viewModel.fetchGames()
-        }
-        
-        // Ordering Menu
-        let orderActionRating = UIAction(title: "Rating", image: UIImage(systemName: "gamecontroller")) { [weak self] (_) in
-            guard let self = self else { return }
-            self.viewModel.setFilter(filter: ["ordering" : "rating"])
-            self.viewModel.fetchGames()
-        }
-        
-        let orderActionRatingReversed = UIAction(title: "Rating (Reverse)", image: UIImage(systemName: "gamecontroller")) { [weak self] (_) in
-            guard let self = self else { return }
-            self.viewModel.setFilter(filter: ["ordering" : "-rating"])
-            self.viewModel.fetchGames()
-        }
-        
-        let orderActionMetacritic = UIAction(title: "Metacritic", image: UIImage(systemName: "gamecontroller")) { [weak self] (_) in
-            guard let self = self else { return }
-            self.viewModel.setFilter(filter: ["ordering" : "metacritic"])
-            self.viewModel.fetchGames()
-        }
-        
-        let orderActionMetacriticReversed = UIAction(title: "Metacritic (Reverse)", image: UIImage(systemName: "gamecontroller")) { [weak self] (_) in
-            guard let self = self else { return }
-            self.viewModel.setFilter(filter: ["ordering" : "-metacritic"])
-            self.viewModel.fetchGames()
-        }
-        
-        let subMenuOrdering = UIMenu(title: "Ordering", image: UIImage(systemName: "list.number"), options: .displayInline, children: [orderActionRating, orderActionRatingReversed, orderActionMetacritic, orderActionMetacriticReversed])
-        
-        // Navigation Menu
-        let navigationMenu = UIMenu(title: "Options", children: [actionClearFilter, subMenuOrdering])
-        
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: nil, image: UIImage(named: "filter"), primaryAction: nil, menu: navigationMenu)
+    private func generatePullDownMenu() -> UIMenu {
+        return GameListSceneUtility.getPullDownMenu(selfObject: self)
+    }
+    
+    // MARK: - Public Methods for PullDownMenu
+    public func getSelectedPullDownActionName() -> String {
+        return self.selectedPullDownMenuActionName
+    }
+    
+    public func clearFilters() {
+        self.viewModel.clearFilter()
+        self.tableViewGames.setContentOffset(.zero, animated: true)
+    }
+    
+    public func setSelectedPullDownAction(actionName: String) {
+        self.selectedPullDownMenuActionName = actionName
+    }
+    
+    public func setPullDownMenuFilter(filterFromPullDown: [String: String]) {
+        self.viewModel.setFilter(filter: filterFromPullDown)
+    }
+    
+    public func pullDownFetchGames(){
+        self.viewModel.fetchGames()
+    }
+    
+    public func refreshPullDownMenu() {
+        self.pullDownMenu.menu = self.generatePullDownMenu()
     }
     
 }

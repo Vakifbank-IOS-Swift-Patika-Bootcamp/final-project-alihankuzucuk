@@ -20,6 +20,7 @@
 		C33871A529474C1C00BDB9E1 /* FavoriteGameModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C33871A429474C1C00BDB9E1 /* FavoriteGameModel.swift */; };
 		C34076A32948990700D37051 /* ViewUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = C34076A22948990700D37051 /* ViewUtility.swift */; };
 		C34076A629489BCD00D37051 /* GameDetailSceneUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = C34076A529489BCD00D37051 /* GameDetailSceneUtility.swift */; };
+		C3581C68294B0F0E002C6083 /* GameListSceneUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3581C67294B0F0E002C6083 /* GameListSceneUtility.swift */; };
 		C373D45829423C7B007D3833 /* GameListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C373D45729423C7B007D3833 /* GameListViewModel.swift */; };
 		C37548682941A4F100C52AFF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C37548672941A4F100C52AFF /* AppDelegate.swift */; };
 		C375486A2941A4F100C52AFF /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C37548692941A4F100C52AFF /* SceneDelegate.swift */; };
@@ -85,6 +86,7 @@
 		C33871A429474C1C00BDB9E1 /* FavoriteGameModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteGameModel.swift; sourceTree = "<group>"; };
 		C34076A22948990700D37051 /* ViewUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewUtility.swift; sourceTree = "<group>"; };
 		C34076A529489BCD00D37051 /* GameDetailSceneUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameDetailSceneUtility.swift; sourceTree = "<group>"; };
+		C3581C67294B0F0E002C6083 /* GameListSceneUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameListSceneUtility.swift; sourceTree = "<group>"; };
 		C373D45729423C7B007D3833 /* GameListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameListViewModel.swift; sourceTree = "<group>"; };
 		C37548642941A4F100C52AFF /* GameBox.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GameBox.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C37548672941A4F100C52AFF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -273,6 +275,7 @@
 		C34076A429489BB000D37051 /* SceneUtilities */ = {
 			isa = PBXGroup;
 			children = (
+				C3581C66294B0EF2002C6083 /* GameList */,
 				C34076A729489BEE00D37051 /* GameDetail */,
 			);
 			path = SceneUtilities;
@@ -284,6 +287,14 @@
 				C34076A529489BCD00D37051 /* GameDetailSceneUtility.swift */,
 			);
 			path = GameDetail;
+			sourceTree = "<group>";
+		};
+		C3581C66294B0EF2002C6083 /* GameList */ = {
+			isa = PBXGroup;
+			children = (
+				C3581C67294B0F0E002C6083 /* GameListSceneUtility.swift */,
+			);
+			path = GameList;
 			sourceTree = "<group>";
 		};
 		C373D45629423C63007D3833 /* ViewModel */ = {
@@ -777,6 +788,7 @@
 				C395A0F62943529F001680EF /* GenreCollectionViewCell.swift in Sources */,
 				C33871A529474C1C00BDB9E1 /* FavoriteGameModel.swift in Sources */,
 				C37D66C229491AAE00996474 /* NoteListViewModel.swift in Sources */,
+				C3581C68294B0F0E002C6083 /* GameListSceneUtility.swift in Sources */,
 				C37548722941A4F100C52AFF /* GameBox.xcdatamodeld in Sources */,
 				C309BB212949BA0E00CF6321 /* Date+Extension.swift in Sources */,
 				C39BFF4F2946408800B0BA62 /* GameDetailViewController.swift in Sources */,
