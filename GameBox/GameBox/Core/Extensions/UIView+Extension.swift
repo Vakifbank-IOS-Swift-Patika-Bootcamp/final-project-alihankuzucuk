@@ -20,6 +20,14 @@ enum RoundType {
 // MARK: Extension: UIView
 extension UIView {
     
+    // MARK: - round Computed Property For Onboarding
+    @IBInspectable var cornerRadius: CGFloat {
+        get { return self.cornerRadius }
+        set {
+            self.layer.cornerRadius = newValue
+        }
+    }
+    
     // MARK: - round
     /// Provides radius on which view it is used
     /// - Parameters:
