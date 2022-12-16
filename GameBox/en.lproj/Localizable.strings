@@ -20,6 +20,10 @@
 "scene.onboarding.two" = "You can add the games you like to the favorite list and view them according to their categories";
 "scene.onboarding.three" = "You can take notes as long as you want, with the ability to scroll inside the cell";
 
+// User Notification
+"usernotification.subtitle" = "Welcome to the game world";
+"usernotification.body" = "There are hundreds of thousands of games to review. GameBox is ready for you...";
+
 "Next" = "Next";
 "Get Started" = "Get Started";
 

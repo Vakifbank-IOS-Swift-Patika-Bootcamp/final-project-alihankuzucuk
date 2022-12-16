@@ -21,6 +21,10 @@ final class OnboardingViewController: UIViewController {
     @IBOutlet private weak var pageControlOnboarding: UIPageControl!
     
     // MARK: - Variables
+    // Variables for Local Notification
+    private var localNotificationManager: LocalNotificationManagerProtocol = LocalNotificationManager()
+    private var isLocalNotificationPermissionRequested: Bool = false
+    
     private let slides: [OnboardingModel] = [OnboardingModel(title: "Games".localized,
                                                              description: "scene.onboarding.one".localized,
                                                              image: UIImage(named: "3dcontroller")!),
@@ -78,6 +82,13 @@ extension OnboardingViewController: UICollectionViewDataSource, UICollectionView
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: OnboardingCollectionViewCell.identifier, for: indexPath) as! OnboardingCollectionViewCell
+        
+        if indexPath.row == 0 && isLocalNotificationPermissionRequested == false {
+            isLocalNotificationPermissionRequested = true
+            localNotificationManager.registerForRemoteNotification { permissionGranted in
+                
+            }
+        }
         
         cell.configureCell(slides[indexPath.row], titleColorIndex: indexPath.row)
         

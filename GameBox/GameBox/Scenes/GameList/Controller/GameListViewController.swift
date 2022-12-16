@@ -69,7 +69,9 @@ final class GameListViewController: BaseViewController {
         super.viewDidLoad()
         
         // Local Notification pushed
-        localNotificationManager.scheduleLocalNotification(notificationTitle: "GameBox", notificationSubtitle: "Welcome to the game world", notificationBody: "There are hundreds of thousands of games to review. GameBox is ready for you...")
+        localNotificationManager.scheduleLocalNotification(notificationTitle: "GameBox",
+                                                           notificationSubtitle: "usernotification.subtitle".localized,
+                                                           notificationBody: "usernotification.body".localized)
         
         prepareScene()
     }

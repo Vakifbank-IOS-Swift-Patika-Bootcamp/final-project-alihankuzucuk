@@ -20,6 +20,10 @@
 "scene.onboarding.two" = "Beğendiğiniz oyunları favori listesine ekleyebilir ve kategorilerine göre görüntüleyebilirsiniz";
 "scene.onboarding.three" = "Hücre içinde kaydırma özelliği ile istediğiniz kadar not alabilir ve görüntüleyebilirsiniz";
 
+// User Notification
+"usernotification.subtitle" = "Oyun dünyasına hoş geldin";
+"usernotification.body" = "İncelenecek yüzbinlerce oyun var. GameBox sizin için hazır...";
+
 "Next" = "Sonraki";
 "Get Started" = "Başla";
 
