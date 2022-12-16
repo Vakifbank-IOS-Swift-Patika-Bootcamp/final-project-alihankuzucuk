@@ -11,11 +11,7 @@
 "Warning" = "Uyarı";
 "OK" = "Tamam";
 
-"An error occured while saving your note" = "Notunuzu kaydederken bir hata meydana geldi";
-"Your new note has been saved" = "Notunuz başarıyla kaydedildi";
-"Your note successfully updated" = "Notunuz başarıyla güncellendi";
-"Your note couldn't save" = "Notunuz kaydedilemedi";
-"Please fill the required fields" = "Lütfen zorunlu alanları doldurun";
+"Application will close" = "Uygulama kapatılacak";
 
 // -----------------------------------------------------
 
@@ -32,8 +28,6 @@
 // GameList Scene
 "Games" = "Oyunlar";
 "Type something to search" = "Aramak için birşeyler yazın";
-
-// -----------------------------------------------------
 
 // Genre CollectionView Cards
 "all" = "Tümü";
@@ -104,6 +98,8 @@
 "Note List" = "Not Listesi";
 "Notes" = "Notlar";
 
+// -----------------------------------------------------
+
 // AddNote Scene
 "scene.addnote.noteid" = "Not Id: %@";
 "scene.addnote.gameid" = "Oyun Id: %@";
@@ -113,3 +109,18 @@
 "scene.addnote.typenote" = "Notunuzu girin...";
 "Add Note" = "Not Ekle";
 "Edit Note" = "Not Düzenle";
+
+"An error occured while saving your note" = "Notunuzu kaydederken bir hata meydana geldi";
+"Your new note has been saved" = "Notunuz başarıyla kaydedildi";
+"Your note successfully updated" = "Notunuz başarıyla güncellendi";
+"Your note couldn't save" = "Notunuz kaydedilemedi";
+"Please fill the required fields" = "Lütfen zorunlu alanları doldurun";
+
+// -----------------------------------------------------
+
+// Settings Scene
+
+"Settings" = "Ayarlar";
+
+"scene.settings.developerinfo" = "Bu uygulama Alihan KUZUCUK tarafından geliştirilmiştir";
+"scene.settings.btnwebsite" = "alihankuzucuk.com 'u ziyaret et";

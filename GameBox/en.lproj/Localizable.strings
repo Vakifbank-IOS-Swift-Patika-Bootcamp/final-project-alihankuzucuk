@@ -11,11 +11,7 @@
 "Warning" = "Warning";
 "OK" = "OK";
 
-"An error occured while saving your note" = "An error occured while saving your note";
-"Your new note has been saved" = "Your new note has been saved";
-"Your note successfully updated" = "Your note successfully updated";
-"Your note couldn't save" = "Your note couldn't save";
-"Please fill the required fields" = "Please fill the required fields";
+"Application will close" = "Application will close";
 
 // -----------------------------------------------------
 
@@ -27,11 +23,11 @@
 "Next" = "Next";
 "Get Started" = "Get Started";
 
+// -----------------------------------------------------
+
 // GameList Scene
 "Games" = "Games";
 "Type something to search" = "Type something to search";
-
-// -----------------------------------------------------
 
 // Genre CollectionView Cards
 "all" = "All";
@@ -102,6 +98,8 @@
 "Note List" = "Note List";
 "Notes" = "Notes";
 
+// -----------------------------------------------------
+
 // AddNote Scene
 "scene.addnote.noteid" = "Note Id: %@";
 "scene.addnote.gameid" = "Game Id: %@";
@@ -111,3 +109,18 @@
 "scene.addnote.typenote" = "Type your note...";
 "Add Note" = "Add Note";
 "Edit Note" = "Edit Note";
+
+"An error occured while saving your note" = "An error occured while saving your note";
+"Your new note has been saved" = "Your new note has been saved";
+"Your note successfully updated" = "Your note successfully updated";
+"Your note couldn't save" = "Your note couldn't save";
+"Please fill the required fields" = "Please fill the required fields";
+
+// -----------------------------------------------------
+
+// Settings Scene
+
+"Settings" = "Settings";
+
+"scene.settings.developerinfo" = "This application is developed by Alihan KUZUCUK";
+"scene.settings.btnwebsite" = "Visit alihankuzucuk.com";

@@ -570,6 +570,7 @@
                         <segue destination="P5m-zq-uTE" kind="relationship" relationship="viewControllers" id="gXg-4N-wbE"/>
                         <segue destination="gFF-V5-30i" kind="relationship" relationship="viewControllers" id="g6c-Gd-140"/>
                         <segue destination="Qzu-x3-QRa" kind="relationship" relationship="viewControllers" id="a2d-5c-V8S"/>
+                        <segue destination="wh8-9H-3ke" kind="relationship" relationship="viewControllers" id="TDe-cT-AQQ"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZcT-zm-M45" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -614,6 +615,70 @@
             </objects>
             <point key="canvasLocation" x="2407" y="-330"/>
         </scene>
+        <!--Settings-->
+        <scene sceneID="GiZ-aG-0pC">
+            <objects>
+                <viewController id="wh8-9H-3ke" customClass="SettingsViewController" customModule="GameBox" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="9Zi-ax-BrR">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mbj-fX-s0q">
+                                <rect key="frame" x="20" y="718.66666666666663" width="353" height="20.333333333333371"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" systemColor="systemGray2Color"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MdU-gR-lVK">
+                                <rect key="frame" x="20" y="653.66666666666663" width="353" height="35"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="filled" title="Button"/>
+                                <connections>
+                                    <action selector="btnVisitWebsite:" destination="wh8-9H-3ke" eventType="touchUpInside" id="h6d-Kq-7Ry"/>
+                                </connections>
+                            </button>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="3dusaflag" translatesAutoresizingMaskIntoConstraints="NO" id="ldS-ss-xEo">
+                                <rect key="frame" x="76" y="209" width="240" height="100"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="100" id="F47-LJ-lq4"/>
+                                </constraints>
+                            </imageView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="3dturkishflag" translatesAutoresizingMaskIntoConstraints="NO" id="zh2-Tb-lOL">
+                                <rect key="frame" x="76" y="409" width="240" height="100"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="100" id="hfQ-ej-onj"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="G7I-g5-y9A"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="zh2-Tb-lOL" firstAttribute="top" secondItem="ldS-ss-xEo" secondAttribute="bottom" constant="100" id="Ev7-6P-GR1"/>
+                            <constraint firstItem="MdU-gR-lVK" firstAttribute="leading" secondItem="G7I-g5-y9A" secondAttribute="leading" constant="20" id="IQa-a5-KMp"/>
+                            <constraint firstItem="G7I-g5-y9A" firstAttribute="trailing" secondItem="MdU-gR-lVK" secondAttribute="trailing" constant="20" id="Ie1-Aj-lxN"/>
+                            <constraint firstItem="zh2-Tb-lOL" firstAttribute="leading" secondItem="G7I-g5-y9A" secondAttribute="leading" constant="76" id="KRV-Io-ZWS"/>
+                            <constraint firstItem="ldS-ss-xEo" firstAttribute="leading" secondItem="G7I-g5-y9A" secondAttribute="leading" constant="76" id="UAO-ev-TV6"/>
+                            <constraint firstItem="G7I-g5-y9A" firstAttribute="trailing" secondItem="Mbj-fX-s0q" secondAttribute="trailing" constant="20" id="YnM-px-fEV"/>
+                            <constraint firstItem="G7I-g5-y9A" firstAttribute="trailing" secondItem="zh2-Tb-lOL" secondAttribute="trailing" constant="77" id="aoa-S5-CUY"/>
+                            <constraint firstItem="Mbj-fX-s0q" firstAttribute="leading" secondItem="G7I-g5-y9A" secondAttribute="leading" constant="20" id="dIF-1C-Ahh"/>
+                            <constraint firstItem="ldS-ss-xEo" firstAttribute="top" secondItem="G7I-g5-y9A" secondAttribute="top" constant="150" id="k0w-HD-XZ8"/>
+                            <constraint firstItem="Mbj-fX-s0q" firstAttribute="top" secondItem="MdU-gR-lVK" secondAttribute="bottom" constant="30" id="quI-Jq-yzi"/>
+                            <constraint firstItem="G7I-g5-y9A" firstAttribute="trailing" secondItem="ldS-ss-xEo" secondAttribute="trailing" constant="77" id="rzS-ei-Fif"/>
+                            <constraint firstItem="G7I-g5-y9A" firstAttribute="bottom" secondItem="Mbj-fX-s0q" secondAttribute="bottom" constant="30" id="wGt-eq-wW7"/>
+                        </constraints>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Settings" image="gear.circle" catalog="system" id="qkr-p0-hvF"/>
+                    <connections>
+                        <outlet property="btnVisitWebsite" destination="MdU-gR-lVK" id="Vuk-ix-UJQ"/>
+                        <outlet property="imgVEnglish" destination="ldS-ss-xEo" id="fVs-gU-6dn"/>
+                        <outlet property="imgVTurkish" destination="zh2-Tb-lOL" id="Abp-Il-00z"/>
+                        <outlet property="lblDeveloperInfo" destination="Mbj-fX-s0q" id="NUX-CB-8i7"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="fTz-VU-kJE" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1598" y="559"/>
+        </scene>
         <!--Notes-->
         <scene sceneID="5GY-ke-nSL">
             <objects>
@@ -635,7 +700,10 @@
         </scene>
     </scenes>
     <resources>
+        <image name="3dturkishflag" width="640" height="480"/>
+        <image name="3dusaflag" width="640" height="480"/>
         <image name="gamecontroller.fill" catalog="system" width="128" height="79"/>
+        <image name="gear.circle" catalog="system" width="128" height="123"/>
         <image name="heart.fill" catalog="system" width="128" height="107"/>
         <image name="note.text" catalog="system" width="128" height="107"/>
         <systemColor name="systemBackgroundColor">

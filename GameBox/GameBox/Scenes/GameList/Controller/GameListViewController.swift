@@ -134,6 +134,7 @@ extension GameListViewController {
         self.tabBarController?.tabBar.selectedItem?.title = "Games".localized
         self.tabBarController?.tabBar.items?[1].title = "Favorites".localized
         self.tabBarController?.tabBar.items?[2].title = "Notes".localized
+        self.tabBarController?.tabBar.items?[3].title = "Settings".localized
         
         // Preparing viewModel
         viewModel.delegate = self
