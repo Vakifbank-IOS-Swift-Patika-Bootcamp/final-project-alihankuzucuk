@@ -46,20 +46,20 @@ final class OnboardingViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        DispatchQueue.main.asyncAfter(deadline: .now()) {
-            let firstUsage = UserDefaults.standard.object(forKey: "firstUsage")
-
-            if (firstUsage as? Bool?) != nil && (firstUsage != nil) == true {
-                self.performSegue(withIdentifier: "segueToMainScene", sender: nil)
-            }
-        }
     }
 
     // MARK: - Actions
     @IBAction func btnOnboardingClicked(_ sender: Any) {
         if currentPage == (slides.count - 1) {
-            UserDefaults.standard.set(true, forKey: "firstUsage")
-            performSegue(withIdentifier: "segueToMainScene", sender: nil)
+            UserDefaults.standard.set(true, forKey: "notNeedToOnboarding")
+            
+            guard let tabBarController = self.storyboard?.instantiateViewController(withIdentifier: "TabBarController") else { return }
+            let navigationController = UINavigationController(rootViewController: tabBarController)
+            
+            navigationController.modalPresentationStyle = .fullScreen
+            navigationController.modalTransitionStyle = .coverVertical
+            
+            self.present(navigationController, animated: true)
         } else {
             currentPage += 1
             let indexPath = IndexPath(item: currentPage, section: 0)
