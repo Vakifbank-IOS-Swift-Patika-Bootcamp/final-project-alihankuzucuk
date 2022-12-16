@@ -69,7 +69,7 @@ extension NoteListViewController {
     // MARK: - prepareScene
     private func prepareScene() {
         // Preparing NavigationItem
-        self.navigationItem.title = "Note List"
+        self.navigationItem.title = "Note List".localized
         
         // Setting appearance of NavigationBar
         let appearance = UINavigationBarAppearance()
@@ -82,14 +82,15 @@ extension NoteListViewController {
         // Initializing Search Bar
         let search = UISearchController(searchResultsController: nil)
         search.searchResultsUpdater = self
-        search.searchBar.placeholder = "Type something to search"
+        search.searchBar.placeholder = "Type something to search".localized
         navigationItem.searchController = search
         
         // Prevented automatic hiding of SearchController
         navigationItem.hidesSearchBarWhenScrolling = false
         
-        // Changing TabBar icon colors
+        // Preparing selected TabBar
         self.tabBarController?.tabBar.tintColor = Constants.Colors.PageColors.green
+        self.tabBarController?.tabBar.selectedItem?.title = "Notes".localized
         
         // FloatingButton
         view.addSubview(floatingButton)

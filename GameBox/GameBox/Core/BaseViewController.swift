@@ -48,7 +48,7 @@ class BaseViewController: UIViewController, BaseViewControllerProtocol {
     // MARK: - UIAlert
     func showAlert(title: String, message: String, btnOkHandler: ((UIAlertAction) -> Void)? = nil) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
-        let alertBtnOk = UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: btnOkHandler)
+        let alertBtnOk = UIAlertAction(title: "OK".localized, style: UIAlertAction.Style.default, handler: btnOkHandler)
         alert.addAction(alertBtnOk)
         self.present(alert, animated: true, completion: nil)
     }

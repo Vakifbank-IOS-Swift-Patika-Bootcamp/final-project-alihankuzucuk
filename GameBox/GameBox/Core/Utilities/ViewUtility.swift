@@ -47,7 +47,7 @@ final class ViewUtility {
     ///   - normalText: Normal text
     static func labelWithBoldAndNormalText(_ label: inout UILabel, boldText: String, normalText: String) {
         let attributes = [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 18)]
-        let boldString = NSMutableAttributedString(string: boldText, attributes: attributes)
+        let boldString = NSMutableAttributedString(string: boldText.localized, attributes: attributes)
         let normalString = NSMutableAttributedString(string: normalText)
         let resultString = NSMutableAttributedString()
         

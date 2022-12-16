@@ -1,0 +1,115 @@
+/* 
+  Localizable.strings
+  GameBox
+
+  Created by Alihan KUZUCUK on 16.12.2022.
+  
+*/
+
+// App Messages
+"Error" = "Hata";
+"Warning" = "Uyarı";
+"OK" = "Tamam";
+
+"An error occured while saving your note" = "Notunuzu kaydederken bir hata meydana geldi";
+"Your new note has been saved" = "Notunuz başarıyla kaydedildi";
+"Your note successfully updated" = "Notunuz başarıyla güncellendi";
+"Your note couldn't save" = "Notunuz kaydedilemedi";
+"Please fill the required fields" = "Lütfen zorunlu alanları doldurun";
+
+// -----------------------------------------------------
+
+// Onboarding Scene
+"scene.onboarding.one" = "Sayfalama yapısı sayesinde, 800,000 den fazla oyunu görüntüleyebilirsiniz";
+"scene.onboarding.two" = "Beğendiğiniz oyunları favori listesine ekleyebilir ve kategorilerine göre görüntüleyebilirsiniz";
+"scene.onboarding.three" = "Hücre içinde kaydırma özelliği ile istediğiniz kadar not alabilir ve görüntüleyebilirsiniz";
+
+"Next" = "Sonraki";
+"Get Started" = "Başla";
+
+// -----------------------------------------------------
+
+// GameList Scene
+"Games" = "Oyunlar";
+"Type something to search" = "Aramak için birşeyler yazın";
+
+// -----------------------------------------------------
+
+// Genre CollectionView Cards
+"all" = "Tümü";
+"action" = "Aksiyon";
+"indie" = "Bağımsız";
+"adventure" = "Macera";
+"role-playing-games-rpg" = "Rol Yapma Oyunları";
+"strategy" = "Strateji";
+"shooter" = "Nişancı";
+"casual" = "Gündelik";
+"simulation" = "Simülasyon";
+"puzzle" = "Bulmaca";
+"arcade" = "Arcade Oyunları";
+"platformer" = "Platform";
+"racing" = "Yarış";
+"massively-multiplayer" = "Devasa Çok Oyunculu";
+"sports" = "Spor";
+"fighting" = "Savaş";
+"family" = "Aile";
+"board-games" = "Kart Oyunları";
+"educational" = "Eğitici";
+"card" = "Kart";
+
+// -----------------------------------------------------
+
+// PullDown Menu
+"Options" = "Seçenekler";
+"Clear All Filters" = "Filtreleri Temizle";
+"Ordering" = "Sıralama";
+"Rating (Increasing)" = "Rating (Artan)";
+"Rating (Decreasing)" = "Rating (Azalan)";
+"Metacritic (Increasing)" = "Metacritic (Artan)";
+"Metacritic (Decreasing)" = "Metacritic (Azalan)";
+"Game Platform" = "Oyun Platformu";
+
+// -----------------------------------------------------
+
+// GameDetail Scene
+"Game Detail" = "Oyun Detayı";
+"Playtime: " = "Oyun Saati: ";
+"Release Date: " = "Yayınlanma Tarihi: ";
+"Platforms: " = "Platformlar: ";
+"Tags: " = "Etiketler: ";
+"Genres: " = "Türler: ";
+"Age Rating: " = "Yaş Kısıtlaması: ";
+"Description:" = "Açıklama:";
+"Go to Game Website" = "Web sitesine git";
+
+// Mutable Variables
+"scene.gamedetail.playtime" = "%i Saat";
+"messages.newFavoriteGame" = "%@ favori listenize eklendi";
+"messages.unfavoriteGame" = "%@ favori listenizden çıkarıldı";
+
+// -----------------------------------------------------
+
+// FavoriteList Scene
+"Favorite List" = "Favori Listesi";
+"Favorites" = "Favoriler";
+"Please select an option" = "Lütfen bir seçim yapın";
+"Detail" = "Detay";
+"Delete" = "Sil";
+"Dismiss" = "İptal";
+"Unfavorite" = "Favorilerden kaldır";
+
+// -----------------------------------------------------
+
+// NoteList Scene
+"Note List" = "Not Listesi";
+"Notes" = "Notlar";
+
+// AddNote Scene
+"scene.addnote.noteid" = "Not Id: %@";
+"scene.addnote.gameid" = "Oyun Id: %@";
+"scene.addnote.gamename" = "Oyun Adı: %@";
+"scene.addnote.notedate" = "Not Tarihi: %@";
+"scene.addnote.note" = "Not:";
+"scene.addnote.typenote" = "Notunuzu girin...";
+"Add Note" = "Not Ekle";
+"Edit Note" = "Not Düzenle";

@@ -21,23 +21,23 @@ final class OnboardingViewController: UIViewController {
     @IBOutlet private weak var pageControlOnboarding: UIPageControl!
     
     // MARK: - Variables
-    private let slides: [OnboardingModel] = [OnboardingModel(title: "Games",
-                                                             description: "Thanks to Pagination, you can view more than 800,000 games",
+    private let slides: [OnboardingModel] = [OnboardingModel(title: "Games".localized,
+                                                             description: "scene.onboarding.one".localized,
                                                              image: UIImage(named: "3dcontroller")!),
-                                             OnboardingModel(title: "Favorites",
-                                                             description: "You can add the games you like to the favorite list and view them according to their categories",
+                                             OnboardingModel(title: "Favorites".localized,
+                                                             description: "scene.onboarding.two".localized,
                                                              image: UIImage(named: "3dheart")!),
                                              OnboardingModel(title: "Notes",
-                                                             description: "You can take notes as long as you want, with the ability to scroll inside the cell",
+                                                             description: "scene.onboarding.three".localized,
                                                              image: UIImage(named: "3dnote")!)]
     
     private var currentPage: Int = 0 {
         didSet {
             pageControlOnboarding.currentPage = currentPage
             if currentPage == slides.count - 1 {
-                btnOnboarding.setTitle("Get Started", for: .normal)
+                btnOnboarding.setTitle("Get Started".localized, for: .normal)
             } else {
-                btnOnboarding.setTitle("Next", for: .normal)
+                btnOnboarding.setTitle("Next".localized, for: .normal)
             }
         }
     }
@@ -45,7 +45,7 @@ final class OnboardingViewController: UIViewController {
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        btnOnboarding.setTitle("Next".localized, for: .normal)
     }
 
     // MARK: - Actions
