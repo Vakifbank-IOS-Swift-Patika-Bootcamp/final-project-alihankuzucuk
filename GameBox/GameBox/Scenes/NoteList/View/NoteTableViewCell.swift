@@ -31,11 +31,19 @@ final class NoteTableViewCell: UITableViewCell {
         viewNoteCellContentBackground.backgroundColor = Constants.Colors.BackgroundColors.green
         
         // Preparing Labels
-        ViewUtility.labelWithBoldAndNormalText(&lblNoteId, boldText: "Note Id: ", normalText: note.id.uuidString)
-        ViewUtility.labelWithBoldAndNormalText(&lblGameId, boldText: "Game Id: ", normalText: String(note.gameId))
-        ViewUtility.labelWithBoldAndNormalText(&lblGameName, boldText: "Game Name: ", normalText: String(note.noteGame!.name))
-        ViewUtility.labelWithBoldAndNormalText(&lblNoteDate, boldText: "Note Date: ", normalText: String(note.date!.formatString()))
-        ViewUtility.labelWithBoldAndNormalText(&lblNoteHeader, boldText: "Note:", normalText: "")
+        ViewUtility.labelWithBoldAndNormalText(&lblNoteId,
+                                               boldText: String(format: NSLocalizedString("scene.addnote.noteid", comment: ""),"\n"),
+                                               normalText: note.id.uuidString)
+        ViewUtility.labelWithBoldAndNormalText(&lblGameId,
+                                               boldText: String(format: NSLocalizedString("scene.addnote.gameid", comment: ""),""),
+                                               normalText: String(note.gameId))
+        ViewUtility.labelWithBoldAndNormalText(&lblGameName,
+                                               boldText: String(format: NSLocalizedString("scene.addnote.gamename", comment: ""),""),
+                                               normalText: String(note.noteGame!.name))
+        ViewUtility.labelWithBoldAndNormalText(&lblNoteDate,
+                                               boldText: String(format: NSLocalizedString("scene.addnote.notedate", comment: ""),""),
+                                               normalText: String(note.date!.formatString()))
+        ViewUtility.labelWithBoldAndNormalText(&lblNoteHeader, boldText: "scene.addnote.note".localized, normalText: "")
         lblNote.text = note.note
         
     }

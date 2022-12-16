@@ -12,6 +12,7 @@
 "OK" = "OK";
 
 "Application will close" = "Application will close";
+"error.unknown" = "An unknown error occured while performing operations";
 
 // -----------------------------------------------------
 

@@ -157,6 +157,15 @@ extension NoteListViewController: UITableViewDataSource, UITableViewDelegate {
         
         let alertSheet = UIAlertController(title: "Options", message: "Please select an option", preferredStyle: .actionSheet)
 
+        // MARK: - ActionSheet Detail
+        alertSheet.addAction(UIAlertAction(title: "Detail".localized, style: .default, handler: { (UIAlertAction) in
+            guard let noteDetailViewController = self.storyboard?.instantiateViewController(withIdentifier: NoteDetailViewController.identifier) as? NoteDetailViewController else { return }
+            
+            noteDetailViewController.noteModel = selectedNote
+            
+            self.navigationController?.pushViewController(noteDetailViewController, animated: true)
+        }))
+        
         // MARK: - ActionSheet Edit
         alertSheet.addAction(UIAlertAction(title: "Edit", style: .default, handler: { (UIAlertAction) in
             guard let editNoteViewController = self.storyboard?.instantiateViewController(withIdentifier: AddNoteViewController.identifier) as? AddNoteViewController else { return }

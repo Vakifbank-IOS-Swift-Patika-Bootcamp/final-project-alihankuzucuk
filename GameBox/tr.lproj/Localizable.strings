@@ -12,6 +12,7 @@
 "OK" = "Tamam";
 
 "Application will close" = "Uygulama kapatılacak";
+"error.unknown" = "İşlem sırasında bilinmeyen bir hata ile karşılaşıldı";
 
 // -----------------------------------------------------
 
