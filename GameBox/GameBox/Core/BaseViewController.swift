@@ -11,27 +11,29 @@ import MaterialActivityIndicator
 // MARK: - Protocols
 // MARK: BaseViewControllerProtocol
 protocol BaseViewControllerProtocol {
-    // MARK: Variables
+    
+    // MARK: - Variables
     var indicator: MaterialActivityIndicatorView { get }
     
-    // MARK: Methods
-    func showAlert(title: String, message: String)
+    // MARK: - Methods
+    func showAlert(title: String, message: String, btnOkHandler: ((UIAlertAction) -> Void)?)
+    
 }
 
 // MARK: - BaseViewController
 class BaseViewController: UIViewController, BaseViewControllerProtocol {
     
-    // MARK: Variables
+    // MARK: - Variables
     let indicator = MaterialActivityIndicatorView()
 
-    // MARK: Life Cycle
+    // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupActivityIndicatorView()
     }
     
-    // MARK: Activity Indicator Methods
+    // MARK: - Activity Indicator Methods
     private func setupActivityIndicatorView() {
         view.addSubview(indicator)
         setupActivityIndicatorViewConstraints()
@@ -43,10 +45,10 @@ class BaseViewController: UIViewController, BaseViewControllerProtocol {
         indicator.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
     }
     
-    // MARK: UIAlert
-    func showAlert(title: String, message: String) {
+    // MARK: - UIAlert
+    func showAlert(title: String, message: String, btnOkHandler: ((UIAlertAction) -> Void)? = nil) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
-        let alertBtnOk = UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil)
+        let alertBtnOk = UIAlertAction(title: "OK".localized, style: UIAlertAction.Style.default, handler: btnOkHandler)
         alert.addAction(alertBtnOk)
         self.present(alert, animated: true, completion: nil)
     }

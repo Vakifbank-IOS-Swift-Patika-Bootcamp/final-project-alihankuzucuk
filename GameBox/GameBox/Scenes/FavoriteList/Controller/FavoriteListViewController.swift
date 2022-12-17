@@ -7,9 +7,10 @@
 
 import UIKit
 
-// MARK: - FavoriteListViewController
+// MARK: FavoriteListViewController
 final class FavoriteListViewController: BaseViewController {
     
+    // MARK: - Outlets
     @IBOutlet private weak var collectionViewGenres: UICollectionView! {
         didSet {
             collectionViewGenres.delegate = self
@@ -35,16 +36,18 @@ final class FavoriteListViewController: BaseViewController {
     
     // MARK: - Variables
     private var viewModel: FavoriteListViewModelProtocol = FavoriteListViewModel()
+    
+    private var selectedGenreIndex: Int = 0
 
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        prepareScreen()
+        prepareScene()
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        self.tabBarController?.tabBar.tintColor = UIColor(red: 1.00, green: 0.75, blue: 0.00, alpha: 1.00)
+        self.tabBarController?.tabBar.tintColor = Constants.Colors.PageColors.orange
     }
 
 }
@@ -52,13 +55,14 @@ final class FavoriteListViewController: BaseViewController {
 // MARK: - Extension: Helper Methods
 extension FavoriteListViewController {
     
-    private func prepareScreen() {
+    // MARK: - prepareScene
+    private func prepareScene() {
         // Preparing NavigationItem
-        self.navigationItem.title = "Favorite List"
+        self.navigationItem.title = "Favorite List".localized
         
         // Setting appearance of NavigationBar
         let appearance = UINavigationBarAppearance()
-        appearance.backgroundColor = UIColor(red: 1.00, green: 0.75, blue: 0.00, alpha: 1.00)
+        appearance.backgroundColor = Constants.Colors.PageColors.orange
         
         navigationController?.navigationBar.standardAppearance = appearance
         navigationController?.navigationBar.compactAppearance = appearance
@@ -67,14 +71,15 @@ extension FavoriteListViewController {
         // Initializing Search Bar
         let search = UISearchController(searchResultsController: nil)
         search.searchResultsUpdater = self
-        search.searchBar.placeholder = "Type something to search"
+        search.searchBar.placeholder = "Type something to search".localized
         navigationItem.searchController = search
         
         // Prevented automatic hiding of SearchController
         navigationItem.hidesSearchBarWhenScrolling = false
         
-        // Changing TabBar icon colors
-        self.tabBarController?.tabBar.tintColor = UIColor(red: 1.00, green: 0.75, blue: 0.00, alpha: 1.00)
+        // Preparing selected TabBar
+        self.tabBarController?.tabBar.tintColor = Constants.Colors.PageColors.orange
+        self.tabBarController?.tabBar.selectedItem?.title = "Favorites".localized
         
         // Preparing viewModel
         viewModel.delegate = self
@@ -86,6 +91,7 @@ extension FavoriteListViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(fetchFavoriteGames), name: NSNotification.Name(rawValue: NSNotificationNames.gameDeletedFromFavorites.rawValue), object: nil)
     }
     
+    // MARK: - fetchFavoriteGames
     @objc private func fetchFavoriteGames() {
         viewModel.fetchFavoriteGames()
     }
@@ -109,6 +115,7 @@ extension FavoriteListViewController: FavoriteListViewModelDelegate {
     
     func fetchedFavoriteGames() {
         tableViewFavoriteGames.reloadData()
+        collectionViewGenres.reloadData()
     }
     
     func fetchedGenres() {
@@ -128,6 +135,8 @@ extension FavoriteListViewController: UICollectionViewDataSource, UICollectionVi
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GenreCollectionViewCell.identifier, for: indexPath) as? GenreCollectionViewCell
         else { return UICollectionViewCell() }
         
+        let selectedGenreColor = (selectedGenreIndex == indexPath.row) ? Constants.Colors.PageColors.green : Constants.Colors.BackgroundColors.orange
+        
         if indexPath.row == 0 {
             // Initializing "All" as a genre
             let genreAllJson = """
@@ -140,10 +149,10 @@ extension FavoriteListViewController: UICollectionViewDataSource, UICollectionVi
 
             let genreAll = try! JSONDecoder().decode(CommonModel.self, from: Data(genreAllJson.utf8))
             
-            cell.configureCell(genre: genreAll, backgroundColorType: .orange)
+            cell.configureCell(genre: genreAll, genreBackgroundColor: selectedGenreColor)
         } else {
             let cellModel = viewModel.getGenre(at: (indexPath.row - 1))
-            cell.configureCell(genre: cellModel!, backgroundColorType: .orange)
+            cell.configureCell(genre: cellModel!, genreBackgroundColor: selectedGenreColor)
         }
         
         return cell
@@ -155,6 +164,7 @@ extension FavoriteListViewController: UICollectionViewDataSource, UICollectionVi
         } else {
             viewModel.changeFilterGenre(filter: viewModel.getGenre(at: (indexPath.row - 1))!.slug)
         }
+        selectedGenreIndex = indexPath.row
         viewModel.fetchFavoriteGames()
     }
     
@@ -172,10 +182,7 @@ extension FavoriteListViewController: UITableViewDataSource, UITableViewDelegate
               let cellGame = viewModel.getFavoriteGame(at: indexPath.row)
         else { return UITableViewCell() }
         
-        let gameDetailViewModel = GameDetailViewModel()
-        gameDetailViewModel.game = cellGame
-        
-        cell.configureCell(gameDetail: gameDetailViewModel)
+        cell.configureCell(game: cellGame, gameCardColor: Constants.Colors.BackgroundColors.orange)
         
         return cell
     }
@@ -187,24 +194,65 @@ extension FavoriteListViewController: UITableViewDataSource, UITableViewDelegate
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let selectedGame = viewModel.getFavoriteGame(at: indexPath.row) else { return }
         
-        guard let gameDetailViewController = storyboard?.instantiateViewController(withIdentifier: GameDetailViewController.identifier) as? GameDetailViewController else { return }
-        gameDetailViewController.viewModel.game = selectedGame
-        self.navigationController?.pushViewController(gameDetailViewController, animated: true)
+        tableView.deselectRow(at: indexPath, animated: true)
+        
+        // MARK: - ActionSheet
+        let alertSheet = UIAlertController(title: "Options".localized, message: "Please select an option".localized, preferredStyle: .actionSheet)
+        
+        // MARK: - ActionSheet Detail
+        alertSheet.addAction(UIAlertAction(title: "Detail".localized, style: .default, handler: { (UIAlertAction) in
+            guard let gameDetailViewController = self.storyboard?.instantiateViewController(withIdentifier: GameDetailViewController.identifier) as? GameDetailViewController else { return }
+            
+            gameDetailViewController.gameDetail = selectedGame
+            
+            self.navigationController?.pushViewController(gameDetailViewController, animated: true)
+        }))
+        
+        // MARK: - ActionSheet Delete
+        alertSheet.addAction(UIAlertAction(title: "Delete".localized, style: .destructive, handler: { (UIAlertAction) in
+            if GameBoxCoreDataManager.shared.deleteFavoriteBy(gameId: selectedGame.id) == true {
+                self.viewModel.fetchFavoriteGames()
+            }
+        }))
+        
+        // MARK: - ActionSheet Cancel
+        alertSheet.addAction(UIAlertAction(title: "Dismiss".localized, style: .cancel, handler: { (UIAlertAction) in
+            
+        }))
+        
+        self.present(alertSheet, animated: true)
     }
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let action = UIContextualAction(style: .normal, title: "Unfavorite", handler: { [weak self] (action, view, completionHandler) in
+        guard let selectedGame = viewModel.getFavoriteGame(at: indexPath.row) else { return UISwipeActionsConfiguration() }
+        
+        // MARK: - Contextual Action Detail
+        let actionDetail = UIContextualAction(style: .normal, title: "Detail".localized, handler: { [weak self] (action, view, completionHandler) in
             guard let self = self else { return }
-            if GameBoxCoreDataManager.shared.deleteFavoriteBy(gameId: self.viewModel.getFavoriteGame(at: indexPath.row)!.id) == true {
+            
+            guard let gameDetailViewController = self.storyboard?.instantiateViewController(withIdentifier: GameDetailViewController.identifier) as? GameDetailViewController else { return }
+            
+            gameDetailViewController.gameDetail = selectedGame
+            
+            self.navigationController?.pushViewController(gameDetailViewController, animated: true)
+          })
+        
+        actionDetail.image = UIImage(systemName: "note.text")
+        actionDetail.backgroundColor = Constants.Colors.PageColors.orange
+        
+        // MARK: - Contextual Action Unfavorite
+        let actionUnfavorite = UIContextualAction(style: .normal, title: "Unfavorite".localized, handler: { [weak self] (action, view, completionHandler) in
+            guard let self = self else { return }
+            
+            if GameBoxCoreDataManager.shared.deleteFavoriteBy(gameId: selectedGame.id) == true {
                 self.viewModel.fetchFavoriteGames()
-                completionHandler(true)
-            } else {
-                completionHandler(false)
             }
           })
-        action.image = UIImage(systemName: "heart")
-        action.backgroundColor = .red
-        let configuration = UISwipeActionsConfiguration(actions: [action])
+        
+        actionUnfavorite.image = UIImage(systemName: "heart.slash")
+        actionUnfavorite.backgroundColor = .red
+        
+        let configuration = UISwipeActionsConfiguration(actions: [actionUnfavorite, actionDetail])
         return configuration
     }
     
@@ -214,11 +262,15 @@ extension FavoriteListViewController: UITableViewDataSource, UITableViewDelegate
 extension FavoriteListViewController: UISearchResultsUpdating {
     
     func updateSearchResults(for searchController: UISearchController) {
-        guard let searchText = searchController.searchBar.text else { return }
-        if searchText.isEmpty {
-            viewModel.changeFilterSearch(filter: "")
+        if searchController.isActive {
+            guard let searchText = searchController.searchBar.text else { return }
+            if searchText.isEmpty {
+                viewModel.changeFilterSearch(filter: "")
+            } else {
+                viewModel.changeFilterSearch(filter: searchText)
+            }
         } else {
-            viewModel.changeFilterSearch(filter: searchText)
+            viewModel.changeFilterSearch(filter: "")
         }
         tableViewFavoriteGames.reloadData()
     }

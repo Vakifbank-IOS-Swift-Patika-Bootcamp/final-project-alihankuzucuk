@@ -8,6 +8,7 @@
 import UIKit
 import ImageSlideshow
 
+// MARK: GameTableViewCell
 final class GameTableViewCell: UITableViewCell {
     
     // MARK: - Constants
@@ -28,35 +29,36 @@ final class GameTableViewCell: UITableViewCell {
     
     // MARK: - Methods
     
-    // MARK: Configuring Cell
-    func configureCell(gameDetail: GameDetailViewModel) {
+    // MARK: - configureCell
+    func configureCell(game: GameModel, gameCardColor: UIColor) {
         // Preparing Background
         viewBackground.round(with: RoundType.all, radius: 30)
         
         // Preparing Slideshow
-        gameDetail.setImageInputs(&imageSlideshow, gameId: gameDetail.game!.id)
+        ViewUtility.setImageInputs(&imageSlideshow, gameId: game.id)
         
         // Preparing Card Detail
-        switch gameDetail.game!.id%2 {
-            case 0:
-                viewGameDetailBackground.backgroundColor = UIColor(red: 0.16, green: 0.16, blue: 0.16, alpha: 1.00)
-            case 1:
-                viewGameDetailBackground.backgroundColor = UIColor(red: 0.00, green: 0.75, blue: 1.00, alpha: 1.00)
-            default:
-                viewGameDetailBackground.backgroundColor = UIColor(red: 0.00, green: 0.75, blue: 1.00, alpha: 1.00)
-                break
-        }
-        lblGameName.text = gameDetail.game!.name
+        viewGameDetailBackground.backgroundColor = gameCardColor
         
-        gameDetail.labelWithImageAttachment(&lblMetacritic, imageIconType: .resourceImage, imageName: "metacritic", text: " \(gameDetail.game!.metacritic)", textColor: UIColor.white)
+        lblGameName.text = game.name
         
-        gameDetail.labelWithImageAttachment(&lblRating, imageIconType: .systemImage, imageName: "star.fill", text: "\(gameDetail.game!.rating) / \(gameDetail.game!.ratingTop) (\(gameDetail.game!.ratingsCount))", textColor: UIColor.yellow)
+        ViewUtility.labelWithImageAttachment(&lblMetacritic, imageIconType: .resourceImage, imageName: "metacritic", text: " \(game.metacritic)", textColor: UIColor.white)
         
-        gameDetail.labelWithBoldAndNormalText(&lblPlaytime, boldText: "Playtime: ", normalText: "\(String(gameDetail.game!.playtime)) Hours")
-        gameDetail.labelWithBoldAndNormalText(&lblReleaseDate, boldText: "Release Date: ", normalText: "\(String(gameDetail.game!.releaseDate))")
+        ViewUtility.labelWithImageAttachment(&lblRating, imageIconType: .systemImage, imageName: "star.fill", text: "\(game.rating) / \(game.ratingTop) (\(game.ratingsCount))", textColor: UIColor.yellow)
         
-        gameDetail.setParentPlatforms(&lblParentPlatforms)
-        gameDetail.setGameTags(&lblTags, tagShowingType: .between0And10)
+        ViewUtility.labelWithBoldAndNormalText(&lblPlaytime,
+                                               boldText: "Playtime: ",
+                                               normalText: String(format: NSLocalizedString("scene.gamedetail.playtime", comment: ""), game.playtime))
+        ViewUtility.labelWithBoldAndNormalText(&lblReleaseDate, boldText: "Release Date: ", normalText: "\(String(game.releaseDate))")
+        
+        GameDetailSceneUtility.setParentPlatforms(&lblParentPlatforms, game: game)
+        GameDetailSceneUtility.setGameTags(&lblTags, game: game, tagShowingType: .between0And10)
+    }
+    
+    // MARK: - prepareForReuse
+    override func prepareForReuse() {
+        // imageSlideshow pictures have been temporarily deleted
+        imageSlideshow.setImageInputs([])
     }
     
 }

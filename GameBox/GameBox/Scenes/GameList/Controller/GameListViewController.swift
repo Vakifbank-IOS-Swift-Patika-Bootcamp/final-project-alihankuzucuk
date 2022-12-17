@@ -7,8 +7,18 @@
 
 import UIKit
 
+// MARK: - Enums
+// MARK: GameListRedirection
+enum GameListRedirection {
+    case toDetailPage
+    case toNotePage
+}
+
 // MARK: - GameListViewController
 final class GameListViewController: BaseViewController {
+    
+    // MARK: - Constants
+    static let identifier = String(describing: GameListViewController.self)
     
     // MARK: - Outlets
     @IBOutlet private weak var collectionViewGenres: UICollectionView! {
@@ -36,16 +46,38 @@ final class GameListViewController: BaseViewController {
     
     // MARK: - Variables
     private var viewModel: GameListViewModelProtocol = GameListViewModel()
+    
+    // Variables for colorizing page
+    public var gameListRedirection: GameListRedirection?
+    private var pageColorNavigationBar: UIColor = Constants.Colors.PageColors.blue
+    private var pageColorGenreCard: UIColor = Constants.Colors.PageColors.blue
+    
+    // Variable for Genre categories detection
+    private var selectedGenreIndex: Int = 0
+    
+    // Variables for PullDownMenu
+    internal var pullDownMenu: UIBarButtonItem!
+    private var selectedPullDownMenuActionName: String = ""
+    private var selectedPullDownMenuParentPlatformActionName: String = ""
+    private var selectedPullDownMenuOrderingActionName: String = ""
+    
+    // Variables for Local Notification
+    private var localNotificationManager: LocalNotificationManagerProtocol = LocalNotificationManager()
 
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        prepareScreen()
+        // Local Notification pushed
+        localNotificationManager.scheduleLocalNotification(notificationTitle: "GameBox",
+                                                           notificationSubtitle: "usernotification.subtitle".localized,
+                                                           notificationBody: "usernotification.body".localized)
+        
+        prepareScene()
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        self.tabBarController?.tabBar.tintColor = UIColor(red: 0.00, green: 0.75, blue: 1.00, alpha: 1.00)
+        self.tabBarController?.tabBar.tintColor = Constants.Colors.PageColors.blue
     }
 
 }
@@ -53,13 +85,30 @@ final class GameListViewController: BaseViewController {
 // MARK: - Extension: Helper Methods
 extension GameListViewController {
     
-    private func prepareScreen() {
+    private func prepareScene() {
+        // Page redirection stabilized
+        gameListRedirection = gameListRedirection == nil ? .toDetailPage : .toNotePage
+        
         // Preparing NavigationItem
-        self.navigationItem.title = "Games"
+        self.navigationItem.title = "Games".localized
         
         // Setting appearance of NavigationBar
         let appearance = UINavigationBarAppearance()
-        appearance.backgroundColor = UIColor(red: 0.00, green: 0.75, blue: 1.00, alpha: 1.00)
+        
+        // Preparing Page Colors
+        switch gameListRedirection {
+            case .toDetailPage:
+                pageColorNavigationBar = Constants.Colors.PageColors.blue
+                pageColorGenreCard = Constants.Colors.BackgroundColors.blue
+            case .toNotePage:
+                pageColorNavigationBar = Constants.Colors.PageColors.green
+                pageColorGenreCard = Constants.Colors.BackgroundColors.green
+            default:
+                showAlert(title: "Error", message: "An error occurred while determining target page")
+                break
+        }
+        
+        appearance.backgroundColor = pageColorNavigationBar
         
         navigationController?.navigationBar.standardAppearance = appearance
         navigationController?.navigationBar.compactAppearance = appearance
@@ -68,19 +117,86 @@ extension GameListViewController {
         // Initializing Search Bar
         let search = UISearchController(searchResultsController: nil)
         search.searchResultsUpdater = self
-        search.searchBar.placeholder = "Type something to search"
+        search.searchBar.placeholder = "Type something to search".localized
         navigationItem.searchController = search
         
         // Prevented automatic hiding of SearchController
         navigationItem.hidesSearchBarWhenScrolling = false
         
-        // Changing TabBar icon colors
-        self.tabBarController?.tabBar.tintColor = UIColor(red: 0.00, green: 0.75, blue: 1.00, alpha: 1.00)
+        // Filtering Menu
+        let pullDownMenu = UIBarButtonItem(title: "",
+                                           image: UIImage(named: "filter"),
+                                           primaryAction: nil,
+                                           menu: generatePullDownMenu())
+        self.pullDownMenu = pullDownMenu
+        navigationItem.rightBarButtonItem = pullDownMenu
+        
+        // Preparing selected TabBar
+        self.tabBarController?.tabBar.tintColor = Constants.Colors.PageColors.blue
+        self.tabBarController?.tabBar.selectedItem?.title = "Games".localized
+        self.tabBarController?.tabBar.items?[1].title = "Favorites".localized
+        self.tabBarController?.tabBar.items?[2].title = "Notes".localized
+        self.tabBarController?.tabBar.items?[3].title = "Settings".localized
         
         // Preparing viewModel
         viewModel.delegate = self
         viewModel.fetchGenres()
         viewModel.fetchGames()
+    }
+    
+    private func generatePullDownMenu() -> UIMenu {
+        return GameListSceneUtility.getPullDownMenu(selfObject: self)
+    }
+    
+    // MARK: - Public Methods for PullDownMenu
+    public func getSelectedPullDownActionName() -> String {
+        return self.selectedPullDownMenuActionName
+    }
+    
+    public func getSelectedPullDownOrderingActionName() -> String {
+        return self.selectedPullDownMenuOrderingActionName
+    }
+    
+    public func getSelectedPullDownParentPlatformActionName() -> String {
+        return self.selectedPullDownMenuParentPlatformActionName
+    }
+    
+    public func clearFilters() {
+        selectedPullDownMenuOrderingActionName = ""
+        selectedPullDownMenuParentPlatformActionName = ""
+        viewModel.clearFilter()
+        selectedGenreIndex = 0
+        collectionViewGenres.reloadData()
+        tableViewGames.setContentOffset(.zero, animated: true)
+    }
+    
+    public func setSelectedPullDownAction(actionName: String) {
+        if actionName.split(separator: ".")[1] == "ordering" {
+            selectedPullDownMenuActionName = actionName
+            selectedPullDownMenuOrderingActionName = actionName
+        } else if actionName.split(separator: ".")[1] == "parentPlatform" {
+            selectedPullDownMenuActionName = actionName
+            selectedPullDownMenuParentPlatformActionName = actionName
+        } else {
+            selectedPullDownMenuActionName = actionName
+        }
+    }
+    
+    public func setPullDownMenuFilter(filterFromPullDown: [String: String]) {
+        if selectedGenreIndex == 0 {
+            viewModel.removeFilter(filterKey: "genres")
+        } else {
+            viewModel.addFilter(filter: ["genres": viewModel.getGenre(at: (selectedGenreIndex - 1))!.slug])
+        }
+        viewModel.addFilter(filter: filterFromPullDown)
+    }
+    
+    public func pullDownFetchGames(){
+        self.viewModel.fetchGames()
+    }
+    
+    public func refreshPullDownMenu() {
+        self.pullDownMenu.menu = self.generatePullDownMenu()
     }
     
 }
@@ -102,6 +218,7 @@ extension GameListViewController: GameListViewModelDelegate {
     
     func fetchedGames() {
         tableViewGames.reloadData()
+        collectionViewGenres.reloadData()
     }
     
     func fetchedGenres() {
@@ -121,6 +238,14 @@ extension GameListViewController: UICollectionViewDataSource, UICollectionViewDe
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GenreCollectionViewCell.identifier, for: indexPath) as? GenreCollectionViewCell
         else { return UICollectionViewCell() }
         
+        var selectedGenreColor: UIColor
+        switch gameListRedirection! {
+            case .toDetailPage:
+                selectedGenreColor = (selectedGenreIndex == indexPath.row) ? Constants.Colors.PageColors.green : pageColorGenreCard
+            case .toNotePage:
+                selectedGenreColor = (selectedGenreIndex == indexPath.row) ? Constants.Colors.PageColors.blue : pageColorGenreCard
+        }
+        
         if indexPath.row == 0 {
             // Initializing "All" as a genre
             let genreAllJson = """
@@ -133,10 +258,10 @@ extension GameListViewController: UICollectionViewDataSource, UICollectionViewDe
 
             let genreAll = try! JSONDecoder().decode(CommonModel.self, from: Data(genreAllJson.utf8))
             
-            cell.configureCell(genre: genreAll, backgroundColorType: .blue)
+            cell.configureCell(genre: genreAll, genreBackgroundColor: selectedGenreColor)
         } else {
             let cellModel = viewModel.getGenre(at: (indexPath.row - 1))
-            cell.configureCell(genre: cellModel!, backgroundColorType: .blue)
+            cell.configureCell(genre: cellModel!, genreBackgroundColor: selectedGenreColor)
         }
         
         return cell
@@ -148,6 +273,7 @@ extension GameListViewController: UICollectionViewDataSource, UICollectionViewDe
         } else {
             viewModel.addFilter(filter: ["genres": viewModel.getGenre(at: (indexPath.row - 1))!.slug])
         }
+        selectedGenreIndex = indexPath.row
         viewModel.fetchGames()
     }
     
@@ -165,10 +291,8 @@ extension GameListViewController: UITableViewDataSource, UITableViewDelegate {
               let cellGame = viewModel.getGame(at: indexPath.row)
         else { return UITableViewCell() }
         
-        let gameDetailViewModel = GameDetailViewModel()
-        gameDetailViewModel.game = cellGame
-        
-        cell.configureCell(gameDetail: gameDetailViewModel)
+        let cellColor = gameListRedirection == .toNotePage ? Constants.Colors.BackgroundColors.gray : Constants.Colors.BackgroundColors.blue
+        cell.configureCell(game: cellGame, gameCardColor: cellColor)
         
         if indexPath.row == (viewModel.getGameCount() - 1) {
             viewModel.fetchMoreGames(page: (viewModel.getCurrentPage() + 1))
@@ -183,10 +307,28 @@ extension GameListViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let selectedGame = viewModel.getGame(at: indexPath.row) else { return }
+        tableView.deselectRow(at: indexPath, animated: true)
         
-        guard let gameDetailViewController = storyboard?.instantiateViewController(withIdentifier: GameDetailViewController.identifier) as? GameDetailViewController else { return }
-        gameDetailViewController.viewModel.game = selectedGame
-        self.navigationController?.pushViewController(gameDetailViewController, animated: true)
+        switch gameListRedirection {
+            case .toNotePage:
+            
+                guard let addNoteViewController = storyboard?.instantiateViewController(withIdentifier: AddNoteViewController.identifier) as? AddNoteViewController else { return }
+
+                addNoteViewController.noteModel = NoteModel(id: UUID(), gameId: selectedGame.id, note: "", noteGame: selectedGame, noteState: .addNote)
+                self.navigationController?.pushViewController(addNoteViewController, animated: true)
+            
+            case .toDetailPage:
+            
+                guard let gameDetailViewController = storyboard?.instantiateViewController(withIdentifier: GameDetailViewController.identifier) as? GameDetailViewController else { return }
+                
+                gameDetailViewController.gameDetail = selectedGame
+                self.navigationController?.pushViewController(gameDetailViewController, animated: true)
+            
+            default:
+                showAlert(title: "Error", message: "An error occurred while determining target page")
+                break
+        }
+        
     }
     
 }
@@ -195,11 +337,15 @@ extension GameListViewController: UITableViewDataSource, UITableViewDelegate {
 extension GameListViewController: UISearchResultsUpdating {
     
     func updateSearchResults(for searchController: UISearchController) {
-        guard let searchText = searchController.searchBar.text else { return }
-        if searchText.isEmpty {
-            viewModel.removeFilter(filterKey: "search")
+        if searchController.isActive {
+            guard let searchText = searchController.searchBar.text else { return }
+            if searchText.isEmpty {
+                viewModel.removeFilter(filterKey: "search")
+            } else {
+                viewModel.addFilter(filter: ["search" : searchText])
+            }
         } else {
-            viewModel.addFilter(filter: ["search" : searchText])
+            viewModel.removeFilter(filterKey: "search")
         }
         viewModel.fetchGames()
     }

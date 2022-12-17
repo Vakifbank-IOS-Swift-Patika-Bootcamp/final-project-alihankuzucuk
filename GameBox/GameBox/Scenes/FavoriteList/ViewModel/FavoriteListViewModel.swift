@@ -8,8 +8,9 @@
 import Foundation
 
 // MARK: - Protocols
-// MARK: FavoriteListViewModelProtocol
+// MARK: - FavoriteListViewModelProtocol
 protocol FavoriteListViewModelProtocol: AnyObject {
+    
     // MARK: Delegates
     var delegate: FavoriteListViewModelDelegate? { get set }
     
@@ -30,10 +31,12 @@ protocol FavoriteListViewModelProtocol: AnyObject {
     // MARK: Filtering
     func changeFilterSearch(filter: String)
     func changeFilterGenre(filter: String)
+    
 }
 
-// MARK: FavoriteListViewModelDelegate
+// MARK: - FavoriteListViewModelDelegate
 protocol FavoriteListViewModelDelegate: AnyObject {
+    
     // MARK: Indicator
     func preFetch()
     func postFetch()
@@ -48,10 +51,10 @@ protocol FavoriteListViewModelDelegate: AnyObject {
 // MARK: - FavoriteListViewModel
 final class FavoriteListViewModel: FavoriteListViewModelProtocol {
     
-    // MARK: Delegates
+    // MARK: - Delegates
     weak var delegate: FavoriteListViewModelDelegate?
     
-    // MARK: Variables
+    // MARK: - Variables
     private var favoriteGames: [FavoriteGameModel] = []
     private var genres: [CommonModel]?
     
@@ -60,6 +63,8 @@ final class FavoriteListViewModel: FavoriteListViewModelProtocol {
     
     // MARK: - Methods
     
+    // MARK: - Fetching Methods
+    // MARK: fetchFavoriteGames
     /// This method fetches the favorite games from GameBoxCoreDataManager
     func fetchFavoriteGames() {
         favoriteGames = []
@@ -94,6 +99,7 @@ final class FavoriteListViewModel: FavoriteListViewModelProtocol {
         }
     }
     
+    // MARK: - fetchGenres
     /// This method fetches the genres variable
     func fetchGenres() {
         RawGClient.getAllGenres { [weak self] response, error in
@@ -111,6 +117,7 @@ final class FavoriteListViewModel: FavoriteListViewModelProtocol {
     }
     
     // MARK: - FavoriteGame Methods
+    // MARK: getFavoriteGameCount
     func getFavoriteGameCount() -> Int {
         return favoriteGames.filter { favoriteGame in
             switch (filterSearch, filterGenre) {
@@ -124,7 +131,7 @@ final class FavoriteListViewModel: FavoriteListViewModelProtocol {
                         return false
                     }.count > 0 ? true : false
                 case (let filteredSearch, let filteredGenre):
-                    if favoriteGame.favoriteGame.name.contains(filteredSearch) {
+                    if favoriteGame.favoriteGame.name.lowercased().contains(filteredSearch.lowercased()) {
 
                         return favoriteGame.favoriteGame.genres.filter { commonModel in
                             if commonModel.slug.contains(filteredGenre) || filteredGenre == "" {
@@ -139,6 +146,7 @@ final class FavoriteListViewModel: FavoriteListViewModelProtocol {
         }.count
     }
     
+    // MARK: - getFavoriteGame
     func getFavoriteGame(at index: Int) -> GameModel? {
         guard !favoriteGames.isEmpty &&
                 favoriteGames.count > index &&
@@ -157,7 +165,7 @@ final class FavoriteListViewModel: FavoriteListViewModelProtocol {
                         return false
                     }.count > 0 ? true : false
                 case (let filteredSearch, let filteredGenre):
-                    if favoriteGame.favoriteGame.name.contains(filteredSearch) {
+                    if favoriteGame.favoriteGame.name.lowercased().contains(filteredSearch.lowercased()) {
 
                         return favoriteGame.favoriteGame.genres.filter { commonModel in
                             if commonModel.slug.contains(filteredGenre) || filteredGenre == "" {
@@ -173,10 +181,12 @@ final class FavoriteListViewModel: FavoriteListViewModelProtocol {
     }
     
     // MARK: - GenreModel Methods
+    // MARK: getGenreCount
     func getGenreCount() -> Int {
         genres?.count ?? 0
     }
     
+    // MARK: - getGenre
     func getGenre(at index: Int) -> CommonModel? {
         guard let genres = genres else { return nil }
         guard genres.count > index && index >= 0 else { return nil }
@@ -184,6 +194,7 @@ final class FavoriteListViewModel: FavoriteListViewModelProtocol {
         return genres[index]
     }
     
+    // MARK: - getGenreId
     func getGenreId(at index: Int) -> Int? {
         guard let genres = genres else { return nil }
         guard genres.count > index && index >= 0 else { return nil }
@@ -191,6 +202,7 @@ final class FavoriteListViewModel: FavoriteListViewModelProtocol {
         return genres[index].id
     }
     
+    // MARK: - getGenreSlug
     func getGenreSlug(at index: Int) -> String? {
         guard let genres = genres else { return nil }
         guard genres.count > index && index >= 0 else { return nil }
@@ -199,12 +211,14 @@ final class FavoriteListViewModel: FavoriteListViewModelProtocol {
     }
     
     // MARK: - Filtering
+    // MARK: changeFilterSearch
     /// This method changes the filterSearch variable which will be used for favoriteGames list
     /// - Parameter filter: Value of search
     func changeFilterSearch(filter: String) {
         filterSearch = filter
     }
     
+    // MARK: changeFilterGenre
     /// This method changes the filterGenre variable which will be used for favoriteGames list
     /// - Parameter filter: Value of genre
     func changeFilterGenre(filter: String) {

@@ -8,10 +8,10 @@
 import Foundation
 import Alamofire
 
-// MARK: - RawGClient
+// MARK: RawGClient
 final class RawGClient {
     
-    // MARK: Endpoints
+    // MARK: - Endpoints
     enum Endpoints: String {
         
         static let base = "https://api.rawg.io/api"
@@ -40,7 +40,7 @@ final class RawGClient {
         
     }
     
-    // MARK: handleResponse
+    // MARK: - handleResponse
     /// Make a request to the given url and returns given response
     /// - Parameters:
     ///   - url: Url address of where you want to make a request
@@ -71,7 +71,7 @@ final class RawGClient {
         
     }
     
-    // MARK: getGamesInRange
+    // MARK: - getGamesInRange
     /// Makes a request to the /games endpoint and returns games in given range as parameter
     /// - Parameters:
     ///   - page: Parameter of which page you want to request
@@ -96,7 +96,7 @@ final class RawGClient {
         }
     }
     
-    // MARK: getAllGenres
+    // MARK: - getAllGenres
     /// Makes a request to the /genres endpoint and returns all genres
     /// - Parameter completion: Completion of where you handle response
     static func getAllGenres(completion: @escaping (BaseResponseModel<CommonModel>?, Error?) -> Void) {
@@ -109,7 +109,7 @@ final class RawGClient {
         }
     }
     
-    // MARK: getGameDetail
+    // MARK: - getGameDetail
     /// Puts /{gameId} after /games Endpoint and makes a request to the /games endpoint then returns game detail
     /// - Parameters:
     ///   - gameId: Id of the entity which you want to get detail
@@ -124,7 +124,7 @@ final class RawGClient {
         }
     }
     
-    // MARK: getGameScreenshots
+    // MARK: - getGameScreenshots
     /// Puts /{gameId}/screenshots after /games Endpoint and makes a request to the /games endpoint then returns game screenshots
     /// - Parameters:
     ///   - gameId: Id of the entity which you want to get screenshots
