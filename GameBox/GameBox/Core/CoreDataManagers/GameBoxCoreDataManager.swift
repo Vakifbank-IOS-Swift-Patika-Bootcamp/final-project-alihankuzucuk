@@ -28,15 +28,19 @@ protocol GameBoxCoreDataProtocol {
 // MARK: - Enums
 // MARK: GameBoxCoreDataKeys
 struct GameBoxCoreDataKeys {
+    
+    // MARK: - Tables
     enum Entities: String {
         case favorites = "Favorites"
         case notes = "Notes"
     }
     
+    // MARK: - Columns of Favorites Table
     enum FavoritesDataKeys: String {
         case id, gameId
     }
     
+    // MARK: - Columns of Notes Table
     enum NotesDataKeys: String {
         case id, gameId, note, date
     }
@@ -206,7 +210,7 @@ final class GameBoxCoreDataManager: GameBoxCoreDataProtocol {
     
     @discardableResult
     func updateNoteBy(id noteId: UUID, updatedNote: String, updatedDate: Date) -> Bool {
-        var note = getNoteBy(id: noteId)
+        let note = getNoteBy(id: noteId)
         guard let note = note else { return false }
         note.note = String(updatedNote)
         note.date = updatedDate

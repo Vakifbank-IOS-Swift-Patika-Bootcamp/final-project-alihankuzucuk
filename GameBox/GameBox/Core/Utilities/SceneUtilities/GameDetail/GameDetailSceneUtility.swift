@@ -17,6 +17,7 @@ enum TagShowingType {
 // MARK: - GameDetailSceneUtility
 final class GameDetailSceneUtility {
     
+    // MARK: - setParentPlatforms
     /// Sets parent platforms to the given label
     /// - Parameter label: Current label of you want to use
     static func setParentPlatforms(_ label: inout UILabel, game: GameModel?) {
@@ -37,6 +38,7 @@ final class GameDetailSceneUtility {
         ViewUtility.labelWithBoldAndNormalText(&label, boldText: "Platforms: ", normalText: parentPlatforms)
     }
     
+    // MARK: - setGameTags
     /// Sets game tags to the given label
     /// - Parameter label: Current label of you want to use
     static func setGameTags(_ label: inout UILabel, game: GameModel?, tagShowingType: TagShowingType) {
@@ -68,6 +70,7 @@ final class GameDetailSceneUtility {
         ViewUtility.labelWithBoldAndNormalText(&label, boldText: "Tags: ", normalText: tags)
     }
     
+    // MARK: - setGenres
     /// Sets genres to the given label
     /// - Parameter label: Current label of you want to use
     static func setGenres(_ label: inout UILabel, game: GameModel?) {

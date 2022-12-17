@@ -7,7 +7,7 @@
 
 import UIKit
 
-// MARK: - NoteListViewController
+// MARK: NoteListViewController
 final class NoteListViewController: BaseViewController {
     
     // MARK: - Outlets
@@ -66,9 +66,10 @@ final class NoteListViewController: BaseViewController {
 // MARK: - Extension: Helper Methods
 extension NoteListViewController {
     
+    // MARK: - prepareScene
     private func prepareScene() {
         // Preparing NavigationItem
-        self.navigationItem.title = "Note List"
+        self.navigationItem.title = "Note List".localized
         
         // Setting appearance of NavigationBar
         let appearance = UINavigationBarAppearance()
@@ -81,14 +82,15 @@ extension NoteListViewController {
         // Initializing Search Bar
         let search = UISearchController(searchResultsController: nil)
         search.searchResultsUpdater = self
-        search.searchBar.placeholder = "Type something to search"
+        search.searchBar.placeholder = "Type something to search".localized
         navigationItem.searchController = search
         
         // Prevented automatic hiding of SearchController
         navigationItem.hidesSearchBarWhenScrolling = false
         
-        // Changing TabBar icon colors
+        // Preparing selected TabBar
         self.tabBarController?.tabBar.tintColor = Constants.Colors.PageColors.green
+        self.tabBarController?.tabBar.selectedItem?.title = "Notes".localized
         
         // FloatingButton
         view.addSubview(floatingButton)
@@ -103,6 +105,7 @@ extension NoteListViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(fetchNotes), name: NSNotification.Name(rawValue: NSNotificationNames.noteUpdated.rawValue), object: nil)
     }
     
+    // MARK: - fetchNotes
     @objc private func fetchNotes() {
         viewModel.fetchNotes()
     }
@@ -149,28 +152,80 @@ extension NoteListViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let selectedNote = viewModel.getNote(at: indexPath.row) else { return }
+        
         tableView.deselectRow(at: indexPath, animated: true)
         
-        guard let editNoteViewController = storyboard?.instantiateViewController(withIdentifier: AddNoteViewController.identifier) as? AddNoteViewController else { return }
+        let alertSheet = UIAlertController(title: "Options".localized, message: "Please select an option".localized, preferredStyle: .actionSheet)
 
-        editNoteViewController.noteModel = NoteModel(id: selectedNote.id, gameId: selectedNote.gameId, note: selectedNote.note, noteGame: selectedNote.noteGame, noteState: .editNote)
-        let editNoteNavController = UINavigationController(rootViewController: editNoteViewController)
-        self.present(editNoteNavController, animated: true)
+        // MARK: - ActionSheet Detail
+        alertSheet.addAction(UIAlertAction(title: "Detail".localized, style: .default, handler: { (UIAlertAction) in
+            guard let noteDetailViewController = self.storyboard?.instantiateViewController(withIdentifier: NoteDetailViewController.identifier) as? NoteDetailViewController else { return }
+            
+            noteDetailViewController.noteModel = selectedNote
+            
+            self.navigationController?.pushViewController(noteDetailViewController, animated: true)
+        }))
+        
+        // MARK: - ActionSheet Edit
+        alertSheet.addAction(UIAlertAction(title: "Edit".localized, style: .default, handler: { (UIAlertAction) in
+            guard let editNoteViewController = self.storyboard?.instantiateViewController(withIdentifier: AddNoteViewController.identifier) as? AddNoteViewController else { return }
+            
+            editNoteViewController.noteModel = NoteModel(id: selectedNote.id, gameId: selectedNote.gameId, note: selectedNote.note, noteGame: selectedNote.noteGame, noteState: .editNote)
+            
+            let editNoteNavController = UINavigationController(rootViewController: editNoteViewController)
+            self.present(editNoteNavController, animated: true)
+        }))
+        
+        // MARK: - ActionSheet Delete
+        alertSheet.addAction(UIAlertAction(title: "Delete".localized, style: .destructive, handler: { (UIAlertAction) in
+            if GameBoxCoreDataManager.shared.deleteNoteBy(id: selectedNote.id) == true {
+                self.viewModel.fetchNotes()
+            }
+        }))
+        
+        // MARK: - ActionSheet Cancel
+        alertSheet.addAction(UIAlertAction(title: "Dismiss".localized, style: .cancel, handler: { (UIAlertAction) in
+            
+        }))
+        
+        self.present(alertSheet, animated: true)
     }
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let action = UIContextualAction(style: .normal, title: "Delete", handler: { [weak self] (action, view, completionHandler) in
+        guard let selectedNote = viewModel.getNote(at: indexPath.row) else { return UISwipeActionsConfiguration() }
+        
+        // MARK: - Contextual Action Edit
+        let actionEdit = UIContextualAction(style: .normal, title: "Edit".localized, handler: { [weak self] (action, view, completionHandler) in
             guard let self = self else { return }
-            if GameBoxCoreDataManager.shared.deleteNoteBy(id: self.viewModel.getNote(at: indexPath.row)!.id) == true {
-                self.viewModel.fetchNotes()
-                completionHandler(true)
-            } else {
-                completionHandler(false)
-            }
+            guard let editNoteViewController = self.storyboard?.instantiateViewController(withIdentifier: AddNoteViewController.identifier) as? AddNoteViewController else { return }
+
+            editNoteViewController.noteModel = NoteModel(id: selectedNote.id, gameId: selectedNote.gameId, note: selectedNote.note, noteGame: selectedNote.noteGame, noteState: .editNote)
+            
+            let editNoteNavController = UINavigationController(rootViewController: editNoteViewController)
+            
+            self.present(editNoteNavController, animated: true)
+            
+            completionHandler(true) // It is required to close SwipeAction
           })
-        action.image = UIImage(systemName: "trash")
-        action.backgroundColor = .red
-        let configuration = UISwipeActionsConfiguration(actions: [action])
+        
+        actionEdit.image = UIImage(systemName: "note.text")
+        actionEdit.backgroundColor = Constants.Colors.PageColors.green
+        
+        // MARK: - Contextual Action Delete
+        let actionDelete = UIContextualAction(style: .normal, title: "Delete".localized, handler: { [weak self] (action, view, completionHandler) in
+            guard let self = self else { return }
+            
+            if GameBoxCoreDataManager.shared.deleteNoteBy(id: selectedNote.id) == true {
+                self.viewModel.fetchNotes()
+            }
+            
+            completionHandler(true) // It is required to close SwipeAction
+          })
+        
+        actionDelete.image = UIImage(systemName: "trash")
+        actionDelete.backgroundColor = .red
+        
+        let configuration = UISwipeActionsConfiguration(actions: [actionDelete, actionEdit])
         return configuration
     }
     

@@ -24,6 +24,7 @@ struct GameModel: Codable {
     let genres: [CommonModel]
     let tags: [CommonModel]
     let esrbRating: CommonModel?
+    
     // Properties after this line will be bounded by GameDetail endpoint
     let description: String
     let descriptionRaw: String

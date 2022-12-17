@@ -18,7 +18,7 @@ enum ImageIconType {
 // MARK: - ViewUtility
 final class ViewUtility {
     
-    // MARK: Methods
+    // MARK: - setImageInputs
     /// Sets Image Inputs to the given imageSlideshow
     /// - Parameters:
     ///   - imageSlideshow: Current imageSlideshow of you want to use
@@ -33,12 +33,13 @@ final class ViewUtility {
                 imageSlideshowInputSource.append(AlamofireSource(url: URL(string: screenshot.image)!))
             })
             
-            imageSlideshow!.setImageInputs(imageSlideshowInputSource)
-            imageSlideshow!.slideshowInterval = 3
-            imageSlideshow!.contentScaleMode = UIViewContentMode.center
+            imageSlideshow?.setImageInputs(imageSlideshowInputSource)
+            imageSlideshow?.slideshowInterval = 3
+            imageSlideshow?.contentScaleMode = UIViewContentMode.center
         }
     }
     
+    // MARK: - labelWithBoldAndNormalText
     /// Combines bold text and normal text at once for properties
     /// - Parameters:
     ///   - label: Current label of you want to use
@@ -46,7 +47,7 @@ final class ViewUtility {
     ///   - normalText: Normal text
     static func labelWithBoldAndNormalText(_ label: inout UILabel, boldText: String, normalText: String) {
         let attributes = [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 18)]
-        let boldString = NSMutableAttributedString(string: boldText, attributes: attributes)
+        let boldString = NSMutableAttributedString(string: boldText.localized, attributes: attributes)
         let normalString = NSMutableAttributedString(string: normalText)
         let resultString = NSMutableAttributedString()
         
@@ -56,6 +57,7 @@ final class ViewUtility {
         label.attributedText = resultString
     }
     
+    // MARK: - labelWithImageAttachment
     /// Creates label with image attachment
     /// - Parameters:
     ///   - label: Current label of you want to use

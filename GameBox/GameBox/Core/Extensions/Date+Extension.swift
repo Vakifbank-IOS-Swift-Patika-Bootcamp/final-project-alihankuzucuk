@@ -10,6 +10,10 @@ import Foundation
 // MARK: Extension: Date
 extension Date {
     
+    // MARK: - format
+    /// Returns date with formatted style
+    /// - Parameter dateFormat: Requested date format
+    /// - Returns: Date with requested format
     func format(dateFormat: String = "dd/MM/yyyy hh:mm:ss") -> Date {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = dateFormat
@@ -21,6 +25,10 @@ extension Date {
         }
     }
     
+    // MARK: - formatString
+    /// Returns date string with formatted style
+    /// - Parameter dateFormat: Requested date format
+    /// - Returns: Date with requested format
     func formatString(dateFormat: String = "dd/MM/yyyy hh:mm:ss") -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = dateFormat

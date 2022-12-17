@@ -11,27 +11,30 @@ import MaterialActivityIndicator
 // MARK: - Protocols
 // MARK: BaseViewControllerProtocol
 protocol BaseViewControllerProtocol {
-    // MARK: Variables
+    
+    // MARK: - Variables
     var indicator: MaterialActivityIndicatorView { get }
     
-    // MARK: Methods
+    // MARK: - Methods
     func showAlert(title: String, message: String, btnOkHandler: ((UIAlertAction) -> Void)?)
+    func showAlertWithCancelOption(title: String, message: String, btnOkHandler: ((UIAlertAction) -> Void)?, btnCancelHandler: ((UIAlertAction) -> Void)?)
+    
 }
 
 // MARK: - BaseViewController
 class BaseViewController: UIViewController, BaseViewControllerProtocol {
     
-    // MARK: Variables
+    // MARK: - Variables
     let indicator = MaterialActivityIndicatorView()
 
-    // MARK: Life Cycle
+    // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupActivityIndicatorView()
     }
     
-    // MARK: Activity Indicator Methods
+    // MARK: - Activity Indicator Methods
     private func setupActivityIndicatorView() {
         view.addSubview(indicator)
         setupActivityIndicatorViewConstraints()
@@ -43,11 +46,20 @@ class BaseViewController: UIViewController, BaseViewControllerProtocol {
         indicator.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
     }
     
-    // MARK: UIAlert
-    func showAlert(title: String, message: String, btnOkHandler: ((UIAlertAction) -> Void)? = nil) {
+    // MARK: - UIAlert
+    public func showAlert(title: String, message: String, btnOkHandler: ((UIAlertAction) -> Void)? = nil) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
-        let alertBtnOk = UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: btnOkHandler)
+        let alertBtnOk = UIAlertAction(title: "OK".localized, style: UIAlertAction.Style.default, handler: btnOkHandler)
         alert.addAction(alertBtnOk)
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    public func showAlertWithCancelOption(title: String, message: String, btnOkHandler: ((UIAlertAction) -> Void)? = nil, btnCancelHandler: ((UIAlertAction) -> Void)? = nil) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
+        let alertBtnOk = UIAlertAction(title: "OK".localized, style: UIAlertAction.Style.default, handler: btnOkHandler)
+        let alertBtnCancel = UIAlertAction(title: "Dismiss".localized, style: UIAlertAction.Style.destructive, handler: btnCancelHandler)
+        alert.addAction(alertBtnOk)
+        alert.addAction(alertBtnCancel)
         self.present(alert, animated: true, completion: nil)
     }
 

@@ -8,7 +8,7 @@
 import Foundation
 
 // MARK: - Protocols
-// MARK: NoteListViewModel
+// MARK: - NoteListViewModel
 protocol NoteListViewModelProtocol: AnyObject {
     
     // MARK: Delegates
@@ -26,7 +26,7 @@ protocol NoteListViewModelProtocol: AnyObject {
     
 }
 
-// MARK: NoteListViewModelDelegate
+// MARK: - NoteListViewModelDelegate
 protocol NoteListViewModelDelegate: AnyObject {
     
     // MARK: Indicator
@@ -42,14 +42,18 @@ protocol NoteListViewModelDelegate: AnyObject {
 // MARK: - NoteListViewModel
 final class NoteListViewModel: NoteListViewModelProtocol {
     
-    // MARK: Delegates
+    // MARK: - Delegates
     weak var delegate: NoteListViewModelDelegate?
     
-    // MARK: Variables
+    // MARK: - Variables
     private var notes: [NoteModel] = []
     
     private var filterSearch: String = ""
     
+    // MARK: - Methods
+    
+    // MARK: - Fetching Methods
+    // MARK: fetchNotes
     func fetchNotes() {
         notes = []
         
@@ -83,6 +87,8 @@ final class NoteListViewModel: NoteListViewModelProtocol {
         }
     }
     
+    // MARK: - Note Methods
+    // MARK: getNoteCount
     func getNoteCount() -> Int {
         return notes.filter { note in
             if filterSearch == "" {
@@ -92,6 +98,7 @@ final class NoteListViewModel: NoteListViewModelProtocol {
         }.count
     }
     
+    // MARK: - getNote
     func getNote(at index: Int) -> NoteModel? {
         guard !notes.isEmpty &&
                 notes.count > index &&
@@ -106,6 +113,8 @@ final class NoteListViewModel: NoteListViewModelProtocol {
         }[index]
     }
     
+    // MARK: - Filtering Methods
+    // MARK: changeFilterSearch
     func changeFilterSearch(filter: String) {
         filterSearch = filter
     }

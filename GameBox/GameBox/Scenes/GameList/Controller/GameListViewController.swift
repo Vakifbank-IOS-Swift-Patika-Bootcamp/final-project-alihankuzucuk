@@ -52,11 +52,26 @@ final class GameListViewController: BaseViewController {
     private var pageColorNavigationBar: UIColor = Constants.Colors.PageColors.blue
     private var pageColorGenreCard: UIColor = Constants.Colors.PageColors.blue
     
+    // Variable for Genre categories detection
     private var selectedGenreIndex: Int = 0
+    
+    // Variables for PullDownMenu
+    internal var pullDownMenu: UIBarButtonItem!
+    private var selectedPullDownMenuActionName: String = ""
+    private var selectedPullDownMenuParentPlatformActionName: String = ""
+    private var selectedPullDownMenuOrderingActionName: String = ""
+    
+    // Variables for Local Notification
+    private var localNotificationManager: LocalNotificationManagerProtocol = LocalNotificationManager()
 
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // Local Notification pushed
+        localNotificationManager.scheduleLocalNotification(notificationTitle: "GameBox",
+                                                           notificationSubtitle: "usernotification.subtitle".localized,
+                                                           notificationBody: "usernotification.body".localized)
         
         prepareScene()
     }
@@ -75,7 +90,7 @@ extension GameListViewController {
         gameListRedirection = gameListRedirection == nil ? .toDetailPage : .toNotePage
         
         // Preparing NavigationItem
-        self.navigationItem.title = "Games"
+        self.navigationItem.title = "Games".localized
         
         // Setting appearance of NavigationBar
         let appearance = UINavigationBarAppearance()
@@ -102,19 +117,86 @@ extension GameListViewController {
         // Initializing Search Bar
         let search = UISearchController(searchResultsController: nil)
         search.searchResultsUpdater = self
-        search.searchBar.placeholder = "Type something to search"
+        search.searchBar.placeholder = "Type something to search".localized
         navigationItem.searchController = search
         
         // Prevented automatic hiding of SearchController
         navigationItem.hidesSearchBarWhenScrolling = false
         
-        // Changing TabBar icon colors
+        // Filtering Menu
+        let pullDownMenu = UIBarButtonItem(title: "",
+                                           image: UIImage(named: "filter"),
+                                           primaryAction: nil,
+                                           menu: generatePullDownMenu())
+        self.pullDownMenu = pullDownMenu
+        navigationItem.rightBarButtonItem = pullDownMenu
+        
+        // Preparing selected TabBar
         self.tabBarController?.tabBar.tintColor = Constants.Colors.PageColors.blue
+        self.tabBarController?.tabBar.selectedItem?.title = "Games".localized
+        self.tabBarController?.tabBar.items?[1].title = "Favorites".localized
+        self.tabBarController?.tabBar.items?[2].title = "Notes".localized
+        self.tabBarController?.tabBar.items?[3].title = "Settings".localized
         
         // Preparing viewModel
         viewModel.delegate = self
         viewModel.fetchGenres()
         viewModel.fetchGames()
+    }
+    
+    private func generatePullDownMenu() -> UIMenu {
+        return GameListSceneUtility.getPullDownMenu(selfObject: self)
+    }
+    
+    // MARK: - Public Methods for PullDownMenu
+    public func getSelectedPullDownActionName() -> String {
+        return self.selectedPullDownMenuActionName
+    }
+    
+    public func getSelectedPullDownOrderingActionName() -> String {
+        return self.selectedPullDownMenuOrderingActionName
+    }
+    
+    public func getSelectedPullDownParentPlatformActionName() -> String {
+        return self.selectedPullDownMenuParentPlatformActionName
+    }
+    
+    public func clearFilters() {
+        selectedPullDownMenuOrderingActionName = ""
+        selectedPullDownMenuParentPlatformActionName = ""
+        viewModel.clearFilter()
+        selectedGenreIndex = 0
+        collectionViewGenres.reloadData()
+        tableViewGames.setContentOffset(.zero, animated: true)
+    }
+    
+    public func setSelectedPullDownAction(actionName: String) {
+        if actionName.split(separator: ".")[1] == "ordering" {
+            selectedPullDownMenuActionName = actionName
+            selectedPullDownMenuOrderingActionName = actionName
+        } else if actionName.split(separator: ".")[1] == "parentPlatform" {
+            selectedPullDownMenuActionName = actionName
+            selectedPullDownMenuParentPlatformActionName = actionName
+        } else {
+            selectedPullDownMenuActionName = actionName
+        }
+    }
+    
+    public func setPullDownMenuFilter(filterFromPullDown: [String: String]) {
+        if selectedGenreIndex == 0 {
+            viewModel.removeFilter(filterKey: "genres")
+        } else {
+            viewModel.addFilter(filter: ["genres": viewModel.getGenre(at: (selectedGenreIndex - 1))!.slug])
+        }
+        viewModel.addFilter(filter: filterFromPullDown)
+    }
+    
+    public func pullDownFetchGames(){
+        self.viewModel.fetchGames()
+    }
+    
+    public func refreshPullDownMenu() {
+        self.pullDownMenu.menu = self.generatePullDownMenu()
     }
     
 }
