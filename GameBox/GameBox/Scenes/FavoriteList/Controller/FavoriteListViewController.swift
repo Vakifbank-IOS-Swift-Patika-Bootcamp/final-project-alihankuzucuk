@@ -199,6 +199,14 @@ extension FavoriteListViewController: UITableViewDataSource, UITableViewDelegate
         // MARK: - ActionSheet
         let alertSheet = UIAlertController(title: "Options".localized, message: "Please select an option".localized, preferredStyle: .actionSheet)
         
+        // MARK: - ActionSheet AddNote
+        alertSheet.addAction(UIAlertAction(title: "Add Note".localized, style: .default, handler: { (UIAlertAction) in
+            guard let addNoteViewController = self.storyboard?.instantiateViewController(withIdentifier: AddNoteViewController.identifier) as? AddNoteViewController else { return }
+
+            addNoteViewController.noteModel = NoteModel(id: UUID(), gameId: selectedGame.id, note: "", noteGame: selectedGame, noteState: .addNote)
+            self.present(addNoteViewController, animated: true)
+        }))
+        
         // MARK: - ActionSheet Detail
         alertSheet.addAction(UIAlertAction(title: "Detail".localized, style: .default, handler: { (UIAlertAction) in
             guard let gameDetailViewController = self.storyboard?.instantiateViewController(withIdentifier: GameDetailViewController.identifier) as? GameDetailViewController else { return }
@@ -226,6 +234,21 @@ extension FavoriteListViewController: UITableViewDataSource, UITableViewDelegate
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         guard let selectedGame = viewModel.getFavoriteGame(at: indexPath.row) else { return UISwipeActionsConfiguration() }
         
+        // MARK: - Contextual Action AddNote
+        let actionAddNote = UIContextualAction(style: .normal, title: "Add Note".localized, handler: { [weak self] (action, view, completionHandler) in
+            guard let self = self else { return }
+            
+            guard let addNoteViewController = self.storyboard?.instantiateViewController(withIdentifier: AddNoteViewController.identifier) as? AddNoteViewController else { return }
+
+            addNoteViewController.noteModel = NoteModel(id: UUID(), gameId: selectedGame.id, note: "", noteGame: selectedGame, noteState: .addNote)
+            self.present(addNoteViewController, animated: true)
+            
+            completionHandler(true) // It is required to close SwipeAction
+          })
+        
+        actionAddNote.image = UIImage(systemName: "plus")
+        actionAddNote.backgroundColor = Constants.Colors.PageColors.green
+        
         // MARK: - Contextual Action Detail
         let actionDetail = UIContextualAction(style: .normal, title: "Detail".localized, handler: { [weak self] (action, view, completionHandler) in
             guard let self = self else { return }
@@ -235,6 +258,8 @@ extension FavoriteListViewController: UITableViewDataSource, UITableViewDelegate
             gameDetailViewController.gameDetail = selectedGame
             
             self.navigationController?.pushViewController(gameDetailViewController, animated: true)
+            
+            completionHandler(true) // It is required to close SwipeAction
           })
         
         actionDetail.image = UIImage(systemName: "note.text")
@@ -247,12 +272,14 @@ extension FavoriteListViewController: UITableViewDataSource, UITableViewDelegate
             if GameBoxCoreDataManager.shared.deleteFavoriteBy(gameId: selectedGame.id) == true {
                 self.viewModel.fetchFavoriteGames()
             }
+            
+            completionHandler(true) // It is required to close SwipeAction
           })
         
         actionUnfavorite.image = UIImage(systemName: "heart.slash")
         actionUnfavorite.backgroundColor = .red
         
-        let configuration = UISwipeActionsConfiguration(actions: [actionUnfavorite, actionDetail])
+        let configuration = UISwipeActionsConfiguration(actions: [actionUnfavorite, actionDetail, actionAddNote])
         return configuration
     }
     
