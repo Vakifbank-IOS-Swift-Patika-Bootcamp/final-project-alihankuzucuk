@@ -59,18 +59,22 @@ extension SettingsViewController {
     
     @objc func changeAppLanguageToEn() {
         if Locale.current.identifier != "en" {
-            showAlert(title: "Warning".localized, message: "Application will close".localized) { action in
+            showAlertWithCancelOption(title: "Warning".localized, message: "Application will close".localized) { actionOk in
                 AppUtility.setApplicationLanguage(languageCode: "en")
                 exit(0)
+            } btnCancelHandler: { actionCancel in
+                
             }
         }
     }
     
     @objc func changeAppLanguageToTr() {
         if Locale.current.identifier != "tr" {
-            showAlert(title: "Warning".localized, message: "Application will close".localized) { action in
+            showAlertWithCancelOption(title: "Warning".localized, message: "Application will close".localized) { actionOk in
                 AppUtility.setApplicationLanguage(languageCode: "tr")
                 exit(0)
+            } btnCancelHandler: { actionCancel in
+                
             }
         }
     }
