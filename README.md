@@ -400,6 +400,31 @@ open GameBox.xcworkspace
             <td colspan="1">You can see user notifications in English if your app language is English</td>
             <td colspan="1">You can see user notifications in Turkish if your app language is Turkish</td>
         </tr>
+        <tr><td colspan="3"></td></tr>
+        <tr>
+            <th colspan="3">GameList Scene</th>
+        </tr>
+        <tr>
+            <th colspan="1">Search in Games</th>
+            <th colspan="1">Genre Categories</th>
+            <th colspan="1">Filtering Options</th>
+        </tr>
+        <tr>
+            <td colspan="1" align="center">
+                <img width="250" height="500" src="./assets/screenshots/Screenshot-GameList-Search.gif"></a>
+            </td>
+            <td colspan="1" align="center">
+                <img width="250" height="500" src="./assets/screenshots/Screenshot-GameList-GenreCategories.gif"></a>
+            </td>
+            <td colspan="1" align="center">
+                <img width="250" height="500" src="./assets/screenshots/Screenshot-GameList-Filtering.gif"></a>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="1">Thanks to the pagination structure, you can search more than 800,000 games</td>
+            <td colspan="1">You can categorize the list of games by genres</td>
+            <td colspan="1">You can find the games you are looking for very easily by filtering</td>
+        </tr>
     </table>
 </div>
 
