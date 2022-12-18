@@ -425,6 +425,27 @@ open GameBox.xcworkspace
             <td colspan="1">You can categorize the list of games by genres</td>
             <td colspan="1">You can find the games you are looking for very easily by filtering</td>
         </tr>
+        <tr>
+            <th colspan="1">Swipe Actions</th>
+            <th colspan="1">Detailing Game</th>
+            <th colspan="1">Favoriting Game</th>
+        </tr>
+        <tr>
+            <td colspan="1" align="center">
+                <img width="250" height="500" src="./assets/screenshots/Screenshot-GameList-SwipeActions.gif"></a>
+            </td>
+            <td colspan="1" align="center">
+                <img width="250" height="500" src="./assets/screenshots/Screenshot-GameList-DetailingAndFavoritingGame.gif"></a>
+            </td>
+            <td colspan="1" align="center">
+                <img width="250" height="500" src="./assets/screenshots/Screenshot-GameList-DetailingAndFavoritingGame.gif"></a>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="1">You can easily take action thanks to swipe actions</td>
+            <td colspan="1">You can view the detail page of a game and go to the website</td>
+            <td colspan="1">You can add a game to favorites on the detail page</td>
+        </tr>
     </table>
 </div>
 
