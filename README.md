@@ -23,9 +23,36 @@
 <hr>
 <br>
 
+<a name="table-of-contents">
+    <h1>:notebook_with_decorative_cover: Table of Contents</h1>
+</a>
+<ul>
+    <li>
+        <a href="#project-overview">:eyes: Project Overview</a>
+    </li>
+    <li>
+        <a href="#license">:lock: License</a>
+    </li>
+</ul>
+
+<hr>
+
 <a name="project-overview">
     <h1>:eyes: Project Overview</h1>
 </a>
 <p>
 This repository consists of the graduation project of the Bootcamp training organized by <a href="https://www.patika.dev/">Patika</a> and <a href="https://www.vakifbank.com.tr/">VakifBank</a> cooperation and the resources related to this project written by <a href="https://github.com/alihankuzucuk">Alihan KUZUCUK</a>
 </p>
+
+<hr>
+
+<a name="license">
+    <h1>:lock: License</h1>
+</a>
+<p>
+    This <a href="">GameBox</a> project is MIT licensed. See the <a href="./LICENSE">LICENSE</a> file for details.
+    <br><br>
+    <a href="https://github.com/alihankuzucuk">Alihan KUZUCUK</a>
+</p>
+
+<p align="right">(<a href="#table-of-contents">Back to Top</a>)</p>
