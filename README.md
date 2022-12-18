@@ -34,6 +34,9 @@
         <a href="#getting-started">:toolbox: Getting Started</a>
     </li>
     <li>
+        <a href="#list-of-libraries">:books: List of Libraries</a>
+    </li>
+    <li>
         <a href="#license">:lock: License</a>
     </li>
 </ul>
@@ -92,6 +95,49 @@ open GameBox.xcworkspace
 ```
 
 > :two: Before running the project, you need to change `API_KEY` variable (which `##API_KEY##` value assigned by default) under <a href="./GameBox/GameBox/App/Constants.swift">Constants.swift</a> file with your API KEY. If you don't have any, you can have one from <a href="https://rawg.io/apidocs">RawG API</a>
+
+<p align="right">(<a href="#table-of-contents">Back to Top</a>)</p>
+
+<hr>
+
+<a name="list-of-libraries">
+    <h1>:books: List of Libraries</h1>
+</a>
+<table>
+    <tr>
+        <th>Library</th>
+        <th>Version</th>
+        <th>Description</th>
+    </tr>
+    <tr>
+        <td>
+            <a href="https://github.com/Alamofire/Alamofire">Alamofire</a>
+        </td>
+        <td align="center">Latest</td>
+        <td>Alamofire is an HTTP networking library written in Swift</td>
+    </tr>
+    <tr>
+        <td>
+            <a href="https://github.com/Alamofire/AlamofireImage">AlamofireImage</a>
+        </td>
+        <td align="center">~> 4.1</td>
+        <td>AlamofireImage is an image component library for Alamofire</td>
+    </tr>
+    <tr>
+        <td>
+            <a href="https://github.com/nspavlo/MaterialActivityIndicator">MaterialActivityIndicator</a>
+        </td>
+        <td align="center">Latest</td>
+        <td>MaterialActivityIndicatorView is a drop in replacement for UIActivityIndicatorView</td>
+    </tr>
+    <tr>
+        <td>
+            <a href="https://github.com/zvonicek/ImageSlideshow">ImageSlideshow</a>
+        </td>
+        <td align="center">Latest</td>
+        <td>Customizable Swift image slideshow with circular scrolling, timer and full screen viewer</td>
+    </tr>
+</table>
 
 <p align="right">(<a href="#table-of-contents">Back to Top</a>)</p>
 
