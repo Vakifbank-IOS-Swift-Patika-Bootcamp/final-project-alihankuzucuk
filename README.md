@@ -446,6 +446,27 @@ open GameBox.xcworkspace
             <td colspan="1">You can view the detail page of a game and go to the website</td>
             <td colspan="1">You can add a game to favorites on the detail page</td>
         </tr>
+        <tr>
+            <th colspan="1">Search in Favorites</th>
+            <th colspan="1">Genre Categories</th>
+            <th colspan="1">Unfavoriting Game</th>
+        </tr>
+        <tr>
+            <td colspan="1" align="center">
+                <img width="250" height="500" src="./assets/screenshots/Screenshot-FavoriteList-Search.gif"></a>
+            </td>
+            <td colspan="1" align="center">
+                <img width="250" height="500" src="./assets/screenshots/Screenshot-FavoriteList-GenreCategories.gif"></a>
+            </td>
+            <td colspan="1" align="center">
+                <img width="250" height="500" src="./assets/screenshots/Screenshot-FavoriteList-UnfavoritingGame.gif"></a>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="1">You can easily search in your favorite list</td>
+            <td colspan="1">You can categorize the list of your favorite games according to genres</td>
+            <td colspan="1">You can unfavorite a game in your favorite list</td>
+        </tr>
     </table>
 </div>
 
