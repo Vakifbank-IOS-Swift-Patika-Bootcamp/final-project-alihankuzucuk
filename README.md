@@ -374,6 +374,7 @@ open GameBox.xcworkspace
         </tr>
     </table>
 </div>
+<br><br>
 <div align="center">
     <table>
         <tr>
@@ -400,9 +401,9 @@ open GameBox.xcworkspace
             <td colspan="1">You can see user notifications in English if your app language is English</td>
             <td colspan="1">You can see user notifications in Turkish if your app language is Turkish</td>
         </tr>
-        <tr><td colspan="3"></td></tr>
+        <tr><td colspan="3"><br><br></td></tr>
         <tr>
-            <th colspan="3">GameList Scene</th>
+            <th colspan="3">Game Scene</th>
         </tr>
         <tr>
             <th colspan="1">Search in Games</th>
@@ -446,6 +447,10 @@ open GameBox.xcworkspace
             <td colspan="1">You can view the detail page of a game and go to the website</td>
             <td colspan="1">You can add a game to favorites on the detail page</td>
         </tr>
+        <tr><td colspan="3"><br><br></td></tr>
+        <tr>
+            <th colspan="3">Favorite Scene</th>
+        </tr>
         <tr>
             <th colspan="1">Search in Favorites</th>
             <th colspan="1">Genre Categories</th>
@@ -467,8 +472,80 @@ open GameBox.xcworkspace
             <td colspan="1">You can categorize the list of your favorite games according to genres</td>
             <td colspan="1">You can unfavorite a game in your favorite list</td>
         </tr>
+        <tr><td colspan="3"><br><br></td></tr>
+        <tr>
+            <th colspan="3">Note Scene</th>
+        </tr>
+        <tr>
+            <th colspan="1">Adding Note</th>
+            <th colspan="1">Search in Notes</th>
+            <th colspan="1">Note Detail</th>
+        </tr>
+        <tr>
+            <td colspan="1" align="center">
+                <img width="250" height="500" src="./assets/screenshots/Screenshot-NoteList-AddingNote.gif"></a>
+            </td>
+            <td colspan="1" align="center">
+                <img width="250" height="500" src="./assets/screenshots/Screenshot-NoteList-Search.gif"></a>
+            </td>
+            <td colspan="1" align="center">
+                <img width="250" height="500" src="./assets/screenshots/Screenshot-NoteList-Detail.gif"></a>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="1">You can add note to your games</td>
+            <td colspan="1">You can easily search in your note list</td>
+            <td colspan="1">You can view the detail page of your note</td>
+        </tr>
+        <tr>
+            <th colspan="1">Editing Note</th>
+            <th colspan="1">Note Preview</th>
+            <th colspan="1">Deleting Note</th>
+        </tr>
+        <tr>
+            <td colspan="1" align="center">
+                <img width="250" height="500" src="./assets/screenshots/Screenshot-NoteList-Editing.gif"></a>
+            </td>
+            <td colspan="1" align="center">
+                <img width="250" height="500" src="./assets/screenshots/Screenshot-NoteList-NotePreview.gif"></a>
+            </td>
+            <td colspan="1" align="center">
+                <img width="250" height="500" src="./assets/screenshots/Screenshot-NoteList-Deleting.gif"></a>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="1">You can edit your notes previously you added</td>
+            <td colspan="1">Thanks to the NotePreview feature, you can view your long notes without going to the detail page.</td>
+            <td colspan="1">You can delete your notes previously you added</td>
+        </tr>
     </table>
 </div>
+<br><br>
+<div align="center">
+    <table>
+        <tr>
+            <th colspan="2">Settings Scene</th>
+        </tr>
+        <tr>
+            <th colspan="1">Changing App Language</th>
+            <th colspan="1">Visiting <a href="http://alihankuzucuk.com/">alihankuzucuk.com</a></th>
+        </tr>
+        <tr>
+            <td colspan="1" align="center">
+                <img width="250" height="500" src="./assets/screenshots/Screenshot-Settings-ChangingAppLanguage.gif"></a>
+            </td>
+            <td colspan="1" align="center">
+                <img width="250" height="500" src="./assets/screenshots/Screenshot-Settings-VisitDeveloperWebsite.gif"></a>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="1">You can change your App language anytime you want</td>
+            <td colspan="1">You can visit and get more information about the developer of GameBox</td>
+        </tr>
+    </table>
+</div>
+
+<p align="right">(<a href="#table-of-contents">Back to Top</a>)</p>
 
 <hr>
 
