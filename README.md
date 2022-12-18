@@ -368,6 +368,38 @@ open GameBox.xcworkspace
                 <img width="250" height="500" src="./assets/screenshots/Screenshot-Scene-Onboarding-InTurkish.gif"></a>
             </td>
         </tr>
+        <tr>
+            <td colspan="1">You can get information about the app in English if your phone language is English</td>
+            <td colspan="1">You can get information about the app in Turkish if your phone language is Turkish</td>
+        </tr>
+    </table>
+</div>
+<div align="center">
+    <table>
+        <tr>
+            <th colspan="3">Local Notifications</th>
+        </tr>
+        <tr>
+            <th colspan="1">LocalNotification Request</th>
+            <th colspan="1">LocalNotification In English</th>
+            <th colspan="1">LocalNotification In Turkish</th>
+        </tr>
+        <tr>
+            <td colspan="1" align="center">
+                <img width="250" height="500" src="./assets/screenshots/Screenshot-LocalNotificationRequest.png"></a>
+            </td>
+            <td colspan="1" align="center">
+                <img width="250" height="500" src="./assets/screenshots/Screenshot-LocalNotificationInEnglish.png"></a>
+            </td>
+            <td colspan="1" align="center">
+                <img width="250" height="500" src="./assets/screenshots/Screenshot-LocalNotificationInTurkish.png"></a>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="1">You can give a permission if you want to see notifications</td>
+            <td colspan="1">You can see user notifications in English if your app language is English</td>
+            <td colspan="1">You can see user notifications in Turkish if your app language is Turkish</td>
+        </tr>
     </table>
 </div>
 
