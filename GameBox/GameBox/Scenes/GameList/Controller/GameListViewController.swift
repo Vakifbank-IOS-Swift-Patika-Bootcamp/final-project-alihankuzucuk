@@ -331,6 +331,69 @@ extension GameListViewController: UITableViewDataSource, UITableViewDelegate {
         
     }
     
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        guard let selectedGame = viewModel.getGame(at: indexPath.row) else { return UISwipeActionsConfiguration() }
+        
+        // MARK: - Contextual Action AddNote
+        let actionAddNote = UIContextualAction(style: .normal, title: "Add Note".localized, handler: { [weak self] (action, view, completionHandler) in
+            guard let self = self else { return }
+            
+            guard let addNoteViewController = self.storyboard?.instantiateViewController(withIdentifier: AddNoteViewController.identifier) as? AddNoteViewController else { return }
+
+            addNoteViewController.noteModel = NoteModel(id: UUID(), gameId: selectedGame.id, note: "", noteGame: selectedGame, noteState: .addNote)
+            self.present(addNoteViewController, animated: true)
+            
+            completionHandler(true) // It is required to close SwipeAction
+          })
+        
+        actionAddNote.image = UIImage(systemName: "plus")
+        actionAddNote.backgroundColor = Constants.Colors.PageColors.green
+        
+        // MARK: - Contextual Action Detail
+        let actionDetail = UIContextualAction(style: .normal, title: "Detail".localized, handler: { [weak self] (action, view, completionHandler) in
+            guard let self = self else { return }
+            
+            guard let gameDetailViewController = self.storyboard?.instantiateViewController(withIdentifier: GameDetailViewController.identifier) as? GameDetailViewController else { return }
+            
+            gameDetailViewController.gameDetail = selectedGame
+            
+            self.navigationController?.pushViewController(gameDetailViewController, animated: true)
+            
+            completionHandler(true) // It is required to close SwipeAction
+          })
+        
+        actionDetail.image = UIImage(systemName: "note.text")
+        actionDetail.backgroundColor = Constants.Colors.PageColors.orange
+        
+        // MARK: - Contextual Action Favorite
+        let isSelectedGameFavorited: Bool = GameBoxCoreDataManager.shared.checkFavoriteGameById(game: selectedGame.id)
+        
+        let actionFavorite = UIContextualAction(style: .normal, title: (isSelectedGameFavorited ? "Unfavorite".localized : "Favorite".localized), handler: { (action, view, completionHandler) in
+            
+            if isSelectedGameFavorited == false {
+                if GameBoxCoreDataManager.shared.saveFavoriteGame(gameId: selectedGame.id) == true {
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: NSNotificationNames.newFavoriteGame.rawValue), object: nil)
+                }
+            } else {
+                if GameBoxCoreDataManager.shared.deleteFavoriteBy(gameId: selectedGame.id) == true {
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: NSNotificationNames.gameDeletedFromFavorites.rawValue), object: nil)
+                }
+            }
+            
+            completionHandler(true) // It is required to close SwipeAction
+          })
+        
+        if isSelectedGameFavorited {
+            actionFavorite.image = UIImage(systemName: "heart.slash")
+        } else {
+            actionFavorite.image = UIImage(systemName: "heart")
+        }
+        actionFavorite.backgroundColor = .red
+        
+        let configuration = UISwipeActionsConfiguration(actions: [actionFavorite, actionDetail, actionAddNote])
+        return configuration
+    }
+    
 }
 
 // MARK: - Extension: UISearchResultsUpdating
