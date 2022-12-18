@@ -40,6 +40,9 @@
         <a href="#project-structure">:open_file_folder: Project Structure</a>
     </li>
     <li>
+        <a href="#screenshots">:camera_flash: Screenshots</a>
+    </li>
+    <li>
         <a href="#license">:lock: License</a>
     </li>
 </ul>
@@ -342,6 +345,31 @@ open GameBox.xcworkspace
 </ul>
 
 <p align="right">(<a href="#table-of-contents">Back to Top</a>)</p>
+
+<hr>
+
+<a name="screenshots">
+    <h1>:camera_flash: Screenshots</h1>
+</a>
+<div align="center">
+    <table>
+        <tr>
+            <th colspan="2">OnBoarding Scene</th>
+        </tr>
+        <tr>
+            <th colspan="1">OnBoarding Scene In English</th>
+            <th colspan="1">OnBoarding Scene In Turkish</th>
+        </tr>
+        <tr>
+            <td colspan="1" align="center">
+                <img width="250" height="500" src="./assets/screenshots/Screenshot-Scene-Onboarding-InEnglish.gif"></a>
+            </td>
+            <td colspan="1" align="center">
+                <img width="250" height="500" src="./assets/screenshots/Screenshot-Scene-Onboarding-InTurkish.gif"></a>
+            </td>
+        </tr>
+    </table>
+</div>
 
 <hr>
 
