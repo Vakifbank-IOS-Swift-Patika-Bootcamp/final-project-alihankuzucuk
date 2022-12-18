@@ -27,7 +27,10 @@ final class GameDetailViewController: BaseViewController {
     @IBOutlet private weak var lblTags: UILabel!
     @IBOutlet private weak var lblGenres: UILabel!
     @IBOutlet private weak var lblAgeRating: UILabel!
+    @IBOutlet private weak var lblDescriptionHeader: UILabel!
     @IBOutlet private weak var lblDescriptionText: UILabel!
+    
+    @IBOutlet private weak var btnGoToGameWebsite: UIButton!
     
     // MARK: - Variables
     public var gameDetail: GameModel?
@@ -61,13 +64,13 @@ final class GameDetailViewController: BaseViewController {
                 if GameBoxCoreDataManager.shared.deleteFavoriteBy(gameId: gameDetail!.id) == true {
                     NotificationCenter.default.post(name: NSNotification.Name(rawValue: NSNotificationNames.gameDeletedFromFavorites.rawValue), object: nil)
                     setRightBarBtnFavoriteImage()
-                    showAlert(title: "Game Favorites", message: "\(gameDetail!.name) removed from your favorite game list")
+                    showAlert(title: "Favorites".localized, message: String(format: NSLocalizedString("messages.unfavoriteGame", comment: ""),"\(gameDetail!.name)"))
                 }
             case false:
                 if GameBoxCoreDataManager.shared.saveFavoriteGame(gameId: gameDetail!.id) == true {
                     NotificationCenter.default.post(name: NSNotification.Name(rawValue: NSNotificationNames.newFavoriteGame.rawValue), object: nil)
                     setRightBarBtnFavoriteImage()
-                    showAlert(title: "Game Favorites", message: "\(gameDetail!.name) added to your favorite game list")
+                    showAlert(title: "Favorites".localized, message: String(format: NSLocalizedString("messages.newFavoriteGame", comment: ""), "\(gameDetail!.name)"))
                 }
         }
     }
@@ -80,7 +83,7 @@ extension GameDetailViewController {
     // MARK: - prepareScene
     private func prepareScene() {
         // Preparing NavigationItem
-        self.navigationItem.title = "Game Detail"
+        self.navigationItem.title = "Game Detail".localized
         
         setRightBarBtnFavoriteImage()
         
@@ -94,14 +97,19 @@ extension GameDetailViewController {
         ViewUtility.labelWithImageAttachment(&lblRating, imageIconType: .systemImage, imageName: "star.fill", text: "\(gameDetail!.rating) / \(gameDetail!.ratingTop) (\(gameDetail!.ratingsCount))", textColor: UIColor.yellow)
         
         // Setting Property Labels
-        ViewUtility.labelWithBoldAndNormalText(&lblPlaytime, boldText: "Playtime: ", normalText: "\(String(gameDetail!.playtime)) Hours")
-        ViewUtility.labelWithBoldAndNormalText(&lblReleaseDate, boldText: "Release Date: ", normalText: "\(String(gameDetail!.releaseDate))")
+        ViewUtility.labelWithBoldAndNormalText(&lblPlaytime,
+                                               boldText: "Playtime: ".localized,
+                                               normalText: String(format: NSLocalizedString("scene.gamedetail.playtime", comment: ""), gameDetail!.playtime))
+        ViewUtility.labelWithBoldAndNormalText(&lblReleaseDate, boldText: "Release Date: ".localized, normalText: "\(String(gameDetail!.releaseDate))")
         
         GameDetailSceneUtility.setParentPlatforms(&lblParentPlatforms, game: gameDetail!)
         GameDetailSceneUtility.setGameTags(&lblTags, game: gameDetail!, tagShowingType: .all)
         GameDetailSceneUtility.setGenres(&lblGenres, game: gameDetail!)
         
-        ViewUtility.labelWithBoldAndNormalText(&lblAgeRating, boldText: "Age Rating: ", normalText: gameDetail!.esrbRating!.name)
+        ViewUtility.labelWithBoldAndNormalText(&lblAgeRating, boldText: "Age Rating: ".localized, normalText: gameDetail!.esrbRating!.name)
+        
+        lblDescriptionHeader.text = "Description:".localized
+        btnGoToGameWebsite.setTitle("Go to Game Website".localized, for: .normal)
         
         RawGClient.getGameDetail(gameId: gameDetail!.id) { [weak self] detailedGame, error in
             guard let self = self else { return }

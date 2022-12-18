@@ -40,12 +40,12 @@ final class AddNoteViewController: BaseViewController {
         guard let noteText = txtFldNote.text,
                 var noteModel = noteModel
         else {
-            showAlert(title: "Error", message: "Your note couldn't save")
+            showAlert(title: "Error".localized, message: "Your note couldn't save".localized)
             return
         }
         
         guard !noteText.isEmpty else {
-            showAlert(title: "Warning", message: "Please fill the required fields")
+            showAlert(title: "Warning".localized, message: "Please fill the required fields".localized)
             return
         }
         
@@ -56,7 +56,7 @@ final class AddNoteViewController: BaseViewController {
                 noteModel.note = noteText
                 if GameBoxCoreDataManager.shared.saveNote(noteModel: noteModel) {
                     // Closing presented AddNoteViewController because new note is saved
-                    showAlert(title: "Add Note", message: "Your new note has been saved") { [weak self] _ in
+                    showAlert(title: "Add Note".localized, message: "Your new note has been saved".localized) { [weak self] _ in
                         guard let self = self else { return }
                         NotificationCenter.default.post(name: NSNotification.Name(rawValue: NSNotificationNames.newNote.rawValue), object: nil)
                         self.closePresentSheet();
@@ -65,7 +65,7 @@ final class AddNoteViewController: BaseViewController {
             case .editNote:
                 if GameBoxCoreDataManager.shared.updateNoteBy(id: noteModel.id, updatedNote: noteText, updatedDate: Date().format()) {
                     // Closing presented AddNoteViewController because note is successfully edited
-                    showAlert(title: "Edit Note", message: "Your note successfully updated") { [weak self] _ in
+                    showAlert(title: "Edit Note".localized, message: "Your note successfully updated".localized) { [weak self] _ in
                         guard let self = self else { return }
                         NotificationCenter.default.post(name: NSNotification.Name(rawValue: NSNotificationNames.noteUpdated.rawValue), object: nil)
                         self.closePresentSheet();
@@ -89,11 +89,11 @@ extension AddNoteViewController {
         // Preparing NavigationItem
         switch noteModel!.noteState {
             case .addNote:
-                self.navigationItem.title = "Add Note"
-                btnSaveNote.setTitle("Add Note", for: .normal)
+            self.navigationItem.title = "Add Note".localized
+                btnSaveNote.setTitle("Add Note".localized, for: .normal)
             case .editNote:
-                self.navigationItem.title = "Edit Note"
-                btnSaveNote.setTitle("Edit Note", for: .normal)
+            self.navigationItem.title = "Edit Note".localized
+                btnSaveNote.setTitle("Edit Note".localized, for: .normal)
                 txtFldNote.text = noteModel!.note
             case .listNote:
                 closePresentSheet()
@@ -108,10 +108,24 @@ extension AddNoteViewController {
         navigationController?.navigationBar.scrollEdgeAppearance = appearance
         
         // Setting Labels
-        ViewUtility.labelWithBoldAndNormalText(&lblNoteId, boldText: "Note Id: ", normalText: noteModel!.id.uuidString)
-        ViewUtility.labelWithBoldAndNormalText(&lblGameId, boldText: "Game Id: ", normalText: String(noteModel!.gameId))
-        ViewUtility.labelWithBoldAndNormalText(&lblGameName, boldText: "Game Name: ", normalText: String(noteModel!.noteGame!.name))
-        ViewUtility.labelWithBoldAndNormalText(&lblNoteDate, boldText: "Note Date: ", normalText: Date().formatString())
+        ViewUtility.labelWithBoldAndNormalText(&lblNoteId,
+                                               boldText: String(format: NSLocalizedString("scene.addnote.noteid", comment: ""),"\n"),
+                                               normalText: noteModel!.id.uuidString)
+        ViewUtility.labelWithBoldAndNormalText(&lblGameId,
+                                               boldText: String(format: NSLocalizedString("scene.addnote.gameid", comment: ""),"\n"),
+                                               normalText: String(noteModel!.gameId))
+        ViewUtility.labelWithBoldAndNormalText(&lblGameName,
+                                               boldText: String(format: NSLocalizedString("scene.addnote.gamename", comment: ""),"\n"),
+                                               normalText: String(noteModel!.noteGame!.name))
+        ViewUtility.labelWithBoldAndNormalText(&lblNoteDate,
+                                               boldText: String(format: NSLocalizedString("scene.addnote.notedate", comment: ""),"\n"),
+                                               normalText: Date().formatString())
+        lblNoteHeader.text = "scene.addnote.note".localized
+        txtFldNote.placeholder = "scene.addnote.typenote".localized
+        
+        // We are giving gestureRecognizer to the view because the keyboard will be closed no matter where is clicked except the keyboard
+        let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
+        view.addGestureRecognizer(gestureRecognizer)
     }
     
     // MARK: - checkNoteDetail
@@ -121,7 +135,7 @@ extension AddNoteViewController {
                 noteModel?.noteGame != nil &&
                 noteModel?.noteState != .listNote
         else {
-            showAlert(title: "Error", message: "An error occured while saving your note", btnOkHandler: { [weak self] _ in
+            showAlert(title: "Error".localized, message: "An error occured while saving your note".localized, btnOkHandler: { [weak self] _ in
                 guard let self = self else { return }
                 self.closePresentSheet();
             })
@@ -132,6 +146,10 @@ extension AddNoteViewController {
     // MARK: - closePresentSheet
     private func closePresentSheet() {
         self.dismiss(animated: true)
+    }
+    
+    @objc private func hideKeyboard() {
+        view.endEditing(true)
     }
     
 }

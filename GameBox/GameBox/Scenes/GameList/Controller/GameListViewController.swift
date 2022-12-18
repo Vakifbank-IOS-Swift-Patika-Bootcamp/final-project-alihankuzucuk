@@ -60,10 +60,18 @@ final class GameListViewController: BaseViewController {
     private var selectedPullDownMenuActionName: String = ""
     private var selectedPullDownMenuParentPlatformActionName: String = ""
     private var selectedPullDownMenuOrderingActionName: String = ""
+    
+    // Variables for Local Notification
+    private var localNotificationManager: LocalNotificationManagerProtocol = LocalNotificationManager()
 
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // Local Notification pushed
+        localNotificationManager.scheduleLocalNotification(notificationTitle: "GameBox",
+                                                           notificationSubtitle: "usernotification.subtitle".localized,
+                                                           notificationBody: "usernotification.body".localized)
         
         prepareScene()
     }
@@ -82,7 +90,7 @@ extension GameListViewController {
         gameListRedirection = gameListRedirection == nil ? .toDetailPage : .toNotePage
         
         // Preparing NavigationItem
-        self.navigationItem.title = "Games"
+        self.navigationItem.title = "Games".localized
         
         // Setting appearance of NavigationBar
         let appearance = UINavigationBarAppearance()
@@ -109,7 +117,7 @@ extension GameListViewController {
         // Initializing Search Bar
         let search = UISearchController(searchResultsController: nil)
         search.searchResultsUpdater = self
-        search.searchBar.placeholder = "Type something to search"
+        search.searchBar.placeholder = "Type something to search".localized
         navigationItem.searchController = search
         
         // Prevented automatic hiding of SearchController
@@ -123,8 +131,12 @@ extension GameListViewController {
         self.pullDownMenu = pullDownMenu
         navigationItem.rightBarButtonItem = pullDownMenu
         
-        // Changing TabBar icon colors
+        // Preparing selected TabBar
         self.tabBarController?.tabBar.tintColor = Constants.Colors.PageColors.blue
+        self.tabBarController?.tabBar.selectedItem?.title = "Games".localized
+        self.tabBarController?.tabBar.items?[1].title = "Favorites".localized
+        self.tabBarController?.tabBar.items?[2].title = "Notes".localized
+        self.tabBarController?.tabBar.items?[3].title = "Settings".localized
         
         // Preparing viewModel
         viewModel.delegate = self

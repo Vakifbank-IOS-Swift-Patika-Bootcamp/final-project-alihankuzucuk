@@ -46,7 +46,9 @@ final class GameTableViewCell: UITableViewCell {
         
         ViewUtility.labelWithImageAttachment(&lblRating, imageIconType: .systemImage, imageName: "star.fill", text: "\(game.rating) / \(game.ratingTop) (\(game.ratingsCount))", textColor: UIColor.yellow)
         
-        ViewUtility.labelWithBoldAndNormalText(&lblPlaytime, boldText: "Playtime: ", normalText: "\(String(game.playtime)) Hours")
+        ViewUtility.labelWithBoldAndNormalText(&lblPlaytime,
+                                               boldText: "Playtime: ",
+                                               normalText: String(format: NSLocalizedString("scene.gamedetail.playtime", comment: ""), game.playtime))
         ViewUtility.labelWithBoldAndNormalText(&lblReleaseDate, boldText: "Release Date: ", normalText: "\(String(game.releaseDate))")
         
         GameDetailSceneUtility.setParentPlatforms(&lblParentPlatforms, game: game)

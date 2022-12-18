@@ -19,7 +19,7 @@ final class GenreCollectionViewCell: UICollectionViewCell {
 
     // MARK: - Methods
     func configureCell(genre: CommonModel, genreBackgroundColor: UIColor) {
-        lblGenreName.text = genre.name
+        lblGenreName.text = NSLocalizedString(genre.slug, comment: "")
         
         viewGenreBackground.backgroundColor = genreBackgroundColor
         viewGenreBackground.layer.shadowColor = genreBackgroundColor.cgColor

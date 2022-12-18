@@ -17,7 +17,7 @@ final class GameListSceneUtility {
     static func getPullDownMenu(selfObject: some GameListViewController) -> UIMenu {
         
         // MARK: - Options
-        let actionClearFilter = UIAction(title: "Clear All Filters",
+        let actionClearFilter = UIAction(title: "Clear All Filters".localized,
                                          image: UIImage(systemName: "trash"),
                                          identifier: UIAction.Identifier("pullDownMenu.clearFilter"),
                                          state: .off) { [weak selfObject] actionClearFilter in
@@ -29,7 +29,7 @@ final class GameListSceneUtility {
         }
         
         // MARK: - Ordering Menu
-        let orderActionRating = UIAction(title: "Rating",
+        let orderActionRating = UIAction(title: "Rating (Increasing)".localized,
                                          image: UIImage(systemName: "gamecontroller"),
                                          identifier: UIAction.Identifier("pullDownMenu.ordering.rating"),
                                          state: (selfObject.getSelectedPullDownOrderingActionName()=="pullDownMenu.ordering.rating") &&
@@ -41,7 +41,7 @@ final class GameListSceneUtility {
             selfObject.refreshPullDownMenu()
         }
         
-        let orderActionRatingReversed = UIAction(title: "Rating (Reverse)",
+        let orderActionRatingReversed = UIAction(title: "Rating (Decreasing)".localized,
                                                  image: UIImage(systemName: "gamecontroller"),
                                                  identifier: UIAction.Identifier("pullDownMenu.ordering.ratingReverse"),
                                                  state: (selfObject.getSelectedPullDownOrderingActionName()=="pullDownMenu.ordering.ratingReverse") &&
@@ -53,7 +53,7 @@ final class GameListSceneUtility {
             selfObject.refreshPullDownMenu()
         }
         
-        let orderActionMetacritic = UIAction(title: "Metacritic",
+        let orderActionMetacritic = UIAction(title: "Metacritic (Increasing)".localized,
                                              image: UIImage(systemName: "gamecontroller"),
                                              identifier: UIAction.Identifier("pullDownMenu.ordering.metacritic"),
                                              state: (selfObject.getSelectedPullDownOrderingActionName()=="pullDownMenu.ordering.metacritic") &&
@@ -65,7 +65,7 @@ final class GameListSceneUtility {
             selfObject.refreshPullDownMenu()
         }
         
-        let orderActionMetacriticReversed = UIAction(title: "Metacritic (Reverse)",
+        let orderActionMetacriticReversed = UIAction(title: "Metacritic (Decreasing)".localized,
                                                      image: UIImage(systemName: "gamecontroller"),
                                                      identifier: UIAction.Identifier("pullDownMenu.ordering.metacriticReverse"),
                                                      state: (selfObject.getSelectedPullDownOrderingActionName()=="pullDownMenu.ordering.metacriticReverse") &&
@@ -77,7 +77,7 @@ final class GameListSceneUtility {
             selfObject.refreshPullDownMenu()
         }
         
-        let subMenuOrdering = UIMenu(title: "Ordering", options: .displayInline, children: [orderActionRating, orderActionRatingReversed, orderActionMetacritic, orderActionMetacriticReversed])
+        let subMenuOrdering = UIMenu(title: "Ordering".localized, options: .displayInline, children: [orderActionRating, orderActionRatingReversed, orderActionMetacritic, orderActionMetacriticReversed])
         
         // MARK: - Parent Platform Menu
         let parentPlatformActionPC = UIAction(title: "PC",
@@ -176,7 +176,7 @@ final class GameListSceneUtility {
             selfObject.refreshPullDownMenu()
         }
         
-        let subMenuParentPlatforms = UIMenu(title: "Parent Platform",
+        let subMenuParentPlatforms = UIMenu(title: "Game Platform".localized,
                                             options: .displayInline,
                                             children: [parentPlatformActionPC,
                                                        parentPlatformActionPlayStation,
@@ -188,7 +188,7 @@ final class GameListSceneUtility {
                                                        parentPlatformActionCommodore])
         
         // MARK: - Navigation Menu
-        let navigationMenu = UIMenu(title: "Options", children: [actionClearFilter, subMenuOrdering, subMenuParentPlatforms])
+        let navigationMenu = UIMenu(title: "Options".localized, children: [actionClearFilter, subMenuOrdering, subMenuParentPlatforms])
         
         return navigationMenu
     }

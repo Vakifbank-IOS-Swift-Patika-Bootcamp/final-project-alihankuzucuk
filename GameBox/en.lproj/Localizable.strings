@@ -1,0 +1,132 @@
+/* 
+  Localizable.strings
+  GameBox
+
+  Created by Alihan KUZUCUK on 16.12.2022.
+  
+*/
+
+// App Messages
+"Error" = "Error";
+"Warning" = "Warning";
+"OK" = "OK";
+
+"Application will close" = "Application will close";
+"error.unknown" = "An unknown error occured while performing operations";
+
+// -----------------------------------------------------
+
+// Onboarding Scene
+"scene.onboarding.one" = "Thanks to Pagination, you can view more than 800,000 games";
+"scene.onboarding.two" = "You can add the games you like to the favorite list and view them according to their categories";
+"scene.onboarding.three" = "You can take notes as long as you want, with the ability to scroll inside the cell";
+
+// User Notification
+"usernotification.subtitle" = "Welcome to the game world";
+"usernotification.body" = "There are hundreds of thousands of games to review. GameBox is ready for you...";
+
+"Next" = "Next";
+"Get Started" = "Get Started";
+
+// -----------------------------------------------------
+
+// GameList Scene
+"Games" = "Games";
+"Type something to search" = "Type something to search";
+
+// Genre CollectionView Cards
+"all" = "All";
+"action" = "Action";
+"indie" = "Indie";
+"adventure" = "Adventure";
+"role-playing-games-rpg" = "Role Playing Games";
+"strategy" = "Strategy";
+"shooter" = "Shooter";
+"casual" = "Casual";
+"simulation" = "Simulation";
+"puzzle" = "Puzzle";
+"arcade" = "Arcade";
+"platformer" = "Platformer";
+"racing" = "Racing";
+"massively-multiplayer" = "Massively Multiplayer";
+"sports" = "Sports";
+"fighting" = "Fighting";
+"family" = "Family";
+"board-games" = "Board Games";
+"educational" = "Educational";
+"card" = "Card";
+
+// -----------------------------------------------------
+
+// PullDown Menu
+"Options" = "Options";
+"Clear All Filters" = "Clear All Filters";
+"Ordering" = "Ordering";
+"Rating (Increasing)" = "Rating (Increasing)";
+"Rating (Decreasing)" = "Rating (Decreasing)";
+"Metacritic (Increasing)" = "Metacritic (Increasing)";
+"Metacritic (Decreasing)" = "Metacritic (Decreasing)";
+"Game Platform" = "Game Platform";
+
+// -----------------------------------------------------
+
+// GameDetail Scene
+"Game Detail" = "Game Detail";
+"Playtime: " = "Playtime: ";
+"Release Date: " = "Release Date: ";
+"Platforms: " = "Platforms: ";
+"Tags: " = "Tags: ";
+"Genres: " = "Genres: ";
+"Age Rating: " = "Age Rating: ";
+"Description:" = "Description:";
+"Go to Game Website" = "Go to Game Website";
+
+// Mutable Variables
+"scene.gamedetail.playtime" = "%i Hours";
+"messages.newFavoriteGame" = "%@ added to your favorite game list";
+"messages.unfavoriteGame" = "%@ removed from your favorite game list";
+
+// -----------------------------------------------------
+
+// FavoriteList Scene
+"Favorite List" = "Favorite List";
+"Favorites" = "Favorites";
+"Please select an option" = "Please select an option";
+"Detail" = "Detail";
+"Delete" = "Delete";
+"Dismiss" = "Dismiss";
+"Unfavorite" = "Unfavorite";
+
+// -----------------------------------------------------
+
+// NoteList Scene
+"Note List" = "Note List";
+"Notes" = "Notes";
+"Edit" = "Edit";
+
+// -----------------------------------------------------
+
+// AddNote Scene
+"scene.addnote.noteid" = "Note Id: %@";
+"scene.addnote.gameid" = "Game Id: %@";
+"scene.addnote.gamename" = "Game Name: %@";
+"scene.addnote.notedate" = "Note Date: %@";
+"scene.addnote.note" = "Note:";
+"scene.addnote.typenote" = "Type your note...";
+"Add Note" = "Add Note";
+"Edit Note" = "Edit Note";
+
+"An error occured while saving your note" = "An error occured while saving your note";
+"Your new note has been saved" = "Your new note has been saved";
+"Your note successfully updated" = "Your note successfully updated";
+"Your note couldn't save" = "Your note couldn't save";
+"Please fill the required fields" = "Please fill the required fields";
+
+// -----------------------------------------------------
+
+// Settings Scene
+
+"Settings" = "Settings";
+
+"scene.settings.developerinfo" = "This application is developed by Alihan KUZUCUK";
+"scene.settings.btnwebsite" = "Visit alihankuzucuk.com";
