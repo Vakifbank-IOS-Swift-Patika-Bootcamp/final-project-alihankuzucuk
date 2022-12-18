@@ -1,0 +1,84 @@
+
+/* Class = "UILabel"; text = "Note"; ObjectID = "1ZJ-GG-zTI"; */
+"1ZJ-GG-zTI.text" = "Note";
+
+/* Class = "UILabel"; text = "Tags"; ObjectID = "6i3-lM-9Hw"; */
+"6i3-lM-9Hw.text" = "Tags";
+
+/* Class = "UILabel"; text = "Description Text"; ObjectID = "7li-eD-KWp"; */
+"7li-eD-KWp.text" = "Description Text";
+
+/* Class = "UITabBarItem"; title = "Notes"; ObjectID = "8Fy-fz-R9G"; */
+"8Fy-fz-R9G.title" = "Notes";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "8ZU-t3-k86"; */
+"8ZU-t3-k86.text" = "Label";
+
+/* Class = "UILabel"; text = "Note Id"; ObjectID = "Emf-bC-Eiu"; */
+"Emf-bC-Eiu.text" = "Note Id";
+
+/* Class = "UITextField"; placeholder = "Type your note"; ObjectID = "EoP-Gy-yJM"; */
+"EoP-Gy-yJM.placeholder" = "Type your note";
+
+/* Class = "UILabel"; text = "Description:"; ObjectID = "KDT-zg-yOQ"; */
+"KDT-zg-yOQ.text" = "Description:";
+
+/* Class = "UILabel"; text = "Game Id"; ObjectID = "Kyr-cN-kD8"; */
+"Kyr-cN-kD8.text" = "Game Id";
+
+/* Class = "UILabel"; text = "Rating"; ObjectID = "Od9-3O-N6u"; */
+"Od9-3O-N6u.text" = "Rating";
+
+/* Class = "UILabel"; text = "Playtime"; ObjectID = "R5h-mm-RcP"; */
+"R5h-mm-RcP.text" = "Playtime";
+
+/* Class = "UILabel"; text = "Release Date"; ObjectID = "SGO-FY-ZBU"; */
+"SGO-FY-ZBU.text" = "Release Date";
+
+/* Class = "UITabBarItem"; title = "Games"; ObjectID = "URF-n6-7So"; */
+"URF-n6-7So.title" = "Games";
+
+/* Class = "UILabel"; text = "Metacritic"; ObjectID = "UUn-RO-Aa9"; */
+"UUn-RO-Aa9.text" = "Metacritic";
+
+/* Class = "UILabel"; text = "Game Name"; ObjectID = "Uji-GN-0CL"; */
+"Uji-GN-0CL.text" = "Game Name";
+
+/* Class = "UILabel"; text = "Note Date"; ObjectID = "YPR-8X-coy"; */
+"YPR-8X-coy.text" = "Note Date";
+
+/* Class = "UITabBarItem"; title = "Favorites"; ObjectID = "aUW-8r-ZyV"; */
+"aUW-8r-ZyV.title" = "Favorites";
+
+/* Class = "UILabel"; text = "Age Rating"; ObjectID = "awf-Vg-mgg"; */
+"awf-Vg-mgg.text" = "Age Rating";
+
+/* Class = "UILabel"; text = "Genre"; ObjectID = "cxj-Lh-5Xb"; */
+"cxj-Lh-5Xb.text" = "Genre";
+
+/* Class = "UIButton"; configuration.title = "Go to Game Website"; ObjectID = "fUF-aU-pOa"; */
+"fUF-aU-pOa.configuration.title" = "Go to Game Website";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "fUF-aU-pOa"; */
+"fUF-aU-pOa.normalTitle" = "Button";
+
+/* Class = "UIButton"; configuration.title = "Next"; ObjectID = "h4W-Gn-ISn"; */
+"h4W-Gn-ISn.configuration.title" = "Next";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "h4W-Gn-ISn"; */
+"h4W-Gn-ISn.normalTitle" = "Button";
+
+/* Class = "UIButton"; configuration.title = "Save"; ObjectID = "ldL-Jf-Hyu"; */
+"ldL-Jf-Hyu.configuration.title" = "Save";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "ldL-Jf-Hyu"; */
+"ldL-Jf-Hyu.normalTitle" = "Button";
+
+/* Class = "UILabel"; text = "Parent Platform"; ObjectID = "ofG-c7-dH7"; */
+"ofG-c7-dH7.text" = "Parent Platform";
+
+/* Class = "UILabel"; text = "Game Name"; ObjectID = "sO0-WE-dYw"; */
+"sO0-WE-dYw.text" = "Game Name";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "wPU-i9-M31"; */
+"wPU-i9-M31.text" = "Label";
